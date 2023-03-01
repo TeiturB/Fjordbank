@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Virðismet
+{% endblock %}
+
+{% block main %}
+    <div class="container mt-3"></div>
+        <h2>Virðismet</h2>
+        <form action="/quote" method="post">
+            <div class="mb-3">
+                <input autocomplete="off" autofocus class="form-control mt-3 mx-auto w-auto" id="symbol" name="symbol" placeholder="T.d. NFLX" type="text">
+            </div>
+            <button class="btn btn-primary" type="submit">Met um</button>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Virðismett
+{% endblock %}
+
+{% block main %}
+  <div class="container mt-3">    
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Symbol</th>
+          <th>Navn</th>
+          <th>Prísur</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ symbol }}</td>
+          <td>{{ name }}</td>
+          <td>{{ price | usd }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Uppgerð
+{% endblock %}
+
+{% block main %}
+    <div class="container mt-3">
+        <h2>Uppgerð</h2>    
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Symbol</th>
+                    <!--<th>Navn</th>-->
+                    <th>Nøgd</th>
+                    <th>Prísur</th>
+                    <th>Tíðarskeið</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in transactions %}
+                <tr>
+                    <td>{{ row["symbol"] }}</td>
+                    <!-- <td>{{ names }}</td> -->
+                    <td>{{ row["shares"] }}</td>
+                    <td>{{ row["price"] | usd }}</td>
+                    <td>{{ row["date"] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

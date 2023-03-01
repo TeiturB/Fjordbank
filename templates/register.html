@@ -1,0 +1,203 @@
+{% extends "layout.html" %} {% block title %} Register {% endblock %} {% block
+main %}
+
+{% if error %}
+    <div class="alert alert-danger" role="alert">{{ error }}</div>
+{% endif %}
+
+
+
+<script src="{{ url_for('static', filename='form-validation.js') }}"></script>
+
+<form action="/register" method="post" onsubmit="return checkForm(event)">
+
+    <div class="form-floating mb-3">
+        <input
+        autocomplete="off"
+        autofocus
+        class="form-control"
+        id="p_number"
+        name="p_number"
+        placeholder="P-number"
+        type="text"
+      {% if request.form.get('p_number') %}
+      value="{{ request.form.get('p_number') }}"
+      {% else %}
+      value=""
+      {% endif %}
+      />
+      <label for="p_number">p-number</label>
+      <div class="form-floating">
+      </div>
+    </div>
+    
+
+
+  <div class="form-floating mb-3">
+    <input
+      class="form-control"
+      id="password"
+      name="password"
+      placeholder="Password"
+      type="password"
+    />
+    <label for="password">password</label>
+    <div class="form-floating">
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <input
+      class="form-control mx-auto w-auto"
+      id="confirmation"
+      name="confirmation"
+      placeholder="Re-type password"
+      type="password"
+    />
+    <label for="password">password</label>
+    <div class="form-floating">
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <input
+      autocomplete="off"
+      autofocus
+      class="form-control mx-auto w-auto"
+      id="first_name"
+      name="first_name"
+      placeholder="First name"
+      type="text"
+      {% if request.form.get('first_name') %}
+      value="{{ request.form.get('first_name') }}"
+      {% else %}
+      value=""
+      {% endif %}
+    />
+    <label for="password">password</label>
+    <div class="form-floating">
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <input
+      autocomplete="off"
+      autofocus
+      class="form-control mx-auto w-auto"
+      id="middle_name"
+      name="middle_name"
+      placeholder="Middle name"
+      type="text"
+      {% if request.form.get('middle_name') %}
+      value="{{ request.form.get('middle_name') }}"
+      {% else %}
+      value=""
+      {% endif %}
+    />
+    <label for="password">password</label>
+    <div class="form-floating">
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <input
+      autocomplete="off"
+      autofocus
+      class="form-control mx-auto w-auto"
+      id="last_name"
+      name="last_name"
+      placeholder="Last name"
+      type="text"
+      {% if request.form.get('last_name') %}
+      value="{{ request.form.get('last_name') }}"
+      {% else %}
+      value=""
+      {% endif %}
+    />
+    <label for="password">password</label>
+    <div class="form-floating">
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <input
+      class="form-control mx-auto w-auto"
+      id="postal_code"
+      name="postal_code"
+      placeholder="Postal code"
+      type="text"
+      {% if request.form.get('postal_code') %}
+      value="{{ request.form.get('postal_code') }}"
+      {% else %}
+      value=""
+      {% endif %}
+    />
+  </div>
+
+  <div class="mb-3">
+    <input
+      class="form-control mx-auto w-auto"
+      id="street_name"
+      name="street_name"
+      placeholder="Street name"
+      type="text"
+      {% if request.form.get('street_name') %}
+      value="{{ request.form.get('street_name') }}"
+      {% else %}
+      value=""
+      {% endif %}
+    />
+  </div>
+
+  <div class="mb-3">
+    <input
+      class="form-control mx-auto w-auto"
+      id="street_number"
+      name="street_number"
+      placeholder="Street number"
+      type="text"
+      {% if request.form.get('street_number') %}
+      value="{{ request.form.get('street_number') }}"
+      {% else %}
+      value=""
+      {% endif %}
+    />
+  </div>
+
+  <div class="mb-3">
+    <input
+      autocomplete="off"
+      autofocus
+      class="form-control mx-auto w-auto"
+      id="phone_number"
+      name="phone_number"
+      placeholder="Phone number"
+      type="text"
+      {% if request.form.get('phone_number') %}
+      value="{{ request.form.get('phone_number') }}"
+      {% else %}
+      value=""
+      {% endif %}
+    />
+  </div>
+
+  <div class="mb-3">
+    <input
+      autocomplete="off"
+      autofocus
+      class="form-control mx-auto w-auto"
+      id="email"
+      name="email"
+      placeholder="e-mail"
+      type="text"
+      {% if request.form.get('email') %}
+      value="{{ request.form.get('email') }}"
+      {% else %}
+      value=""
+      {% endif %}
+    />
+  </div>
+
+  <button class="btn btn-primary" type="submit">Register</button>
+</form>
+{% endblock %}
