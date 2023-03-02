@@ -1,64 +1,74 @@
 /* Size for brand */
-nav .navbar-brand
-{
-    font-size: xx-large;
+nav .navbar-brand {
+  font-size: xx-large;
 }
 
 /* Colors for brand */
-nav .navbar-brand .blue
-{
-    color: #537fbe;
+nav .navbar-brand .blue {
+  color: #537fbe;
 }
-nav .navbar-brand .red
-{
-    color: #ea433b;
-  }
-  nav .navbar-brand .yellow
-  {
-    color: #f5b82e;
-  }
-  nav .navbar-brand .green
-  {
-    color: #2e944b;
-  }
+nav .navbar-brand .red {
+  color: #ea433b;
+}
+nav .navbar-brand .yellow {
+  color: #f5b82e;
+}
+nav .navbar-brand .green {
+  color: #2e944b;
+}
 
-  .alert-primary-red{
-    color: #842029;
-    background-color: #f8d7da;
-    border-color: #f5c2c7;
-  }
-  
-  .alert-primary-blue {
-      color: #084298;
-      background-color: #cfe2ff;
-      border-color: #b6d4fe;
-    }
+.alert-primary-red {
+  color: #842029;
+  background-color: #f8d7da;
+  border-color: #f5c2c7;
+}
+
+.alert-primary-blue {
+  color: #084298;
+  background-color: #cfe2ff;
+  border-color: #b6d4fe;
+}
 
 /* Outline unfilled required fields */
-  .input-error {
-    border: 1px solid red;
-  }
-  
-  .invalid-feedback {
-    display: none;
-  }
+input:not(#middle_name).input-error {
+  border: 1px solid red;
+}
 
-  .is-invalid {
-    border: 1px solid red;
-  }
-  
+.invalid-feedback {
+  display: none;
+}
+
+input:not(#middle_name).is-invalid {
+  border: 1px solid red;
+}
+
+.form-control.is-invalid {
+  padding-right: unset;
+}
+
+input#middle_name.is-invalid {
+  border: 1px solid #ced4da;
+  background-image: unset;
+  background-repeat: unset;
+  background-position: unset;
+  background-size: unset;
+}
+
+input#middle_name.form-control.is-invalid:focus {
+  color: #212529;
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
+}
+
 /* Registry forms */
 .form-floating.mb-3 {
-    display: inline-block;
+  display: inline-block;
 }
 
 .form-control {
-    width: auto;
-    display: initial;
+  display: initial;
 }
 
 form {
-  display: inline-grid!important;
+  display: inline-grid !important;
 }
-
-/* Blue flash */

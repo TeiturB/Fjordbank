@@ -1,17 +1,20 @@
 from heapq import heapify
 import json
-import os
-import re
 from symtable import Symbol
 
 from cs50 import SQL
-from flask import Flask, flash, jsonify, redirect, render_template,  url_for, request, session
+from flask import (
+    Flask,
+    flash,
+    redirect,
+    render_template,
+    request,
+    session,
+)
 import requests
 from flask_session import Session
 from tempfile import mkdtemp
-import hashlib
 from werkzeug.security import check_password_hash, generate_password_hash
-import datetime
 import main
 
 from helpers import apology, login_required, lookup, usd
@@ -36,14 +39,8 @@ db = SQL("sqlite:///finance.db")
 # Declare header for Oracle APEX database
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36",
-    "content-type": "application/json"
+    "content-type": "application/json",
 }
-
-# Make sure API key is set
-# if not os.environ.get("API_KEY"):
-#     raise RuntimeError("API_KEY not set")
-
-
 
 
 @app.after_request
@@ -58,7 +55,7 @@ def after_request(response):
 @app.route("/")
 @login_required
 def index():
-    """Show portfolio of stocks"""
+    """Show welcome page"""
     # Get and declare variables
     p_number = session["p_number"]
 
@@ -78,7 +75,7 @@ def index():
 def accounts():
     """Show portfolio of accounts"""
     if request.method == "POST":
-        boom = 123
+        print("TODO")
 
     else:
         return render_template("accounts.html")
@@ -93,20 +90,23 @@ def login():
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
+        # Retain form data to reduce UX irretability
+        session["login_form_data"] = request.form
+        form_data = session.pop("login_form_data")
+
         # Get variables from form
         p_number = request.form.get("p_number")
         password = request.form.get("password")
 
-        print(p_number)
-        print(password)
-
-        # Ensure p_number was submitted
+        # Ensure p_number is provided
         if not p_number:
-            return apology("P-number required", 403)
+            flash("P-number required")
+            return render_template("login.html", form_data=form_data)
 
-        # Ensure password was submitted
-        elif not password:
-            return apology("Password required", 403)
+        # Ensure password is provided
+        if not password:
+            flash("Password required")
+            return render_template("login.html", form_data=form_data)
 
         # Query database for p_number and hash
         response = requests.get(
@@ -114,39 +114,31 @@ def login():
             headers=headers,
         )
 
-        # Ensure p_number exists and password is correct
-        # if len(rows) != 1 or not check_password_hash(
-        #     rows[0]["hash"], request.form.get("password")
-        # ):
-        #     return apology("ógyldugt brúkaranavn og/ella loyniorð", 403)
-
-        # Remember which user has logged in
-        # session["p_number"] =
-
-        # rows = db.execute(
-        #     "SELECT * FROM users WHERE username = ?", request.form.get("p_number")
-        # )
-
         if response.status_code == 200:
 
+            print(response)
+
             # Unpack person dict from json object
-            data = response.json()["items"][0]
+            data = response.json()
+
+            print(data)
 
             # Ensure p_number exists and password is correct
             if len(data) != 1 or not check_password_hash(
                 data["hash"], request.form.get("password")
             ):
-                return apology("Invalid p-number and/or password", 403)
+                flash("Invalid p-number and/or password")
+                return render_template("login.html", form_data=form_data)
 
+            # If successful login
             session["p_number"] = data["p_number"]
+            flash(f"Welcome back, {data['first_name']}!")
 
-            # Redirect user to home page
             return redirect("/")
 
         else:
-
-            # return an error message if the request failed
-            return f"Something went wrong: {response.text}"
+            flash(response.reason)
+            return render_template("login.html", form_data=form_data)
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -233,27 +225,62 @@ def register():
         email = request.form.get("email")
 
         # Retain form data to reduce UX irretability
-        session["form_data"] = request.form
-        form_data = session.pop("form_data")
-        
-        # Ensure p_number was provided
+        session["register_form_data"] = request.form
+        form_data = session.pop("register_form_data")
+
+        # Ensure p_number is provided
         if not p_number:
             flash("P-number required")
             return render_template("register.html", form_data=form_data)
 
-        # Ensure password was provided
+        # Ensure password is provided
         if not password:
             flash("Password required")
             return render_template("register.html", form_data=form_data)
 
-        # Ensure confirmation was provided
+        # Ensure confirmation is provided
         if not confirmation:
             flash("Confirm password")
             return render_template("register.html", form_data=form_data)
-        
+
         # Ensure confirmation matches password
         if password != confirmation:
             flash("Passwords must match")
+            return render_template("register.html", form_data=form_data)
+
+        # Ensure first name is provided
+        if not first_name:
+            flash("First name required")
+            return render_template("register.html", form_data=form_data)
+
+        # Ensure last name is provided
+        if not last_name:
+            flash("Last name required")
+            return render_template("register.html", form_data=form_data)
+
+        # Ensure postal code is provided
+        if not postal_code:
+            flash("Postal code required")
+            return render_template("register.html", form_data=form_data)
+
+        # Ensure street name is provided
+        if not street_name:
+            flash("Street name required")
+            return render_template("register.html", form_data=form_data)
+
+        # Ensure street number is provided
+        if not street_number:
+            flash("Street number required")
+            return render_template("register.html", form_data=form_data)
+
+        # Ensure phone number is provided
+        if not phone_number:
+            flash("Phone number required")
+            return render_template("register.html", form_data=form_data)
+
+        # Ensure e-mail is provided
+        if not email:
+            flash("E-mail required")
             return render_template("register.html", form_data=form_data)
 
         # Encrypt and store hash of provided password
@@ -271,207 +298,29 @@ def register():
             "street_name": street_name,
             "street_number": street_number,
             "phone_number": phone_number,
-            "email": email
+            "email": email,
         }
         response = requests.post(url, json=data, headers=headers)
 
-        if response.status_code == 200:
+        print(data)
+        print(f"Response: {response}")
 
-            flash("Success!")
-            
+        if response.status_code == 200:
             session["p_number"] = p_number
-            
-            data = response.json()
-            
-            print(data)
-        
+            flash(f"Welcome, {first_name}!")
+
+            return redirect("/")
+
         else:
             flash(response.reason)
-            print('Error: ', response.reason)
+            print("Error: ", response.reason)
 
-        # try:
-
-        # Insert into database
-        # response = requests.post(
-        #     "https://apex.oracle.com/pls/apex/databasur/user/register/", json=json.dumps(data), timeout=60
-        # )
-        # print(response.status_code)
-        # print(response.content)
-
-        # if response.status_code == 200:
-        #     flash("OH YEAH!")
-        #     print("yo")
-        # else:
-        #     print("fokk")
-        #     flash("åh neeeii")
-
-
-        # return redirect("/")
+            return render_template("register.html")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("register.html")
 
-    return apology("TODO")
 
-
-# @app.route("/buy", methods=["GET", "POST"])
-# @login_required
-# def buy():
-#     """Buy shares of stock"""
-
-#     if request.method == "POST":
-
-#         # Declare variables
-#         symbol = request.form.get("symbol")
-#         shares = int(request.form.get("shares"))
-
-#         # Error handling
-#         if not symbol:
-#             return apology("symbol manglar", 403) # The 403 (Forbidden) status code indicates that the server understood the request but refuses to authorize it
-
-#         # Lookup quote
-#         stock = lookup(symbol.upper())
-#         # return jsonify(stock)
-
-#         # Error handling
-#         if stock == None:
-#             return apology("symbol er ikki til", 403)
-#         if shares < 0:
-#             return apology("nøgd má verða positiv", 403)
-#         if shares > 1000000000000000: # Defense against integer overflow
-#             return apology("tú sleppur ikki at bróta síðuna", 403)
-#         if not shares:
-#             return apology("vel nøgd", 403)
-
-#         # Store price of selected stocks
-#         transaction_value = shares * stock["price"]
-
-#         # Get user's cash amount from db and store in variable
-#         user_id = session["user_id"]
-#         user_cash_db = db.execute("SELECT cash FROM users WHERE id = :id", id=user_id)
-#         user_cash = user_cash_db[0]["cash"]
-#         # return jsonify(user_cash_db)
-
-#         # Check if user can afford transaction
-#         if user_cash < transaction_value:
-#             return apology("tú ert ov fátækur", 403)
-
-#         # Calculate new user cash total and update databases
-#         updt_cash = user_cash - transaction_value
-#         db.execute("UPDATE users SET cash = ? WHERE id = ?", updt_cash, user_id)
-
-#         date = datetime.datetime.now()
-#         # return jsonify(date)
-#         db.execute("INSERT INTO transactions (user_id, symbol, shares, price, date) VALUES (?, ?, ?, ?, ?)", user_id, stock["symbol"], shares, stock["price"], date)
-
-#         flash("Keypt!")
-
-#         return redirect("/")
-
-#     else:
-#         return render_template("/buy.html")
-
-
-# @app.route("/history")
-# @login_required
-# def history():
-#     """Show history of transactions"""
-#     user_id = session["user_id"]
-#     transactions_db = db.execute("SELECT * FROM transactions WHERE user_id = :id", id=user_id)
-#     return render_template("history.html", transactions = transactions_db)
-
-
-# @app.route("/quote", methods=["GET", "POST"])
-# @login_required
-# def quote():
-#     """Get stock quote."""
-
-#     if request.method == "POST":
-
-#         # Define variables
-#         symbol = request.form.get("symbol")
-
-#         # Error handling
-#         if not symbol:
-#             return apology("Symbol manglar", 403)
-
-#         # Lookup quote
-#         stock = lookup(symbol.upper())
-
-#         # Error handling
-#         if stock == None:
-#             return apology("Symbol er ikki til", 403)
-
-#         # Render quoted
-#         return render_template("/quoted.html", name = stock["name"], price = stock["price"], symbol = stock["symbol"])
-
-#     else:
-#         return render_template("/quote.html")
-
-
-# @app.route("/sell", methods=["GET", "POST"])
-# @login_required
-# def sell():
-#     """Sell shares of stock"""
-
-#     if request.method == "POST":
-
-#         # Declare variables
-#         symbol = request.form.get("symbol")
-#         shares = int(request.form.get("shares"))
-
-#         # Error handling
-#         if not symbol:
-#             return apology("symbol manglar", 403)
-
-#         # Lookup quote
-#         stock = lookup(symbol.upper())
-
-#         # Error handling
-#         if stock == None:
-#             return apology("symbol er ikki til", 403)
-
-#         # Error handling
-#         if shares < 0:
-#             return apology("nøgd má verða positiv", 403)
-#         if shares > 1000000000000000:
-#             return apology("Tú sleppur ikki at bróta síðuna", 403)
-#         if not shares:
-#             return apology("vel nøgd", 403)
-
-#         # Store price of selected stocks
-#         transaction_value = shares * stock["price"]
-
-#         # Get user's cash amount from db and store in variable
-#         user_id = session["user_id"]
-#         user_cash_db = db.execute("SELECT cash FROM users WHERE id = :id", id=user_id)
-#         user_cash = user_cash_db[0]["cash"]
-
-#         # Error handling
-#         user_shares_db = db.execute("SELECT SUM(shares) AS shares FROM transactions WHERE user_id=:id AND symbol = :symbol", id=user_id, symbol=symbol)
-#         user_shares = user_shares_db[0]["shares"]
-#         if shares > user_shares:
-#             return apology("tú hevur ikki so nógv virðisbrøv av hasum slagnum", 403)
-
-#         # Calculate new user cash total and update databases
-#         updt_cash = user_cash + transaction_value
-#         db.execute("UPDATE users SET cash = ? WHERE id = ?", updt_cash, user_id)
-
-#         date = datetime.datetime.now()
-#         # return jsonify(date)
-#         db.execute("INSERT INTO transactions (user_id, symbol, shares, price, date) VALUES (?, ?, ?, ?, ?)", user_id, stock["symbol"], (-1) * shares, stock["price"], date)
-
-#         flash("Selt!")
-
-#         return redirect("/")
-
-#     else:
-#         user_id = session["user_id"]
-
-#         # Get the user's shares only
-#         user_symbols = db.execute("SELECT symbol FROM transactions WHERE user_id = :id GROUP BY symbol HAVING SUM(shares) > 0", id=user_id)
-#         return render_template("sell.html", symbols = [row["symbol"] for row in user_symbols])
-
-if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=8080, debug=True)
+if __name__ == "__main__":
+    app.run(host="127.0.0.1", port=8080, debug=True)

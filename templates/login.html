@@ -1,26 +1,37 @@
 {% extends "layout.html" %} {% block title %} Log in {% endblock %} {% block
 main %}
+
+<script src="{{ url_for('static', filename='register-form-validation.js') }}"></script>
+
 <div class="container">
   <form action="/login" method="post">
-    <div class="mb-3">
+
+    <div class="form-floating mb-3">
       <input
         autocomplete="off"
         autofocus
-        class="form-control mx-auto w-auto"
+        class="form-control"
         id="p_number"
         name="p_number"
         placeholder="P-number"
         type="text"
+        {% if request.form.get('p_number') %}
+          value="{{ request.form.get('p_number') }}"
+        {% else %}
+          value=""
+        {% endif %}
       />
+      <label for="p_number">P-number</label>
     </div>
-    <div class="mb-3">
+    <div class="form-floating mb-3">
       <input
-        class="form-control mx-auto w-auto"
+        class="form-control"
         id="password"
         name="password"
         placeholder="Password"
         type="password"
       />
+      <label for="password">Password</label>
     </div>
     <button class="btn btn-primary" type="submit">Log in</button>
   </form>
