@@ -51,6 +51,10 @@ nav .navbar-brand .green
     display: initial;
 }
 
+form {
+  display: inline-grid!important;
+}
+
 /* Blue flash */
 .alert-primary-blue {
     color: #084298;

@@ -7,7 +7,6 @@ from symtable import Symbol
 from cs50 import SQL
 from flask import Flask, flash, jsonify, redirect, render_template,  url_for, request, session
 import requests
-import json
 from flask_session import Session
 from tempfile import mkdtemp
 import hashlib
@@ -64,20 +63,13 @@ def index():
     p_number = session["p_number"]
 
     # Get account data from database
-    url = "https://apex.oracle.com/pls/apex/databasur/user/register/"
-    data = {
-        "p_number": p_number,
-        "hash": hash,
-        "first_name": first_name,
-        "middle_name": middle_name,
-        "last_name": last_name,
-        "postal_code": postal_code,
-        "street_name": street_name,
-        "street_number": street_number,
-        "phone_number": phone_number,
-        "email": email
-    }
+    url = f"https://apex.oracle.com/pls/apex/databasur/user/index?p_number={p_number}"
     response = requests.post(url, headers=headers)
+
+    # Unpack person dict from json object
+    data = response.json()["items"][0]
+
+    print(data)
 
     return render_template("index.html")
 
@@ -138,15 +130,15 @@ def login():
         if response.status_code == 200:
 
             # Unpack person dict from json object
-            db_person = response.json()["items"][0]
+            data = response.json()["items"][0]
 
             # Ensure p_number exists and password is correct
-            if len(db_person) != 1 or not check_password_hash(
-                db_person["hash"], request.form.get("password")
+            if len(data) != 1 or not check_password_hash(
+                data["hash"], request.form.get("password")
             ):
                 return apology("Invalid p-number and/or password", 403)
 
-            session["p_number"] = db_person["p_number"]
+            session["p_number"] = data["p_number"]
 
             # Redirect user to home page
             return redirect("/")
