@@ -12,21 +12,27 @@ nav .navbar-brand .blue
 nav .navbar-brand .red
 {
     color: #ea433b;
-}
-nav .navbar-brand .yellow
-{
+  }
+  nav .navbar-brand .yellow
+  {
     color: #f5b82e;
-}
-nav .navbar-brand .green
-{
+  }
+  nav .navbar-brand .green
+  {
     color: #2e944b;
-}
+  }
 
-.alert-primary{
+  .alert-primary-red{
     color: #842029;
     background-color: #f8d7da;
     border-color: #f5c2c7;
-}
+  }
+  
+  .alert-primary-blue {
+      color: #084298;
+      background-color: #cfe2ff;
+      border-color: #b6d4fe;
+    }
 
 /* Outline unfilled required fields */
   .input-error {
@@ -56,8 +62,3 @@ form {
 }
 
 /* Blue flash */
-.alert-primary-blue {
-    color: #084298;
-    background-color: #cfe2ff;
-    border-color: #b6d4fe;
-  }

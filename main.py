@@ -286,8 +286,8 @@ def register():
             print(data)
         
         else:
-            flash("Error message from db!")
-            print('Error: ', response.status_code)
+            flash(response.reason)
+            print('Error: ', response.reason)
 
         # try:
 
