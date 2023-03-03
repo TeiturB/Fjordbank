@@ -144,22 +144,22 @@ def login():
 
         if response.status_code == 200:
 
-            # print(response)
+            try:
+                # Unpack person dict from json object
+                data = response.json()["items"][0]
+            except:
+                flash("User does not exist")
+                return render_template("login.html", form_data=form_data)
 
-            # Unpack person dict from json object
-            data = response.json()["items"][0]
-
-            # print(f"Data: {data}")
+            print(f"Login GET data: {data}")
+            print(f"len of login data: {len(data)}")
 
             # Ensure p_number exists and password is correct
             if not check_password_hash(
                 data["hash"], request.form.get("password")
             ):
-                flash("Invalid p-number and/or password")
+                flash("Incorrect password")
                 return render_template("login.html", form_data=form_data)
-
-            # If successful login
-            # print(f"Data p_number: {data['p_number']}")
 
             session["p_number"] = data["p_number"]
             flash(f"Welcome back, {data['first_name']}!")
