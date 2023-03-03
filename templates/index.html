@@ -5,12 +5,14 @@
 {% endblock %}
 
 {% block main %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script>function printTable() {
     window.print();
   }</script>
     <div class="container mt-3">
+        
         <h2>{{first_name}}'s Account Overview</h2> 
-        <button onclick="printTable()">Print Table</button>
+        <button onclick="printTable()"><i class="fa fa-print"></i>  Print Account Overview</button>
         <table id="print-table" class="table table-striped">
             <thead>
                 <tr>
