@@ -69,21 +69,26 @@ def index():
     response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
-        print(f"Response content: {json.loads(response.content)}")
 
         json_content = json.loads(response.content)
-        print(json_content['items'])
-        account_list = json.loads(json_content['items'][0]['json_data'])["accounts"]
 
-        print(f'HEREE!!!!! {account_list}')
+        print(f"JSON content: {json_content['items']}")
 
+        account_list = json.loads(json_content["items"][0]["json_data"])["accounts"]
+
+        print(f"List of user accounts: {account_list}")
+
+        # If user has accounts
         if len(account_list) > 0:
             print("User has accounts!")
-        
-            first_name = json.loads(json_content['items'][0]['json_data'])['first_name']
 
-            return render_template("index.html", first_name=first_name, account_list=account_list)
-        
+            first_name = json.loads(json_content["items"][0]["json_data"])["first_name"]
+
+            return render_template(
+                "index.html", first_name=first_name, account_list=account_list
+            )
+
+        # If user does not have accounts
         else:
             print("User does not have accounts!")
 
@@ -155,9 +160,7 @@ def login():
             print(f"len of login data: {len(data)}")
 
             # Ensure p_number exists and password is correct
-            if not check_password_hash(
-                data["hash"], request.form.get("password")
-            ):
+            if not check_password_hash(data["hash"], request.form.get("password")):
                 flash("Incorrect password")
                 return render_template("login.html", form_data=form_data)
 
