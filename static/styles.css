@@ -93,12 +93,13 @@ form {
 }
 
 
+
 .printbutton {
   align-items: center;
   background-clip: padding-box;
   background-color: #0d6efd;
   border: 1px solid transparent;
-  border-radius: .25rem;
+  border-radius: 100px;
   box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
   box-sizing: border-box;
   color: #fff;
@@ -111,7 +112,7 @@ form {
   line-height: 1.25;
   margin: 0;
   min-height: 3rem;
-  padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+  padding: 20px;
   position: relative;
   text-decoration: none;
   transition: all 250ms;
