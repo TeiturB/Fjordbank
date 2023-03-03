@@ -1,6 +1,7 @@
 import os
 import requests
 import urllib.parse
+import locale
 
 from flask import redirect, render_template, request, session
 from functools import wraps
@@ -59,10 +60,19 @@ def lookup(symbol):
         return None
 
 
-def dkk(value):
-    """Format value as DKK."""
-    return f"${value:,.2f}"
+# def dkk(value):
+    # """Format value as DKK."""
+    # return f"${value:,.2f}"
 
 # def dkk(value):
 #     """Format value as DKK."""
 #     return f"{value:,.2f}kr"
+
+
+def dkk(value):
+    """Format value as DKK."""
+    locale.setlocale(locale.LC_ALL, 'da_DK.UTF-8')
+    return locale.format_string("%.2fkr", value, grouping=True)
+
+# Another way to achieve similar results
+    # return f"{value:,.2f}".replace(",", ";").replace(".", ",").replace(";", ".") + "kr"

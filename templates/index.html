@@ -28,7 +28,7 @@
                     <td>{{ account["accountnum"] }}</td>
                     <td>{{ account["account_type"] }}</td>
                     <td>{{ account["accountname"] }}</td>
-                    <td>{{ account["balance"] }}</td>
+                    <td>{{ account["balance"] | dkk }}</td>
                 </tr>
                 {% endfor %}
                 
