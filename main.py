@@ -6,6 +6,7 @@ from cs50 import SQL
 from flask import (
     Flask,
     flash,
+    jsonify,
     redirect,
     render_template,
     request,
@@ -17,21 +18,23 @@ from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 import main
 
-from helpers import apology, login_required, lookup, usd
+from helpers import apology, login_required, lookup, dkk
 
 # Configure application
-app = Flask(__name__)
+main = Flask(__name__)
 
 # Ensure templates are auto-reloaded
-app.config["TEMPLATES_AUTO_RELOAD"] = True
+main.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # Custom filter
-app.jinja_env.filters["usd"] = usd
+main.jinja_env.filters["dkk"] = dkk
+
+# app.jinja_env.filters["dkk"] = dkk
 
 # Configure session to use filesystem (instead of signed cookies)
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
+main.config["SESSION_PERMANENT"] = False
+main.config["SESSION_TYPE"] = "filesystem"
+Session(main)
 
 # Configure Library to use SQLite database
 db = SQL("sqlite:///finance.db")
@@ -43,7 +46,7 @@ headers = {
 }
 
 
-@app.after_request
+@main.after_request
 def after_request(response):
     """Ensure responses aren't cached"""
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
@@ -52,26 +55,34 @@ def after_request(response):
     return response
 
 
-@app.route("/")
+@main.route("/")
 @login_required
 def index():
     """Show welcome page"""
     # Get and declare variables
     p_number = session["p_number"]
 
+    print(f"Session p_number: {p_number}")
+
     # Get account data from database
-    url = f"https://apex.oracle.com/pls/apex/databasur/user/index?p_number={p_number}"
-    response = requests.post(url, headers=headers)
+    url = f"https://apex.oracle.com/pls/apex/databasur/user/index/?p_number={p_number}"
+    response = requests.get(url, headers=headers)
+
+    print(response)
 
     # Unpack person dict from json object
-    data = response.json()["items"][0]
+    data = response.json()["items"][0]["json_data"]
+    print(f"THIS DATA: {data}")
 
-    print(data)
+    parsed_data = json.loads(data)
+    first_name = parsed_data["first_name"]
 
-    return render_template("index.html")
+    # first_name = data[0]["first_name"]
+
+    return render_template("index.html", data=data, first_name=first_name)
 
 
-@app.route("/accounts", methods=["GET", "POST"])
+@main.route("/accounts", methods=["GET", "POST"])
 def accounts():
     """Show portfolio of accounts"""
     if request.method == "POST":
@@ -81,7 +92,7 @@ def accounts():
         return render_template("accounts.html")
 
 
-@app.route("/login", methods=["GET", "POST"])
+@main.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
     # Forget any p_number
@@ -110,7 +121,7 @@ def login():
 
         # Query database for p_number and hash
         response = requests.get(
-            f"https://apex.oracle.com/pls/apex/databasur/user/login?p_number={p_number}",
+            f"https://apex.oracle.com/pls/apex/databasur/user/login/?p_number={p_number}",
             headers=headers,
         )
 
@@ -119,18 +130,20 @@ def login():
             print(response)
 
             # Unpack person dict from json object
-            data = response.json()
+            data = response.json()["items"][0]
 
-            print(data)
+            print(f"Data: {data}")
 
             # Ensure p_number exists and password is correct
-            if len(data) != 1 or not check_password_hash(
-                data["hash"], request.form.get("password")
-            ):
-                flash("Invalid p-number and/or password")
-                return render_template("login.html", form_data=form_data)
+            # if len(data) != 1 or not check_password_hash(
+            #     data["hash"], request.form.get("password")
+            # ):
+            #     flash("Invalid p-number and/or password")
+            #     return render_template("login.html", form_data=form_data)
 
             # If successful login
+            print(f"Data p_number: {data['p_number']}")
+
             session["p_number"] = data["p_number"]
             flash(f"Welcome back, {data['first_name']}!")
 
@@ -146,7 +159,7 @@ def login():
         return render_template("login.html")
 
 
-@app.route("/logout")
+@main.route("/logout")
 def logout():
     """Log user out"""
     # Forget any user_id
@@ -156,7 +169,7 @@ def logout():
     return redirect("/")
 
 
-@app.route("/dashboard", methods=["GET", "POST"])
+@main.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
     """Show user dashboard"""
     if request.method == "POST":
@@ -180,7 +193,7 @@ def dashboard():
 
         # make an HTTP GET request to the RESTful web service URL with the query parameter
         response = requests.get(
-            f"https://apex.oracle.com/pls/apex/databasur/user/dashboard?p_number={p_number}",
+            f"https://apex.oracle.com/pls/apex/databasur/user/dashboard/?p_number={p_number}",
             headers=headers,
         )
 
@@ -205,7 +218,7 @@ def dashboard():
             return f"Something went wrong: {response.text}"
 
 
-@app.route("/register", methods=["GET", "POST"])
+@main.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
     # User reached route via POST (as by submitting a form via POST)
@@ -323,4 +336,4 @@ def register():
 
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=8080, debug=True)
+    main.run(host="127.0.0.1", port=8080, debug=True)

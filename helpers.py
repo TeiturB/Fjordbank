@@ -59,6 +59,10 @@ def lookup(symbol):
         return None
 
 
-def usd(value):
-    """Format value as USD."""
+def dkk(value):
+    """Format value as DKK."""
     return f"${value:,.2f}"
+
+# def dkk(value):
+#     """Format value as DKK."""
+#     return f"{value:,.2f}kr"

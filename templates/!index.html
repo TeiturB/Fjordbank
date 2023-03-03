@@ -27,21 +27,25 @@
                     <td>{{ row["symbol"] }}</td>
                     <td>{{ names }}</td>
                     <td>{{ row["shares"] }}</td>
+                    <td>{{ row["price"] | dkk }}</td>
+                    <td>{{ (row["shares"] * row["price"]) | dkk }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
             <tfoot>
                 <tr>
-                    <td></d>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <th>Saldo</th>
+                    <td>{{ cash | dkk }}</td>
                 </tr>
                 <tr>
                     <td></td>-->
                     <!--<td></td>--><!--
                     <td></td>
                     <th>Virði tilsamans</th>
+                    <td>{{ total | dkk }}</td>
                 </tr>-->
             </tfoot>
         </table>
