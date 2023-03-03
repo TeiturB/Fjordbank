@@ -8,7 +8,14 @@ main %}
 
 <script src="{{ url_for('static', filename='register-form-validation.js') }}"></script>
 
-<form action="/register" method="post" onsubmit="return checkForm(event)">
+<form action="/register" method="post" onsubmit="return checkForm(event)" style="
+    padding: 2% 2% 2% 2%;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 10px;
+
+">
+
+    <h2 style="padding: 0% 0% 10% 0%;/* Margin: 0% 0% 0% 0%; *//* font-family: var(--bs-body-font-family); */font-family: var(--bs-body-font-family);/* font-size: var(--bs-body-font-size); */font-weight: var(--bs-body-font-weight);line-height: var(--bs-body-line-height);color: var(--bs-body-color);text-align: var(--bs-body-text-align);background-color: var(--bs-body-bg);-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: transparent;"><span style="color:#537FBE;">Fjord</span>Bank Registration</h2>
 
     <div class="form-floating mb-3">
         <input
