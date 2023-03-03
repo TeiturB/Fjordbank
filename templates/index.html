@@ -16,15 +16,17 @@
                 <tr>
                     <th>Account ID</th>
                     <th>Account Type</th>
+                    <th>Account Name</th>
                     <th>Available Balance</th>
                 </tr>
             </thead>
             <tbody>
-                {% for row in database %}
+                {% for account in account_list %}
                 <tr>
-                    <td>{{ row["ID"] }}</td>
-                    <td>{{ row["name"] }}</td>
-                    <td>{{ row["balance"] }}</td>
+                    <td>{{ account["accountnum"] }}</td>
+                    <td>{{ account["account_type"] }}</td>
+                    <td>{{ account["accountname"] }}</td>
+                    <td>{{ account["balance"] }}</td>
                 </tr>
                 {% endfor %}
                 

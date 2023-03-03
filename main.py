@@ -68,18 +68,35 @@ def index():
     url = f"https://apex.oracle.com/pls/apex/databasur/user/index/?p_number={p_number}"
     response = requests.get(url, headers=headers)
 
-    print(response)
+    if response.status_code == 200:
+        print(f"Response content: {json.loads(response.content)}")
 
-    # Unpack person dict from json object
-    data = response.json()["items"][0]["json_data"]
-    print(f"THIS DATA: {data}")
+        json_content = json.loads(response.content)
+        print(json_content['items'])
+        account_list = json.loads(json_content['items'][0]['json_data'])["accounts"]
 
-    parsed_data = json.loads(data)
-    first_name = parsed_data["first_name"]
+        print(f'HEREE!!!!! {account_list}')
 
-    # first_name = data[0]["first_name"]
+        if len(account_list) > 0:
+            print("User has accounts!")
+        
+            first_name = json.loads(json_content['items'][0]['json_data'])['first_name']
 
-    return render_template("index.html", data=data, first_name=first_name)
+            return render_template("index.html", first_name=first_name, account_list=account_list)
+        
+        else:
+            print("User does not have accounts!")
+
+            data = response.json()["items"][0]["json_data"]
+
+            parsed_data = json.loads(data)
+            first_name = parsed_data["first_name"]
+
+            return render_template("index.html", first_name=first_name)
+
+    else:
+        flash("Database error!")
+        return render_template("login.html")
 
 
 @main.route("/accounts", methods=["GET", "POST"])
@@ -127,22 +144,22 @@ def login():
 
         if response.status_code == 200:
 
-            print(response)
+            try:
+                # Unpack person dict from json object
+                data = response.json()["items"][0]
+            except:
+                flash("User does not exist")
+                return render_template("login.html", form_data=form_data)
 
-            # Unpack person dict from json object
-            data = response.json()["items"][0]
-
-            print(f"Data: {data}")
+            print(f"Login GET data: {data}")
+            print(f"len of login data: {len(data)}")
 
             # Ensure p_number exists and password is correct
-            # if len(data) != 1 or not check_password_hash(
-            #     data["hash"], request.form.get("password")
-            # ):
-            #     flash("Invalid p-number and/or password")
-            #     return render_template("login.html", form_data=form_data)
-
-            # If successful login
-            print(f"Data p_number: {data['p_number']}")
+            if not check_password_hash(
+                data["hash"], request.form.get("password")
+            ):
+                flash("Incorrect password")
+                return render_template("login.html", form_data=form_data)
 
             session["p_number"] = data["p_number"]
             flash(f"Welcome back, {data['first_name']}!")
