@@ -72,3 +72,17 @@ input#middle_name.form-control.is-invalid:focus {
 form {
   display: inline-grid !important;
 }
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #print-table, #print-table * {
+    visibility: visible;
+  }
+  #print-table {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}

@@ -5,9 +5,13 @@
 {% endblock %}
 
 {% block main %}
+<script>function printTable() {
+    window.print();
+  }</script>
     <div class="container mt-3">
         <h2>{{first_name}}'s Account Overview</h2> 
-        <table class="table table-striped">
+        <button onclick="printTable()">Print Table</button>
+        <table id="print-table" class="table table-striped">
             <thead>
                 <tr>
                     <th>Account ID</th>
@@ -23,12 +27,13 @@
                     <td>{{ row["balance"] }}</td>
                 </tr>
                 {% endfor %}
+                
                 <!--
                 {% for row in database %}
                 <tr>
                     <td>{{ row["symbol"] }}</td>
                     <td>{{ names }}</td>
-                    <td>{{ row["shares"] }}</td>
+                                <td>{{ row["shares"] }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
