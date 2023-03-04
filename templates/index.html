@@ -28,18 +28,23 @@
       }
     }
   }
-}</script>
-            <center><form action="" class="search-bar">
-                <input type="text" id="search-input"  onkeyup="searchTable()" placeholder="" required><button class="search-btn" type="submit">
-                    <span>Search</span></button></form></center>
+}</script><script>// Get search input element
+var searchInput = document.getElementById("search-input");
+
+// Add event listener to search input
+searchInput.addEventListener("keydown", function(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+  }
+});</script>
+            
                 
     <div class="container mt-3">
 
         <h2>{{first_name}}'s Account Overview</h2>           
-        <input type="text" id="search-input2" onkeyup="searchTable()" placeholder="Search..">
-        
-
-        <button class="printbutton" onclick="printTable()"><i class="fa fa-print"></i></button>
+        <form action="" class="search-bar">
+            <input type="text" id="search-input"  onkeyup="searchTable()" placeholder="" required><button class="search-btn" type="submit">
+                <span>Search</span></button></form> <button class="printbutton" onclick="printTable()"><i class="fa fa-print"></i></button>
         <table id="print-table" class="table table-striped">
             <thead>
                 <tr>
