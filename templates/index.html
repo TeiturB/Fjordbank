@@ -8,10 +8,28 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script>function printTable() {
     window.print();
-  }</script>
+  }</script><script>function searchTable() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("search-input");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("print-table");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0]; // Change index to the column you want to search
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}</script>
     <div class="container mt-3">
 
         <h2>{{first_name}}'s Account Overview</h2> 
+        <input type="text" id="search-input" onkeyup="searchTable()" placeholder="Search..">
         <button class="printbutton" onclick="printTable()"><i class="fa fa-print"></i></button>
         <table id="print-table" class="table table-striped">
             <thead>
