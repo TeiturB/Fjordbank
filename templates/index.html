@@ -42,9 +42,22 @@ searchInput.addEventListener("keydown", function(event) {
     <div class="container mt-3">
 
         <h2>{{first_name}}'s Account Overview</h2>           
-        <form action="" class="search-bar">
-            <input type="text" id="search-input"  onkeyup="searchTable()" placeholder="" required><button class="search-btn" type="submit">
-                <span>Search</span></button></form> <button class="printbutton" onclick="printTable()"><i class="fa fa-print"></i></button>
+        <table class="icon-table">
+            <tr>
+              <td colspan="2">
+                <form action="" class="search-bar">
+                  <input type="text" id="search-input" onkeyup="searchTable()" placeholder="" required>
+                  <button class="search-btn" type="submit">
+                    <span>Search</span>
+                  </button>
+                </form>
+              </td>
+              <td>
+                <div class="print-icon" onclick="printTable()">
+                  <i class="fa fa-print"></i></div>
+              </td>
+            </tr>
+          </table>
         <table id="print-table" class="table table-striped">
             <thead>
                 <tr>
