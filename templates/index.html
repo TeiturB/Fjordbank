@@ -70,7 +70,7 @@ searchInput.addEventListener("keydown", function(event) {
             <tbody>
                 {% for account in account_list %}
                 <tr>
-                    <td class="left-align">{{ bank["registration_number"] || - || account["accountname"] }}</td>
+                    <td class="left-align">{{ account["accountname"] }}</td>
                     <td>{{ account["accountnum"] }}</td>
                     <td>{{ account["account_type"] }}</td>
                     <td class="right-align"><span style="font-weight: bold;">{{ account["balance"] }}</span> DKK</td>
