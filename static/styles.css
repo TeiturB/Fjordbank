@@ -117,16 +117,10 @@ form {
   text-align: right;
 }
 
-/* Box for account overview */
-.mt-3 {
-  margin-top: 1rem!important;
-  box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
-  padding: 30px 20px 30px 20px;
-  border-radius: 10px;
-}
 
 
 
+/* Search icon styling */
 button, input {
 	font: 1em Hind, sans-serif;
 	line-height: 1.5em;
@@ -266,13 +260,11 @@ table.icon-table {
 
 
 
-
+/* Navigation link styling */
 .nav-link {
 	padding: 0rem 0rem;
 }
 
-
-/* CSS */
 .nav-item {
   align-items: center;
   background-color: #FFFFFF;
@@ -320,3 +312,17 @@ table.icon-table {
   color: rgba(0, 0, 0, 0.65);
   transform: translateY(0);
 }
+
+
+
+
+
+/* Box for account overview */
+.mt-3 {
+	margin-top: 1rem!important;
+	box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
+	padding: 30px 30px 30px 30px;
+	border-radius: 10px;
+  }
+
+
