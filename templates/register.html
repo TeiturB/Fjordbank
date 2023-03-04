@@ -183,11 +183,15 @@ main %}
           name="country_code"
           {% if request.form.get('country_code') %}
           value="{{ request.form.get('country_code') }}"
+          {% else %}
+          value="298"
           {% endif %}
         >
-          <option value="">code</option>
+          <option value="298">FO: +298</option>
           {% for row in country_codes %}
-            <option value="{{ row['phonecode'] }}">{{ row['iso'] ~ ': +' ~ row['phonecode'] }}</option>
+            {% if row['phonecode'] != '298' %}
+              <option value="{{ row['phonecode'] }}">{{ row['iso'] ~ ': +' ~ row['phonecode'] }}</option>
+            {% endif %}
           {% endfor %}
         </select>
         <label for="country_code">Country</label>
