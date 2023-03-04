@@ -254,6 +254,7 @@ def register():
         postal_code = request.form.get("postal_code")
         street_name = request.form.get("street_name")
         street_number = request.form.get("street_number")
+        country_code = request.form.get("country_code")
         phone_number = request.form.get("phone_number")
         email = request.form.get("email")
 
@@ -305,6 +306,11 @@ def register():
         if not street_number:
             flash("Street number required")
             return render_template("register.html", form_data=form_data)
+        
+        # Ensure phone number is provided
+        if not country_code:
+            flash("Country code required")
+            return render_template("register.html", form_data=form_data)
 
         # Ensure phone number is provided
         if not phone_number:
@@ -318,6 +324,9 @@ def register():
 
         # Encrypt and store hash of provided password
         hash = generate_password_hash(password)
+
+        # Concatenate country code and phone number
+        full_phone_number = f"{country_code}{phone_number}"
 
         # Insert data into database
         url = "https://apex.oracle.com/pls/apex/databasur/user/register/"
@@ -352,7 +361,16 @@ def register():
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
-        return render_template("register.html")
+        
+        # GET country codes
+        response = requests.get(
+            f"https://apex.oracle.com/pls/apex/databasur/user/register/",
+            headers=headers,
+        )
+
+        country_codes = response.json()['items']
+
+        return render_template("register.html", country_codes=country_codes)
 
 
 if __name__ == "__main__":
