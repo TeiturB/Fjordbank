@@ -74,22 +74,22 @@ def index():
 
         print(f"JSON content: {json_content['items']}")
 
-        account_list = json.loads(json_content["items"][0]["json_data"])["accounts"]
+        try:
+            account_list = json.loads(json_content["items"][0]["json_data"])["accounts"]
 
-        print(f"List of user accounts: {account_list}")
+            print(f"List of user accounts: {account_list}")
 
-        # If user has accounts
-        if len(account_list) > 0:
-            print("User has accounts!")
+            # If user has accounts
+            if len(account_list) > 0:
+                print("User has accounts!")
 
-            first_name = json.loads(json_content["items"][0]["json_data"])["first_name"]
+                first_name = json.loads(json_content["items"][0]["json_data"])["first_name"]
 
-            return render_template(
-                "index.html", first_name=first_name, account_list=account_list
-            )
-
-        # If user does not have accounts
-        else:
+                return render_template(
+                    "index.html", first_name=first_name, account_list=account_list
+                )
+        except:
+            # If user does not have accounts
             print("User does not have accounts!")
 
             data = response.json()["items"][0]["json_data"]
@@ -326,7 +326,7 @@ def register():
         hash = generate_password_hash(password)
 
         # Concatenate country code and phone number
-        full_phone_number = f"{country_code}{phone_number}"
+        full_phone_number = f"+{country_code}{phone_number}"
 
         # Insert data into database
         url = "https://apex.oracle.com/pls/apex/databasur/user/register/"
@@ -339,7 +339,7 @@ def register():
             "postal_code": postal_code,
             "street_name": street_name,
             "street_number": street_number,
-            "phone_number": phone_number,
+            "phone_number": full_phone_number,
             "email": email,
         }
         response = requests.post(url, json=data, headers=headers)
@@ -347,7 +347,7 @@ def register():
         print(data)
         print(f"Response: {response}")
 
-        if response.status_code == 200:
+        if response.status_code == 201:
             session["p_number"] = p_number
             flash(f"Welcome, {first_name}!")
 
