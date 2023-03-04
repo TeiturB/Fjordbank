@@ -267,7 +267,9 @@ table.icon-table {
 
 
 
-
+.nav-link {
+	padding: 0rem 0rem;
+}
 
 
 /* CSS */
@@ -297,7 +299,7 @@ table.icon-table {
   touch-action: manipulation;
   vertical-align: baseline;
   width: auto;
-  margin: 0px 9x 0px 0px;
+  margin: 0px 9px 0px 0px!important;
 }
 
 .nav-item:hover,
