@@ -49,7 +49,8 @@
                     <td class="left-align">{{ account["accountname"] }}</td>
                     <td>{{ account["accountnum"] }}</td>
                     <td>{{ account["account_type"] }}</td>
-                    <td class="right-align">{{ account["balance"] | dkk }}</td>
+                    <td class="right-align"><span style="font-weight: bold;">{{ account["balance"] }}</span> DKK</td>
+
                 </tr>
                 {% endfor %}
                 

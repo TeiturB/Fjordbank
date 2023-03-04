@@ -75,7 +75,7 @@ form {
   display: inline-grid !important;
 }
 
-/* Print button */
+/* Print button hide elements on press */
 @media print {
   body * {
     visibility: hidden;
@@ -90,7 +90,7 @@ form {
   }
 }
 
-
+/* Printbutton style */
 .printbutton {
   float: right;
   align-items: center;
@@ -137,6 +137,7 @@ form {
   transform: translateY(0);
 }
 
+/* Printer Icon */
 .fa {
   display: inline-block;
   font: normal normal normal 14px/1 FontAwesome;
@@ -152,4 +153,12 @@ form {
 
 .right-align {
   text-align: right;
+}
+
+/* Box for account overview */
+.mt-3 {
+  margin-top: 1rem!important;
+  box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
+  padding: 30px 20px 30px 20px;
+  border-radius: 10px;
 }
