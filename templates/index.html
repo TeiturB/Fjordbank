@@ -16,19 +16,19 @@
         <table id="print-table" class="table table-striped">
             <thead>
                 <tr>
+                    <th class="left-align">Account Name</th>
                     <th>Account ID</th>
                     <th>Account Type</th>
-                    <th>Account Name</th>
-                    <th>Available Balance</th>
+                    <th class="right-align">Available Balance</th>
                 </tr>
             </thead>
             <tbody>
                 {% for account in account_list %}
                 <tr>
+                    <td class="left-align">{{ account["accountname"] }}</td>
                     <td>{{ account["accountnum"] }}</td>
                     <td>{{ account["account_type"] }}</td>
-                    <td>{{ account["accountname"] }}</td>
-                    <td>{{ account["balance"] | dkk }}</td>
+                    <td class="right-align">{{ account["balance"] | dkk }}</td>
                 </tr>
                 {% endfor %}
                 

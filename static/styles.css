@@ -17,6 +17,8 @@ nav .navbar-brand .green {
   color: #2e944b;
 }
 
+/* Alerts */
+
 .alert-primary-red {
   color: #842029;
   background-color: #f8d7da;
@@ -73,6 +75,7 @@ form {
   display: inline-grid !important;
 }
 
+/* Print button */
 @media print {
   body * {
     visibility: hidden;
@@ -140,4 +143,13 @@ form {
   font-size: 20px!important;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Text align */
+.left-align {
+  text-align: left;
+}
+
+.right-align {
+  text-align: right;
 }
