@@ -252,3 +252,6 @@ input {
 	transform: translateY(1px);
 }
 
+table.icon-table {
+  float: right;
+}
