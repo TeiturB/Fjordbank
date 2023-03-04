@@ -62,15 +62,15 @@ searchInput.addEventListener("keydown", function(event) {
             <thead>
                 <tr>
                     <th class="left-align">Account Name</th>
-                    <th>Account ID</th>
+                    <th>Account Number</th>
                     <th>Account Type</th>
-                    <th class="right-align">Available Balance</th>
+                    <th class="right-align">Balance</th>
                 </tr>
             </thead>
             <tbody>
                 {% for account in account_list %}
                 <tr>
-                    <td class="left-align">{{ account["accountname"] }}</td>
+                    <td class="left-align">{{ bank["registration_number"] || - || account["accountname"] }}</td>
                     <td>{{ account["accountnum"] }}</td>
                     <td>{{ account["account_type"] }}</td>
                     <td class="right-align"><span style="font-weight: bold;">{{ account["balance"] }}</span> DKK</td>
