@@ -62,11 +62,15 @@ def index():
     # Get and declare variables
     p_number = session["p_number"]
 
+    # customer_id = session["customer_id"]
+
     print(f"Session p_number: {p_number}")
 
     # Get account data from database
     url = f"https://apex.oracle.com/pls/apex/databasur/user/index/?p_number={p_number}"
     response = requests.get(url, headers=headers)
+
+    print(response.status_code)
 
     if response.status_code == 200:
 
@@ -76,6 +80,8 @@ def index():
 
         try:
             account_list = json.loads(json_content["items"][0]["json_data"])["accounts"]
+
+            print(json.loads(json_content["items"][0]["json_data"])["customer_id"])
 
             print(f"List of user accounts: {account_list}")
 
@@ -164,7 +170,7 @@ def login():
                 flash("Incorrect password")
                 return render_template("login.html", form_data=form_data)
 
-            session["p_number"] = data["p_number"]
+            session["p_number"] = p_number
             flash(f"Welcome back, {data['first_name']}!")
 
             return redirect("/")
@@ -241,6 +247,14 @@ def dashboard():
 @main.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
+    # GET country codes
+    response = requests.get(
+        f"https://apex.oracle.com/pls/apex/databasur/user/register/",
+        headers=headers,
+    )
+
+    country_codes = response.json()['items']
+
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
@@ -265,62 +279,62 @@ def register():
         # Ensure p_number is provided
         if not p_number:
             flash("P-number required")
-            return render_template("register.html", form_data=form_data)
+            return render_template("register.html", form_data=form_data, country_codes=country_codes)
 
         # Ensure password is provided
         if not password:
             flash("Password required")
-            return render_template("register.html", form_data=form_data)
+            return render_template("register.html", form_data=form_data, country_codes=country_codes)
 
         # Ensure confirmation is provided
         if not confirmation:
             flash("Confirm password")
-            return render_template("register.html", form_data=form_data)
+            return render_template("register.html", form_data=form_data, country_codes=country_codes)
 
         # Ensure confirmation matches password
         if password != confirmation:
             flash("Passwords must match")
-            return render_template("register.html", form_data=form_data)
+            return render_template("register.html", form_data=form_data, country_codes=country_codes)
 
         # Ensure first name is provided
         if not first_name:
             flash("First name required")
-            return render_template("register.html", form_data=form_data)
+            return render_template("register.html", form_data=form_data, country_codes=country_codes)
 
         # Ensure last name is provided
         if not last_name:
             flash("Last name required")
-            return render_template("register.html", form_data=form_data)
+            return render_template("register.html", form_data=form_data, country_codes=country_codes)
 
         # Ensure postal code is provided
         if not postal_code:
             flash("Postal code required")
-            return render_template("register.html", form_data=form_data)
+            return render_template("register.html", form_data=form_data, country_codes=country_codes)
 
         # Ensure street name is provided
         if not street_name:
             flash("Street name required")
-            return render_template("register.html", form_data=form_data)
+            return render_template("register.html", form_data=form_data, country_codes=country_codes)
 
         # Ensure street number is provided
         if not street_number:
             flash("Street number required")
-            return render_template("register.html", form_data=form_data)
+            return render_template("register.html", form_data=form_data, country_codes=country_codes)
         
         # Ensure phone number is provided
         if not country_code:
             flash("Country code required")
-            return render_template("register.html", form_data=form_data)
+            return render_template("register.html", form_data=form_data, country_codes=country_codes)
 
         # Ensure phone number is provided
         if not phone_number:
             flash("Phone number required")
-            return render_template("register.html", form_data=form_data)
+            return render_template("register.html", form_data=form_data, country_codes=country_codes)
 
         # Ensure e-mail is provided
         if not email:
             flash("E-mail required")
-            return render_template("register.html", form_data=form_data)
+            return render_template("register.html", form_data=form_data, country_codes=country_codes)
 
         # Encrypt and store hash of provided password
         hash = generate_password_hash(password)
@@ -341,6 +355,7 @@ def register():
             "street_number": street_number,
             "phone_number": full_phone_number,
             "email": email,
+            "address_id": None
         }
         response = requests.post(url, json=data, headers=headers)
 
@@ -357,19 +372,12 @@ def register():
             flash(response.reason)
             print("Error: ", response.reason)
 
-            return render_template("register.html")
+            return render_template("register.html", form_data=form_data, country_codes=country_codes)
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
-        
-        # GET country codes
-        response = requests.get(
-            f"https://apex.oracle.com/pls/apex/databasur/user/register/",
-            headers=headers,
-        )
 
-        country_codes = response.json()['items']
-
+        print(f"country_codes: {country_codes}")
         return render_template("register.html", country_codes=country_codes)
 
 
