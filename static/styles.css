@@ -255,3 +255,8 @@ input {
 table.icon-table {
   float: right;
 }
+
+#print-table tbody tr:hover {
+	background-color: #CFE2FF;
+	cursor: pointer;
+  }
