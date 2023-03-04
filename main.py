@@ -81,8 +81,6 @@ def index():
         try:
             account_list = json.loads(json_content["items"][0]["json_data"])["accounts"]
 
-            print(json.loads(json_content["items"][0]["json_data"])["customer_id"])
-
             print(f"List of user accounts: {account_list}")
 
             # If user has accounts
