@@ -58,38 +58,38 @@ searchInput.addEventListener("keydown", function(event) {
               </td>
             </tr>
           </table>
-        <table id="print-table" class="table table-striped">
+          <table id="print-table" class="table table-striped">
             <thead>
-                <tr>
-                    <th class="left-align">Account Name</th>
-                    <th>Account Number</th>
-                    <th>Account Type</th>
-                    <th class="right-align">Balance</th>
-                </tr>
+              <tr>
+                <th class="left-align">Account Name</th>
+                <th>Account Number</th>
+                <th>Account Type</th>
+                <th class="right-align">Balance</th>
+              </tr>
             </thead>
             <tbody>
-                {% for account in account_list %}
-                    <form method="POST" action="/">
-                        <input type="hidden" name="accountnum" value='{{ account["accountnum"] }}'>
-                        <input type="hidden" name="accountname" value="{{ account['accountname'] }}">
-                        <tr onclick="this.parentNode.submit()">
-                            <td class="left-align">{{ account["accountname"] }}</td>
-                            <td>{{ account["registration_number"] ~ "-" ~ account["accountnum"] }}</td>
-                            <td>{{ account["account_type"] }}</td>
-                            <td class="right-align"><span style="font-weight: bold;">{{ account["balance"] }}</span> DKK</td>
-                            <button type="submit">{{ account["accountname"]}}</button>
-                        </tr>
-                    </form>
-                {% endfor %}
+              {% for account in account_list %}
+              <form method="POST" action="/">
+                <input type="hidden" name="accountnum" value='{{ account["accountnum"] }}'>
+                <input type="hidden" name="accountname" value="{{ account['accountname'] }}">
+                <tr onclick="this.querySelector('button').click();" style="cursor: pointer;">
+                  <td class="left-align">{{ account["accountname"] }}</td>
+                  <td>{{ account["registration_number"] ~ "-" ~ account["accountnum"] }}</td>
+                  <td>{{ account["account_type"] }}</td>
+                  <td class="right-align"><span style="font-weight: bold;">{{ account["balance"] }}</span> DKK</td>
+                  <td style="display:none;"><button type="submit">{{ account["accountname"]}}</button></td>
+                </tr>
+              </form>
+              {% endfor %}
             </tbody>
             <tfoot>
-                <tr>
-                    <td class="left-align"><span style = "font-weight: bold;">Total Balance</span></d>
-                    <td></td>
-                    <td></td>
-                    <td class="right-align"><span style="font-weight: bold;"><u>{{ total_balance }}</u></span> DKK</th>
-                </tr>
+              <tr>
+                <td class="left-align"><span style="font-weight: bold;">Total Balance</span></d>
+                <td></td>
+                <td></td>
+                <td class="right-align"><span style="font-weight: bold;"><u>{{ total_balance }}</u></span> DKK</th>
+              </tr>
             </tfoot>
-        </table>
+          </table>
     </div>
 {% endblock %}
