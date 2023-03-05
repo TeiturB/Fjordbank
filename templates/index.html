@@ -79,9 +79,9 @@ searchInput.addEventListener("keydown", function(event) {
                   <td>{{ account["registration_number"] ~ "-" ~ account["accountnum"] }}</td>
                   <td>{{ account["account_type"] }}</td>
                   {% if account["balance"] >= 0 %}
-                      <td class="right-align"><span style="font-weight: bold; color: green;">{{ account["balance"] }}</span> DKK</td>
+                      <td class="right-align"><span style="font-weight: bold; color: #008000;">{{ account["balance"] }}</span> DKK</td>
                   {% else %}
-                      <td class="right-align"><span style="font-weight: bold; color: red;">{{ account["balance"] }}</span> DKK</td>
+                      <td class="right-align"><span style="font-weight: bold; color: #A23333;">{{ account["balance"] }}</span> DKK</td>
                   {% endif %}
                   <td style="display:none;"><button type="submit">{{ account["accountname"]}}</button></td>
                 </tr>
@@ -94,9 +94,9 @@ searchInput.addEventListener("keydown", function(event) {
                 <td></td>
                 <td></td>
                 {% if total_balance >= 0 %}
-                    <td class="right-align"><span style="font-weight: bold; color: green;">{{ total_balance }}</span> DKK</td>
+                    <td class="right-align"><span style="font-weight: bold; color: #008000;">{{ total_balance }}</span> DKK</td>
                 {% else %}
-                    <td class="right-align"><span style="font-weight: bold; color: red;"><u>{{ total_balance }}</u></span> DKK</td>
+                    <td class="right-align"><span style="font-weight: bold; color: #A23333;"><u>{{ total_balance }}</u></span> DKK</td>
                 {% endif %}
               </tr>
             </tfoot>
