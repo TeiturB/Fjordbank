@@ -5,20 +5,21 @@
 {% endblock %}
 
 {% block main %}         
-<form method="post" action="/open_account">
+<form method="post" action="/open_account" class="my-form">
   <input type="hidden" name="p_number_request" value="{{ p_number }}">
-<label for="account_type">Account Type:</label>
-<select name="account_type" id="account_type">
-  <option value="Savings account">Savings account</option>
-  <option value="Checking account">Checking account</option>
-  <option value="Mortgage">Mortgage</option>
-  <option value="Car loan">Car loan</option>
-</select>
-          
-<label for="account_name">Account Name:</label>
-<input type="text" name="accountname" id="account_name">
-          
-<button type="submit">Open Account</button>
+  <label class="my-label" for="account_type">Account Type:</label>
+  <div class="dropdown">
+    <select name="account_type" id="account_type" class="my-select">
+      <option value="Savings account">Savings account</option>
+      <option value="Checking account">Checking account</option>
+      <option value="Mortgage">Mortgage</option>
+      <option value="Car loan">Car loan</option>
+    </select>
+    <div class="dropdown-arrow"></div>
+  </div>
+  <label for="account_name">Account Name:</label>
+  <input type="text" name="accountname" id="account_name" class="my-input">
+  <button type="submit" class="my-button">Open Account</button>
 </form>
 
 {% endblock %}
