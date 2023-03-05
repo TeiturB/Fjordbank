@@ -435,7 +435,7 @@ def transactions():
 
 
 
-@main.route('/open_account', methods=['GET', 'POST'])
+@main.route('/accounts_and_loans', methods=['GET', 'POST'])
 def open_account():
     if request.method == 'POST':
         headers = {
@@ -454,19 +454,16 @@ def open_account():
         }
 
         # Make the RESTful Service call to the Open_Account procedure
-        response = requests.post('https://apex.oracle.com/pls/apex/databasur/user/open_account', json=payload, headers=headers)
+        response = requests.post('https://apex.oracle.com/pls/apex/databasur/user/accounts_and_loans/', json=payload, headers=headers)
 
         # Check the response status code
         if response.status_code == 200:
-            return render_template('open_account.html', message='Account created successfully')
+            return render_template('accounts-and-loans.html', message='Account created successfully')
         else:
-            return render_template('open_account.html', error='Error creating account: {}'.format(response.text))
+            return render_template('accounts-and-loans.html', error='Error creating account: {}'.format(response.text))
     else:
-        return render_template('open_account.html')
+        return render_template('accounts-and-loans.html')
     
-    
-
-
 
 if __name__ == "__main__":
     main.run(host="127.0.0.1", port=8080, debug=True)
