@@ -435,29 +435,35 @@ def transactions():
 
 
 
-@main.route('/open_account', methods=['POST'])
+@main.route('/open_account', methods=['GET', 'POST'])
 def open_account():
-    # Get the session P_number from the Flask session
-    p_number = session['P_number']
-    # Get the account type and account name from the HTML form
-    account_type = request.form['account_type']
-    account_name = request.form['account_name']
+    if request.method == 'POST':
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
+        }
+        # Get the session P_number from the Flask session
+        p_number = session['P_number']
+        # Get the account type and account name from the HTML form
+        account_type = request.form['account_type']
+        account_name = request.form['account_name']
 
-    # Define the payload for the RESTful Service call
-    payload = {
-        "p_p_number": p_number,
-        "p_account_type": account_type,
-        "p_account_name": account_name
-    }
+        # Define the payload for the RESTful Service call
+        payload = {
+            "p_p_number": p_number,
+            "p_account_type": account_type,
+            "p_account_name": account_name
+        }
 
-    # Make the RESTful Service call to the Open_Account procedure
-    response = requests.post('https://apex.oracle.com/pls/apex/databasur/user/open_account', json=payload)
+        # Make the RESTful Service call to the Open_Account procedure
+        response = requests.post('https://apex.oracle.com/pls/apex/databasur/user/open_account', json=payload, headers=headers)
 
-    # Check the response status code
-    if response.status_code == 200:
-        return render_template('open_account.html', message='Account created successfully')
+        # Check the response status code
+        if response.status_code == 200:
+            return render_template('open_account.html', message='Account created successfully')
+        else:
+            return render_template('open_account.html', error='Error creating account: {}'.format(response.text))
     else:
-        return render_template('open_account.html', error='Error creating account: {}'.format(response.text))
+        return render_template('open_account.html')
 
 
 
