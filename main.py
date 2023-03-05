@@ -410,5 +410,29 @@ def register():
         return render_template("register.html", country_codes=country_codes)
 
 
+@main.route("/transactions", methods=["GET"])
+def transactions():
+    """Display account transactions"""
+    customer_id = session["customer_id"]
+
+    # Make an HTTP GET request
+    response = requests.get(
+        f"https://apex.oracle.com/pls/apex/databasur/user/transactions/?customer_id={customer_id}",
+        headers=headers,
+    )
+
+    if response.status_code == 200:
+
+        response_data = json.loads(
+            json.loads(response.content)["items"][0]["json_data"]
+        )
+
+        print(f"JSON content: {response_data}")
+
+    transactions_list = response_data["transactions"]
+
+    render_template("transactions.html", transaction_list=transaction_list)
+
+
 if __name__ == "__main__":
     main.run(host="127.0.0.1", port=8080, debug=True)

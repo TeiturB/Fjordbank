@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Transactions
+{% endblock %}
+
+{% block main %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script>function printTable() {
+    window.print();
+  }</script><script>function searchTable() {
+  var input, filter, table, tr, td, i, j, txtValue;
+  input = document.getElementById("search-input");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("print-table");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td");
+    for (j = 0; j < td.length; j++) {
+      if (td[j]) {
+        txtValue = td[j].textContent || td[j].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+          break;
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+}</script><script>// Get search input element
+var searchInput = document.getElementById("search-input");
+
+// Add event listener to search input
+searchInput.addEventListener("keydown", function(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+  }
+});</script>
+            
+                
+    <div class="container mt-3">
+
+        <h2>Transaction History for {{accountname}}</h2>
+        <table class="icon-table">
+            <tr>
+              <td colspan="2">
+                <form action="" class="search-bar">
+                  <input type="text" id="search-input" onkeyup="searchTable()" placeholder="Search accounts" required onkeypress="return event.keyCode != 13;">
+                  <button class="search-btn" type="submit">
+                    <span>Search</span>
+                  </button>
+                </form>
+              </td>
+              <td>
+                <div class="print-icon" onclick="printTable()">
+                  <i class="fa fa-print"></i></div>
+              </td>
+            </tr>
+          </table>
+        <table id="print-table" class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="left-align">Date</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th class="right-align">Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in transaction_list %}
+                <tr>
+                    <td class="left-align">{{ transaction["date"] }}</td>
+                    <td>{{ transaction["type"] }}</td>
+                    <td class="right-align"><span style="font-weight: bold;">{{ transaction["amount"] }}</span> DKK</td>
+                    <td class="right-align"><span style="font-weight: bold;">{{ transaction["balance"] }}</span> DKK</td>
+                </tr>
+                {% endfor %}
+            <tfoot>
+                <tr>
+                    <td class="left-align"><span style = "font-weight: bold;">Total Balance</span></d>
+                    <td></td>
+                    <td></td>
+                    <td class="right-align"><span style="font-weight: bold;">{{ total_balance }}</span> DKK</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+{% endblock %}
