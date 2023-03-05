@@ -434,5 +434,35 @@ def transactions():
     render_template("transactions.html", transaction_list=transaction_list)
 
 
+
+@main.route('/open_account', methods=['POST'])
+def open_account():
+    # Get the session P_number from the Flask session
+    p_number = session['P_number']
+    # Get the account type and account name from the HTML form
+    account_type = request.form['account_type']
+    account_name = request.form['account_name']
+
+    # Define the payload for the RESTful Service call
+    payload = {
+        "p_p_number": p_number,
+        "p_account_type": account_type,
+        "p_account_name": account_name
+    }
+
+    # Make the RESTful Service call to the Open_Account procedure
+    response = requests.post('https://apex.oracle.com/pls/apex/databasur/user/open_account', json=payload)
+
+    # Check the response status code
+    if response.status_code == 200:
+        return render_template('open_account.html', message='Account created successfully')
+    else:
+        return render_template('open_account.html', error='Error creating account: {}'.format(response.text))
+
+
+
 if __name__ == "__main__":
     main.run(host="127.0.0.1", port=8080, debug=True)
+
+
+
