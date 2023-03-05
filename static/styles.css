@@ -406,6 +406,11 @@ table.icon-table {
   background-color: #0062cc;
 }
 
+/* Transaction extra info container (DELETE IF NOT USED) */
+.extra-info-container {
+  overflow: hidden;
+  transition: height 0.3s ease-in-out;
+}
 
 
 /* Tabs for Accounts and loans */
