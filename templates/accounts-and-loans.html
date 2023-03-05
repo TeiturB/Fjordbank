@@ -1,24 +1,80 @@
 {% extends "layout.html" %}
 
+<script src="{{ url_for('static', filename='form-validation.js') }}"></script>
+
 {% block title %}
     Open account
 {% endblock %}
 
-{% block main %}         
-<form method="post" action="/accounts_and_loans" class="my-form">
-  <label class="my-label" for="account_type">Account Type:</label>
-  <div class="dropdown">
-    <select name="account_type" id="account_type" class="my-select">
-      <option value="Savings account">Savings account</option>
-      <option value="Checking account">Checking account</option>
-      <option value="Mortgage">Mortgage</option>
-      <option value="Car loan">Car loan</option>
-    </select>
-    <div class="dropdown-arrow"></div>
+{% block main %}  
+
+<center>
+<div class="wrapper">
+  <div class="tabs">
+    <div class="tab">
+      <input type="radio" name="css-tabs" id="tab-1" checked class="tab-switch">
+      <label for="tab-1" class="tab-label">Accounts</label>
+      <div class="tab-content"><div class="container">
+        <form method="post" action="/accounts_and_loans" style="
+        margin: 8% 0% 0% 0%;
+        padding: 2% 2% 2% 2%;
+        border-radius: 10px;" required>
+        <h2 style="Margin: 5% 0% 10% 0%;/* font-family: var(--bs-body-font-family); */font-family: var(--bs-body-font-family);/* font-size: var(--bs-body-font-size); */font-weight: var(--bs-body-font-weight);line-height: var(--bs-body-line-height);color: var(--bs-body-color);text-align: var(--bs-body-text-align);background-color: var(--bs-body-bg);-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: transparent;">Register Account With <span style="color:#537FBE;">Fjord</span>Bank</h2>
+          <div class="form-floating mb-3">
+            <select name="account_type" id="account_type" class="form-control">
+              <optgroup label="Select Account Type" disabled>
+                <option selected>Select Account Type</option>
+              </optgroup>
+              <option value="Savings account">Savings account</option>
+              <option value="Checking account">Checking account</option>
+            </select>
+            <div class="dropdown-arrow"></div>
+            <label for="account_type">Account Type</label>
+          </div>
+          
+          <div class="form-floating mb-3">
+            <input type="text" name="accountname" id="account_name" class="form-control" placeholder="Account Name" required>
+            <label for="accountname">Account Name</label>
+          </div>
+          
+          <button type="submit" class="my-button">Open Account</button>
+        </form>
+      </div></div>
+    </div>
+    <div class="tab">
+      <input type="radio" name="css-tabs" id="tab-2" class="tab-switch">
+      <label for="tab-2" class="tab-label">Loans</label>
+      <div class="tab-content"><div class="container">
+        <form method="post" action="/accounts_and_loans" style="
+        margin: 8% 0% 0% 0%;
+        padding: 2% 2% 2% 2%;
+        border-radius: 10px;">
+        <h2 style="Margin: 5% 0% 10% 0%;/* font-family: var(--bs-body-font-family); */font-family: var(--bs-body-font-family);/* font-size: var(--bs-body-font-size); */font-weight: var(--bs-body-font-weight);line-height: var(--bs-body-line-height);color: var(--bs-body-color);text-align: var(--bs-body-text-align);background-color: var(--bs-body-bg);-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: transparent;">Apply For A Loan With <span style="color:#537FBE;">Fjord</span>Bank</h2>
+          <div class="form-floating mb-3">
+            <select name="account_type" id="account_type" class="form-control">
+              <optgroup label="Select Loan Type" disabled>
+                <option selected>Select Loan Type</option>
+              </optgroup>
+              <option value="Mortgage">Mortgage</option>
+              <option value="Car loan">Car loan</option>
+            </select>
+            <div class="dropdown-arrow"></div>
+            <label for="account_type">Loan Type</label>
+          </div>
+          
+          <div class="form-floating mb-3">
+            <input type="text" name="accountname" id="account_name" class="form-control" placeholder="Account Name" required>
+            <label for="accountname">Account Name</label>
+          </div>
+          
+          <button type="submit" class="my-button">Register loan</button>
+        </form>
+      </div></div>
+    </div>
+    </div>
   </div>
-  <label for="account_name">Account Name:</label>
-  <input type="text" name="accountname" id="account_name" class="my-input">
-  <button type="submit" class="my-button">Open Account</button>
-</form>
+</div></center>
+
+
 
 {% endblock %}
