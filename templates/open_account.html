@@ -6,10 +6,12 @@
 
 {% block main %}         
 <form method="post" action="/open_account">
+  <input type="hidden" name="p_number_request" value="{{ p_number }}">
 <label for="account_type">Account Type:</label>
 <select name="account_type" id="account_type">
   <option value="Savings account">Savings account</option>
   <option value="Checking account">Checking account</option>
+  <option value="Mortgage">Mortgage</option>
   <option value="Car loan">Car loan</option>
 </select>
           
