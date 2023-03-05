@@ -448,9 +448,9 @@ def open_account():
         account_name = request.form['accountname']
         # Define the payload for the RESTful Service call
         payload = {
-            "p_p_number": p_number,
-            "p_account_type": account_type,
-            "p_account_name": account_name
+            "p_number": p_number,
+            "account_type": account_type,
+            "accountname": account_name
         }
 
         # Make the RESTful Service call to the Open_Account procedure
