@@ -68,15 +68,17 @@ searchInput.addEventListener("keydown", function(event) {
                 </tr>
             </thead>
             <tbody>
-               {% for account in account_list %}
-               <tr onclick="location.href='/accounts/' + '{{ account['accountnum'] }} '">
-                <td class="left-align">{{ account["accountname"] }}</td>
-                <td>{{ account["registration_number"] ~ "-" ~ account["accountnum"] }}</td>
-                <td>{{ account["account_type"] }}</td>
-                <td class="right-align"><span style="font-weight: bold;">{{ account["balance"] }}</span> DKK</td>
-            </tr>
+                {% for account in account_list %}
+                    <form method="POST" action="/transactions">
+                        <input type="hidden" name="accountnum" value="{{ account["accountnum"] }}">
+                        <tr onclick="this.parentNode.submit()">
+                            <td class="left-align">{{ account["accountname"] }}</td>
+                            <td>{{ account["registration_number"] ~ "-" ~ account["accountnum"] }}</td>
+                            <td>{{ account["account_type"] }}</td>
+                            <td class="right-align"><span style="font-weight: bold;">{{ account["balance"] }}</span> DKK</td>
+                        </tr>
+                    </form>
                 {% endfor %}
-              
             <tfoot>
                 <tr>
                     <td class="left-align"><span style = "font-weight: bold;">Total Balance</span></d>

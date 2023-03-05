@@ -410,10 +410,10 @@ def register():
         return render_template("register.html", country_codes=country_codes)
 
 
-@main.route("/transactions", methods=["GET"])
+@main.route("/transactions", methods=["POST"])
 def transactions():
     """Display account transactions"""
-    customer_id = session["customer_id"]
+    customer_id = session["accountnum"]
 
     # Make an HTTP GET request
     response = requests.get(
