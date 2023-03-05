@@ -41,7 +41,7 @@ searchInput.addEventListener("keydown", function(event) {
                 
     <div class="container mt-3">
 
-        <h2>Transaction History for {{accountname}}</h2>
+        <h2>Transaction History for {{ accountname }}</h2>
         <table class="icon-table">
             <tr>
               <td colspan="2">
@@ -61,19 +61,19 @@ searchInput.addEventListener("keydown", function(event) {
         <table id="print-table" class="table table-striped">
             <thead>
                 <tr>
-                    <th class="left-align">Date</th>
-                    <th>Type</th>
-                    <th>Amount</th>
+                    <th class="left-align">Transfer Date</th>
+                    <th>Transaction Type</th>
+                    <th class="right-align">Amount</th>
                     <th class="right-align">Balance</th>
                 </tr>
             </thead>
             <tbody>
                 {% for transaction in transaction_list %}
                 <tr>
-                    <td class="left-align">{{ transaction["date"] }}</td>
-                    <td>{{ transaction["type"] }}</td>
+                    <td class="left-align">{{ transaction["transfer_date"] }}</td>
+                    <td>{{ transaction["transaction_type_name"] }}</td>
                     <td class="right-align"><span style="font-weight: bold;">{{ transaction["amount"] }}</span> DKK</td>
-                    <td class="right-align"><span style="font-weight: bold;">{{ transaction["balance"] }}</span> DKK</td>
+                    <td class="right-align"><span style="font-weight: bold;">{{ transaction["balance_updated"] }}</span> DKK</td>
                 </tr>
                 {% endfor %}
             <tfoot>

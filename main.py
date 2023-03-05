@@ -59,7 +59,6 @@ def after_request(response):
 @login_required
 def index():
     """Handle welcome page"""
-
     if request.method == "GET":
         # Get and declare variables
         p_number = session["p_number"]
@@ -98,7 +97,7 @@ def index():
 
                 total_balance = sum([account['balance'] for account in account_list])
 
-                print(total_balance)
+                print(f"Total balance: {total_balance}")
 
                 return render_template(
                     "index.html", first_name=first_name, customer_id=customer_id, account_list=account_list, total_balance=total_balance
@@ -116,9 +115,10 @@ def index():
     
     # If POST
     else:
-        accountnum = request.form.get("accountnum")
+        session["accountnum"] = request.form.get("accountnum")
+        session["accountname"] = request.form.get("accountname")
 
-        redirect("/transactions", accountnum=accountnum)
+        return redirect("/transactions")
 
 
 @main.route("/accounts", methods=["GET", "POST"])
@@ -418,28 +418,28 @@ def register():
         return render_template("register.html", country_codes=country_codes)
 
 
-@main.route("/transactions", methods=["POST"])
+@main.route("/transactions", methods=["GET"])
 def transactions():
     """Display account transactions"""
     accountnum = session["accountnum"]
+    accountname = session["accountname"]
+
+    print(f"Account name: {accountname}\nAccount number: {accountnum}")
+
 
     # Make an HTTP GET request
     response = requests.get(
-        f"https://apex.oracle.com/pls/apex/databasur/user/transactions/?accountnum={accountnum}",
+        f"https://apex.oracle.com/pls/apex/databasur/user/transactions?account={accountnum}",
         headers=headers,
     )
 
     if response.status_code == 200:
 
-        response_data = json.loads(
-            json.loads(response.content)["items"][0]["json_data"]
-        )
+        transaction_list = json.loads(response.content)["items"]
 
-        print(f"JSON content: {response_data}")
+        print(f"Transaction list: {transaction_list}")
 
-    transactions_list = response_data["transactions"]
-
-    render_template("transactions.html", transaction_list=transaction_list)
+        return render_template("transactions.html", accountnum=accountnum, accountname=accountname, transaction_list=transaction_list)
 
 
 
