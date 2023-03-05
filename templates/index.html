@@ -69,7 +69,7 @@ searchInput.addEventListener("keydown", function(event) {
             </thead>
             <tbody>
                 {% for account in account_list %}
-                    <form method="POST" action="/transactions">
+                    <form method="POST" action="/">
                         <input type="hidden" name="accountnum" value="{{ account["accountnum"] }}">
                         <tr onclick="this.parentNode.submit()">
                             <td class="left-align">{{ account["accountname"] }}</td>

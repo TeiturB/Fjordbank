@@ -55,62 +55,70 @@ def after_request(response):
     return response
 
 
-@main.route("/")
+@main.route("/", methods=["GET", "POST"])
 @login_required
 def index():
-    """Show welcome page"""
-    # Get and declare variables
-    p_number = session["p_number"]
+    """Handle welcome page"""
 
-    # customer_id = session["customer_id"]
+    if request.method == "GET":
+        # Get and declare variables
+        p_number = session["p_number"]
 
-    print(f"Session p_number: {p_number}")
+        # customer_id = session["customer_id"]
 
-    # Get account data from database
-    url = f"https://apex.oracle.com/pls/apex/databasur/user/index/?p_number={p_number}"
-    response = requests.get(url, headers=headers)
+        print(f"Session p_number: {p_number}")
 
-    print(response.status_code)
+        # Get account data from database
+        url = f"https://apex.oracle.com/pls/apex/databasur/user/index/?p_number={p_number}"
+        response = requests.get(url, headers=headers)
 
-    if response.status_code == 200:
+        print(response.status_code)
 
-        response_data = json.loads(
-            json.loads(response.content)["items"][0]["json_data"]
-        )
+        if response.status_code == 200:
 
-        print(f"JSON content: {response_data}")
-
-        first_name = response_data["first_name"]
-        customer_id = response_data["customer_id"]
-        account_list = response_data["accounts"]
-
-        session["customer_id"] = customer_id
-
-        print(f"First name: {first_name}")
-        print(f"Customer_id: {customer_id}")
-        print(f"List of user accounts: {account_list}")
-
-        if len(account_list) > 0:
-            
-            print("User has accounts!")
-
-            total_balance = sum([account['balance'] for account in account_list])
-
-            print(total_balance)
-
-            return render_template(
-                "index.html", first_name=first_name, customer_id=customer_id, account_list=account_list, total_balance=total_balance
+            response_data = json.loads(
+                json.loads(response.content)["items"][0]["json_data"]
             )
 
+            print(f"JSON content: {response_data}")
+
+            first_name = response_data["first_name"]
+            customer_id = response_data["customer_id"]
+            account_list = response_data["accounts"]
+
+            session["customer_id"] = customer_id
+
+            print(f"First name: {first_name}")
+            print(f"Customer_id: {customer_id}")
+            print(f"List of user accounts: {account_list}")
+
+            if len(account_list) > 0:
+                
+                print("User has accounts!")
+
+                total_balance = sum([account['balance'] for account in account_list])
+
+                print(total_balance)
+
+                return render_template(
+                    "index.html", first_name=first_name, customer_id=customer_id, account_list=account_list, total_balance=total_balance
+                )
+
+            else:
+
+                print("User does not have accounts!")
+
+                return render_template("index.html", first_name=first_name, customer_id=customer_id)
+
         else:
-
-            print("User does not have accounts!")
-
-            return render_template("index.html", first_name=first_name, customer_id=customer_id)
-
+            flash("Database error!")
+            return render_template("login.html")
+    
+    # If POST
     else:
-        flash("Database error!")
-        return render_template("login.html")
+        accountnum = request.form.get("accountnum")
+
+        redirect("/transactions", accountnum=accountnum)
 
 
 @main.route("/accounts", methods=["GET", "POST"])
@@ -413,11 +421,11 @@ def register():
 @main.route("/transactions", methods=["POST"])
 def transactions():
     """Display account transactions"""
-    customer_id = session["accountnum"]
+    accountnum = session["accountnum"]
 
     # Make an HTTP GET request
     response = requests.get(
-        f"https://apex.oracle.com/pls/apex/databasur/user/transactions/?customer_id={customer_id}",
+        f"https://apex.oracle.com/pls/apex/databasur/user/transactions/?accountnum={accountnum}",
         headers=headers,
     )
 
