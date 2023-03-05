@@ -37,16 +37,15 @@ searchInput.addEventListener("keydown", function(event) {
     event.preventDefault();
   }
 });</script>
-            
-                
+
     <div class="container mt-3">
 
-        <h2>Transaction History for {{ accountname }}</h2>
+        <h2 class="overview name">Transaction History for {{ accountname }}</h2>
         <table class="icon-table">
             <tr>
               <td colspan="2">
                 <form action="" class="search-bar">
-                  <input type="text" id="search-input" onkeyup="searchTable()" placeholder="Search accounts" required onkeypress="return event.keyCode != 13;">
+                  <input type="text" id="search-input" onkeyup="searchTable()" required onkeypress="return event.keyCode != 13;">
                   <button class="search-btn" type="submit">
                     <span>Search</span>
                   </button>
@@ -76,14 +75,6 @@ searchInput.addEventListener("keydown", function(event) {
                     <td class="right-align"><span style="font-weight: bold;">{{ transaction["balance_updated"] }}</span> DKK</td>
                 </tr>
                 {% endfor %}
-            <tfoot>
-                <tr>
-                    <td class="left-align"><span style = "font-weight: bold;">Total Balance</span></d>
-                    <td></td>
-                    <td></td>
-                    <td class="right-align"><span style="font-weight: bold;">{{ total_balance }}</span> DKK</th>
-                </tr>
-            </tfoot>
         </table>
     </div>
 {% endblock %}
