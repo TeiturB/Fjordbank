@@ -331,8 +331,8 @@ table.icon-table {
 
 
 
-h2.overview.name {
-	text-align: left;
+.overview.name {
+	text-align: left !important;
 }
 
 .my-form {
