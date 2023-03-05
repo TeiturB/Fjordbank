@@ -71,7 +71,11 @@ searchInput.addEventListener("keydown", function(event) {
                 <tr>
                     <td class="left-align">{{ transaction["transfer_date"] }}</td>
                     <td>{{ transaction["transaction_type_name"] }}</td>
-                    <td class="right-align"><span style="font-weight: bold;">{{ transaction["amount"] }}</span> DKK</td>
+                    {% if transaction["amount"] >= 0 %}
+                        <td class="right-align"><span style="font-weight: bold; color: green;">{{ transaction["amount"] }}</span> DKK</td>
+                    {% else %}
+                        <td class="right-align"><span style="font-weight: bold; color: red;">{{ transaction["amount"] }}</span> DKK</td>
+                    {% endif %}
                     <td class="right-align"><span style="font-weight: bold;">{{ transaction["balance_updated"] }}</span> DKK</td>
                 </tr>
                 {% endfor %}
