@@ -74,34 +74,33 @@ def index():
 
     if response.status_code == 200:
 
-        json_content = json.loads(response.content)
+        response_data = json.loads(
+            json.loads(response.content)["items"][0]["json_data"]
+        )
 
-        print(f"JSON content: {json_content['items']}")
+        print(f"JSON content: {response_data}")
 
-        try:
-            account_list = json.loads(json_content["items"][0]["json_data"])["accounts"]
+        first_name = response_data["first_name"]
+        customer_id = response_data["customer_id"]
+        account_list = response_data["accounts"]
 
-            print(f"List of user accounts: {account_list}")
+        print(f"First name: {first_name}")
+        print(f"Customer_id: {customer_id}")
+        print(f"List of user accounts: {account_list}")
 
-            # If user has accounts
-            if len(account_list) > 0:
-                print("User has accounts!")
+        if len(account_list) > 0:
+            
+            print("User has accounts!")
 
-                first_name = json.loads(json_content["items"][0]["json_data"])["first_name"]
+            return render_template(
+                "index.html", first_name=first_name, customer_id=customer_id, account_list=account_list
+            )
 
-                return render_template(
-                    "index.html", first_name=first_name, account_list=account_list
-                )
-        except:
-            # If user does not have accounts
+        else:
+
             print("User does not have accounts!")
 
-            data = response.json()["items"][0]["json_data"]
-
-            parsed_data = json.loads(data)
-            first_name = parsed_data["first_name"]
-
-            return render_template("index.html", first_name=first_name)
+            return render_template("index.html", first_name=first_name, customer_id=customer_id)
 
     else:
         flash("Database error!")
@@ -251,7 +250,7 @@ def register():
         headers=headers,
     )
 
-    country_codes = response.json()['items']
+    country_codes = response.json()["items"]
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
@@ -277,62 +276,86 @@ def register():
         # Ensure p_number is provided
         if not p_number:
             flash("P-number required")
-            return render_template("register.html", form_data=form_data, country_codes=country_codes)
+            return render_template(
+                "register.html", form_data=form_data, country_codes=country_codes
+            )
 
         # Ensure password is provided
         if not password:
             flash("Password required")
-            return render_template("register.html", form_data=form_data, country_codes=country_codes)
+            return render_template(
+                "register.html", form_data=form_data, country_codes=country_codes
+            )
 
         # Ensure confirmation is provided
         if not confirmation:
             flash("Confirm password")
-            return render_template("register.html", form_data=form_data, country_codes=country_codes)
+            return render_template(
+                "register.html", form_data=form_data, country_codes=country_codes
+            )
 
         # Ensure confirmation matches password
         if password != confirmation:
             flash("Passwords must match")
-            return render_template("register.html", form_data=form_data, country_codes=country_codes)
+            return render_template(
+                "register.html", form_data=form_data, country_codes=country_codes
+            )
 
         # Ensure first name is provided
         if not first_name:
             flash("First name required")
-            return render_template("register.html", form_data=form_data, country_codes=country_codes)
+            return render_template(
+                "register.html", form_data=form_data, country_codes=country_codes
+            )
 
         # Ensure last name is provided
         if not last_name:
             flash("Last name required")
-            return render_template("register.html", form_data=form_data, country_codes=country_codes)
+            return render_template(
+                "register.html", form_data=form_data, country_codes=country_codes
+            )
 
         # Ensure postal code is provided
         if not postal_code:
             flash("Postal code required")
-            return render_template("register.html", form_data=form_data, country_codes=country_codes)
+            return render_template(
+                "register.html", form_data=form_data, country_codes=country_codes
+            )
 
         # Ensure street name is provided
         if not street_name:
             flash("Street name required")
-            return render_template("register.html", form_data=form_data, country_codes=country_codes)
+            return render_template(
+                "register.html", form_data=form_data, country_codes=country_codes
+            )
 
         # Ensure street number is provided
         if not street_number:
             flash("Street number required")
-            return render_template("register.html", form_data=form_data, country_codes=country_codes)
-        
+            return render_template(
+                "register.html", form_data=form_data, country_codes=country_codes
+            )
+
         # Ensure phone number is provided
         if not country_code:
             flash("Country code required")
-            return render_template("register.html", form_data=form_data, country_codes=country_codes)
+            return render_template(
+                "register.html", form_data=form_data, country_codes=country_codes
+            )
 
         # Ensure phone number is provided
         if not phone_number:
             flash("Phone number required")
-            return render_template("register.html", form_data=form_data, country_codes=country_codes)
+            return render_template(
+                "register.html", form_data=form_data, country_codes=country_codes
+            )
 
         # Ensure e-mail is provided
         if not email:
             flash("E-mail required")
-            return render_template("register.html", form_data=form_data, country_codes=country_codes)
+            return render_template(
+                "register.html", form_data=form_data, country_codes=country_codes
+            )
 
         # Encrypt and store hash of provided password
         hash = generate_password_hash(password)
@@ -353,7 +376,7 @@ def register():
             "street_number": street_number,
             "phone_number": full_phone_number,
             "email": email,
-            "address_id": None
+            "address_id": None,
         }
         response = requests.post(url, json=data, headers=headers)
 
@@ -370,7 +393,9 @@ def register():
             flash(response.reason)
             print("Error: ", response.reason)
 
-            return render_template("register.html", form_data=form_data, country_codes=country_codes)
+            return render_template(
+                "register.html", form_data=form_data, country_codes=country_codes
+            )
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
