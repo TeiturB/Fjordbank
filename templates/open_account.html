@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Open account
+{% endblock %}
+
+{% block main %}         
+<form method="post" action="/open_account">
+<label for="account_type">Account Type:</label>
+<select name="account_type" id="account_type">
+  <option value="Savings account">Savings account</option>
+  <option value="Checking account">Checking account</option>
+  <option value="Car loan">Car loan</option>
+</select>
+          
+<label for="account_name">Account Name:</label>
+<input type="text" name="account_name" id="account_name">
+          
+<button type="submit">Open Account</button>
+</form>
+
+{% endblock %}
