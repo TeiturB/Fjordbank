@@ -41,12 +41,12 @@ searchInput.addEventListener("keydown", function(event) {
                 
     <div class="container mt-3">
 
-        <h2>{{first_name}}'s Account Overview</h2>           
+        <h2 class="overview name">{{first_name}}'s Account Overview</h2>           
         <table class="icon-table">
             <tr>
               <td colspan="2">
                 <form action="" class="search-bar">
-                  <input type="text" id="search-input" onkeyup="searchTable()" placeholder="Search accounts" required onkeypress="return event.keyCode != 13;">
+                  <input type="text" id="search-input" onkeyup="searchTable()" placeholder="" required onkeypress="return event.keyCode != 13;">
                   <button class="search-btn" type="submit">
                     <span>Search</span>
                   </button>
@@ -68,21 +68,21 @@ searchInput.addEventListener("keydown", function(event) {
                 </tr>
             </thead>
             <tbody>
-                {% for account in account_list %}
-                <tr>
-                    <td class="left-align">{{ account["accountname"] }}</td>
-                    <td>{{ account["registration_number"] ~ "-" ~ account["accountnum"] }}</td>
-                    <td>{{ account["account_type"] }}</td>
-                    <td class="right-align"><span style="font-weight: bold;">{{ account["balance"] }}</span> DKK</td>
-                </tr>
+               {% for account in account_list %}
+               <tr onclick="location.href='/accounts/' + '{{ account['accountnum'] }} '">
+                <td class="left-align">{{ account["accountname"] }}</td>
+                <td>{{ account["registration_number"] ~ "-" ~ account["accountnum"] }}</td>
+                <td>{{ account["account_type"] }}</td>
+                <td class="right-align"><span style="font-weight: bold;">{{ account["balance"] }}</span> DKK</td>
+            </tr>
                 {% endfor %}
-                
+              
             <tfoot>
                 <tr>
                     <td class="left-align"><span style = "font-weight: bold;">Total Balance</span></d>
                     <td></td>
                     <td></td>
-                    <td class="right-align"><span style="font-weight: bold;">{{ total_balance }}</span> DKK</th>
+                    <td class="right-align"><span style="font-weight: bold;"><u>{{ total_balance }}</u></span> DKK</th>
                 </tr>
             </tfoot>
         </table>
