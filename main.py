@@ -442,11 +442,10 @@ def open_account():
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
         }
         # Get the session P_number from the Flask session
-        print(f"Session data: {session}")
-        p_number = session['P_number']
+        p_number = session['p_number']
         # Get the account type and account name from the HTML form
         account_type = request.form['account_type']
-        account_name = request.form['account_name']
+        account_name = request.form['accountname']
         # Define the payload for the RESTful Service call
         payload = {
             "p_p_number": p_number,
