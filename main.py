@@ -84,6 +84,8 @@ def index():
         customer_id = response_data["customer_id"]
         account_list = response_data["accounts"]
 
+        session["customer_id"] = customer_id
+
         print(f"First name: {first_name}")
         print(f"Customer_id: {customer_id}")
         print(f"List of user accounts: {account_list}")
@@ -92,8 +94,12 @@ def index():
             
             print("User has accounts!")
 
+            total_balance = sum([account['balance'] for account in account_list])
+
+            print(total_balance)
+
             return render_template(
-                "index.html", first_name=first_name, customer_id=customer_id, account_list=account_list
+                "index.html", first_name=first_name, customer_id=customer_id, account_list=account_list, total_balance=total_balance
             )
 
         else:
