@@ -224,6 +224,7 @@ input {
 }
 
 /* Active state */
+
 .search-bar input:focus + .search-btn,
 .search-bar input:valid + .search-btn {
 	background: #2762f3;
@@ -326,3 +327,8 @@ table.icon-table {
   }
 
 
+
+
+h2.overview.name {
+	text-align: left;
+}
