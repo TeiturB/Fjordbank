@@ -131,6 +131,42 @@ def accounts():
         return render_template("accounts.html")
 
 
+@main.route('/accounts_and_loans', methods=['GET', 'POST'])
+def accounts_and_loans():
+    if request.method == 'POST':
+
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
+        }
+
+        # Get p_number from session
+        p_number = session['p_number']
+
+        # Get the account type and account name from the HTML form
+        account_type = request.form['account_type']
+        account_name = request.form['accountname']
+        
+        # Define the payload for the RESTful Service call
+        payload = {
+            "p_number": p_number,
+            "account_type": account_type,
+            "accountname": account_name
+        }
+
+        # Make the RESTful Service call to the open_account procedure
+        response = requests.post('https://apex.oracle.com/pls/apex/databasur/user/accounts_and_loans/', json=payload, headers=headers)
+
+        # Check the response status code
+        if response.status_code == 200:
+            flash("Account created successfully")
+            return render_template('accounts-and-loans.html')
+        else:
+            flash("Error creating account: {}".format(response.text))
+            return render_template('accounts-and-loans.html')
+    else:
+        return render_template('accounts-and-loans.html')
+
+
 @main.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
@@ -440,37 +476,6 @@ def transactions():
         print(f"Transaction list: {transaction_list}")
 
         return render_template("transactions.html", accountnum=accountnum, accountname=accountname, transaction_list=transaction_list)
-
-
-
-@main.route('/accounts_and_loans', methods=['GET', 'POST'])
-def open_account():
-    if request.method == 'POST':
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
-        }
-        # Get the session P_number from the Flask session
-        p_number = session['p_number']
-        # Get the account type and account name from the HTML form
-        account_type = request.form['account_type']
-        account_name = request.form['accountname']
-        # Define the payload for the RESTful Service call
-        payload = {
-            "p_number": p_number,
-            "account_type": account_type,
-            "accountname": account_name
-        }
-
-        # Make the RESTful Service call to the Open_Account procedure
-        response = requests.post('https://apex.oracle.com/pls/apex/databasur/user/accounts_and_loans/', json=payload, headers=headers)
-
-        # Check the response status code
-        if response.status_code == 200:
-            return render_template('accounts-and-loans.html', message='Account created successfully')
-        else:
-            return render_template('accounts-and-loans.html', error='Error creating account: {}'.format(response.text))
-    else:
-        return render_template('accounts-and-loans.html')
     
 
 if __name__ == "__main__":
