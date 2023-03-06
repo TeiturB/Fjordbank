@@ -116,10 +116,20 @@ searchInput.addEventListener("keydown", function(event) {
                 </button>
             </div>
             <div class="modal-body">
-                <p><strong>Transfer Date:</strong> {{ transaction["transfer_date"] }}</p>
-                <p><strong>Transaction Type:</strong> {{ transaction["transaction_type_name"] }}</p>
-                <p><strong>Amount:</strong> {{ transaction["amount"] | dkk }} DKK</p>
-                <p><strong>Balance:</strong> {{ transaction["balance_updated"] | dkk }} DKK</p>
+                <p class="left-align"><strong>Amount:</strong> {{ transaction["amount"] | dkk }} DKK</p>
+                <p class="left-align"><strong>Balance:</strong> {{ transaction["balance_updated"] | dkk }} DKK</p>
+                <p class="left-align"><strong>Transaction ID:</strong> {{ transaction["transaction_id"] }}</p>
+                <p class="left-align"><strong>Account:</strong> {{ Registration_number }}-{{ transaction["account"] }}</p>
+                <p class="left-align"><strong>Text from sender:</strong> {{ transaction["message_to_receiver"] }}</p>
+                <p class="left-align"><strong>Own text:</strong> {{ transaction["own_text"] }}</p>
+                <p class="left-align"><strong>Transfer Date:</strong> {{ transaction["transfer_date"] }}</p>
+                <p class="left-align"><strong>Sender:</strong> {{ transaction["sender_name"] }}</p>
+                <p class="left-align"><strong>Receiver:</strong> {{ transaction["receiver_name"] }}</p>
+                <p class="left-align"><strong>Receiver account:</strong> {{ transaction["receiver_account"] }}</p>
+                <p class="left-align"><strong>Expedited by:</strong> {{ transaction["expedited_by"] }}</p>
+                <p class="left-align"><strong>Transaction Type:</strong> {{ transaction["transaction_type_name"] }}</p>
+                
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
