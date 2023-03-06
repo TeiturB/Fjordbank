@@ -119,7 +119,7 @@ searchInput.addEventListener("keydown", function(event) {
                 <p class="left-align"><strong>Amount:</strong> {{ transaction["amount"] | dkk }} DKK</p>
                 <p class="left-align"><strong>Balance:</strong> {{ transaction["balance_updated"] | dkk }} DKK</p>
                 <p class="left-align"><strong>Transaction ID:</strong> {{ transaction["transaction_id"] }}</p>
-                <p class="left-align"><strong>Account:</strong> {{ Registration_number }}-{{ transaction["account"] }}</p>
+                <p class="left-align"><strong>Account:</strong> {{ registration_number }}-{{ transaction["account"] }}</p>
                 <p class="left-align"><strong>Text from sender:</strong> {{ transaction["message_to_receiver"] }}</p>
                 <p class="left-align"><strong>Own text:</strong> {{ transaction["own_text"] }}</p>
                 <p class="left-align"><strong>Transfer Date:</strong> {{ transaction["transfer_date"] }}</p>
