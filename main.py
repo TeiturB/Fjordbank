@@ -82,12 +82,14 @@ def index():
             print(f"JSON content: {response_data}")
 
             first_name = response_data["first_name"]
+            last_name = response_data["last_name"]
             customer_id = response_data["customer_id"]
             account_list = response_data["accounts"]
 
             session["customer_id"] = customer_id
 
             print(f"First name: {first_name}")
+            print(f"Last name: {last_name}")
             print(f"Customer_id: {customer_id}")
             print(f"List of user accounts: {account_list}")
 
@@ -100,14 +102,14 @@ def index():
                 print(f"Total balance: {total_balance}")
 
                 return render_template(
-                    "index.html", first_name=first_name, customer_id=customer_id, account_list=account_list, total_balance=total_balance
+                    "index.html", first_name=first_name, last_name=last_name, customer_id=customer_id, account_list=account_list, total_balance=total_balance
                 )
 
             else:
 
                 print("User does not have accounts!")
 
-                return render_template("index.html", first_name=first_name, customer_id=customer_id)
+                return render_template("index.html", first_name=first_name, last_name=last_name, customer_id=customer_id)
 
         else:
             flash("Database error!")
