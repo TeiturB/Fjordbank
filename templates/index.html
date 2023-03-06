@@ -43,7 +43,7 @@ searchInput.addEventListener("keydown", function(event) {
                 
     <div class="container mt-3">
 
-        <h2 class="overview name">{{first_name}} {{last_name}}</h2>           
+        <h2 class="overview name">Account Overview</h2>           
         <table class="icon-table">
             <tr>
               <td colspan="2">
@@ -62,6 +62,9 @@ searchInput.addEventListener("keydown", function(event) {
           </table>
           <table id="print-table" class="table table-striped">
             <thead>
+              <tr>
+                <th colspan="4" class="left-align" style="font-size: 24px">{{ full_name }}</th>
+              </tr>
               <tr>
                 <th class="left-align">Account Name</th>
                 <th>Account Number</th>

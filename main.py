@@ -82,39 +82,54 @@ def index():
             print(f"JSON content: {response_data}")
 
             first_name = response_data["first_name"]
+            try:
+                middle_name = response_data["middle_name"]
+            except:
+                middle_name = False
             last_name = response_data["last_name"]
             customer_id = response_data["customer_id"]
             account_list = response_data["accounts"]
 
             session["customer_id"] = customer_id
 
-            print(f"First name: {first_name}")
-            print(f"Last name: {last_name}")
+            full_name = (
+                f"{first_name} {middle_name + ' ' if middle_name else ''}{last_name}"
+            )
+
+            print(f"Name: {full_name}")
             print(f"Customer_id: {customer_id}")
             print(f"List of user accounts: {account_list}")
 
             if len(account_list) > 0:
-                
+
                 print("User has accounts!")
 
-                total_balance = sum([account['balance'] for account in account_list])
+                total_balance = sum([account["balance"] for account in account_list])
 
                 print(f"Total balance: {total_balance}")
 
                 return render_template(
-                    "index.html", first_name=first_name, last_name=last_name, customer_id=customer_id, account_list=account_list, total_balance=total_balance
+                    "index.html",
+                    full_name=full_name,
+                    customer_id=customer_id,
+                    account_list=account_list,
+                    total_balance=total_balance,
                 )
 
             else:
 
                 print("User does not have accounts!")
 
-                return render_template("index.html", first_name=first_name, last_name=last_name, customer_id=customer_id)
+                return render_template(
+                    "index.html",
+                    full_name,
+                    customer_id=customer_id,
+                )
 
         else:
             flash("Database error!")
             return render_template("login.html")
-    
+
     # If POST
     else:
         session["accountnum"] = request.form.get("accountnum")
@@ -134,40 +149,44 @@ def accounts():
         return render_template("accounts.html")
 
 
-@main.route('/accounts_and_loans', methods=['GET', 'POST'])
+@main.route("/accounts_and_loans", methods=["GET", "POST"])
 def accounts_and_loans():
-    if request.method == 'POST':
+    if request.method == "POST":
 
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
         }
 
         # Get p_number from session
-        p_number = session['p_number']
+        p_number = session["p_number"]
 
         # Get the account type and account name from the HTML form
-        account_type = request.form['account_type']
-        account_name = request.form['accountname']
-        
+        account_type = request.form["account_type"]
+        account_name = request.form["accountname"]
+
         # Define the payload for the RESTful Service call
         payload = {
             "p_number": p_number,
             "account_type": account_type,
-            "accountname": account_name
+            "accountname": account_name,
         }
 
         # Make the RESTful Service call to the open_account procedure
-        response = requests.post('https://apex.oracle.com/pls/apex/databasur/user/accounts_and_loans/', json=payload, headers=headers)
+        response = requests.post(
+            "https://apex.oracle.com/pls/apex/databasur/user/accounts_and_loans/",
+            json=payload,
+            headers=headers,
+        )
 
         # Check the response status code
         if response.status_code == 200:
             flash("Account created successfully")
-            return render_template('accounts-and-loans.html')
+            return render_template("accounts-and-loans.html")
         else:
             flash("Error creating account: {}".format(response.text))
-            return render_template('accounts-and-loans.html')
+            return render_template("accounts-and-loans.html")
     else:
-        return render_template('accounts-and-loans.html')
+        return render_template("accounts-and-loans.html")
 
 
 @main.route("/dashboard", methods=["GET", "POST"])
@@ -466,7 +485,6 @@ def transactions():
 
     print(f"Account name: {accountname}\nAccount number: {accountnum}")
 
-
     # Make an HTTP GET request
     response = requests.get(
         f"https://apex.oracle.com/pls/apex/databasur/user/transactions/?account={accountnum}",
@@ -479,7 +497,13 @@ def transactions():
 
         print(f"Transaction list: {transaction_list}")
 
-        return render_template("transactions.html", accountnum=accountnum, accountname=accountname, registration_number=registration_number, transaction_list=transaction_list)
+        return render_template(
+            "transactions.html",
+            accountnum=accountnum,
+            accountname=accountname,
+            registration_number=registration_number,
+            transaction_list=transaction_list,
+        )
 
 
 @main.route("/payments", methods=["GET", "POST"])
@@ -495,26 +519,30 @@ def payments():
         due_date = request.form.get("due_date")
 
         payload = {
-                "from_account": from_account,
-                "to_account": to_account,
-                "amount": amount,
-                "to_message": to_message,
-                "from_message": from_message,
-                "due_date": due_date
-            }
+            "from_account": from_account,
+            "to_account": to_account,
+            "amount": amount,
+            "to_message": to_message,
+            "from_message": from_message,
+            "due_date": due_date,
+        }
 
         # Make the RESTful Service call to the open_account procedure
-        response = requests.post('https://apex.oracle.com/pls/apex/databasur/user/transfer/', json=payload, headers=headers)
+        response = requests.post(
+            "https://apex.oracle.com/pls/apex/databasur/user/transfer/",
+            json=payload,
+            headers=headers,
+        )
 
         # Check the response status code
         if response.status_code == 200:
             flash(f"Your {action} was successful")
-            return render_template('payments.html')
+            return render_template("payments.html")
 
         else:
             flash("Error creating account: {}".format(response.text))
-            return render_template('payments.html')
-    
+            return render_template("payments.html")
+
     # If GET method
     else:
         return render_template("payments.html")
@@ -522,6 +550,3 @@ def payments():
 
 if __name__ == "__main__":
     main.run(host="127.0.0.1", port=8080, debug=True)
-
-
-
