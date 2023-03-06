@@ -480,8 +480,9 @@ def transactions():
         return render_template("transactions.html", accountnum=accountnum, accountname=accountname, registration_number=registration_number, transaction_list=transaction_list)
 
 
-@main.route("/transfer", methods=["GET", "POST"])
-def transfer():
+@main.route("/payments", methods=["GET", "POST"])
+def payments():
+    action = request.form.get("mode")
 
     if request.method == "POST":
         from_account = request.form.get("from_account")
@@ -505,22 +506,16 @@ def transfer():
 
         # Check the response status code
         if response.status_code == 200:
-            if mode == "deposit":
-                flash("Your deposit was successful")
-                return render_template('transfer.html')
-            elif mode == "transfer":
-                flash("Your transfer was successful")
-                return render_template('transfer.html')
-            elif mode == "withdraw":
-                flash("Your withdrawal was successful")
-                return render_template('transfer.html')
+            flash(f"Your {action} was successful")
+            return render_template('payments.html')
+
         else:
             flash("Error creating account: {}".format(response.text))
-            return render_template('transfer.html')
+            return render_template('payments.html')
     
     # If GET method
     else:
-        return render_template("transfer.html")
+        return render_template("payments.html")
 
 
 if __name__ == "__main__":
