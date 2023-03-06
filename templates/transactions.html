@@ -116,18 +116,45 @@ searchInput.addEventListener("keydown", function(event) {
                 </button>
             </div>
             <div class="modal-body">
+                {% if transaction["amount"] is not none %}
                 <p class="left-align"><strong>Amount:</strong> {{ transaction["amount"] | dkk }} DKK</p>
+                {% endif %}
+                {% if transaction["balance_updated"] is not none %}
                 <p class="left-align"><strong>Balance:</strong> {{ transaction["balance_updated"] | dkk }} DKK</p>
+                {% endif %}
+                {% if transaction["transaction_id"] is not none %}
                 <p class="left-align"><strong>Transaction ID:</strong> {{ transaction["transaction_id"] }}</p>
+                {% endif %}
+                {% if transaction["account"] is not none %}
                 <p class="left-align"><strong>Account:</strong> {{ registration_number }}-{{ transaction["account"] }}</p>
+                {% endif %}
+                {% if transaction["message_to_receiver"] is not none %}
                 <p class="left-align"><strong>Text from sender:</strong> {{ transaction["message_to_receiver"] }}</p>
+                {% endif %}
+                {% if transaction["own_text"] is not none %}
                 <p class="left-align"><strong>Own text:</strong> {{ transaction["own_text"] }}</p>
+                {% endif %}
+                {% if transaction["transfer_date"] is not none %}
                 <p class="left-align"><strong>Transfer Date:</strong> {{ transaction["transfer_date"] }}</p>
+                {% endif %}
+                {% if transaction["sender_name"] is not none %}
                 <p class="left-align"><strong>Sender:</strong> {{ transaction["sender_name"] }}</p>
+                {% endif %}
+                {% if transaction["sender_account"] is not none %}
+                <p class="left-align"><strong>Sender account:</strong> {{ registration_number }}-{{ transaction["sender_account"] }}</p>
+                {% endif %}
+                {% if transaction["receiver_name"] is not none %}
                 <p class="left-align"><strong>Receiver:</strong> {{ transaction["receiver_name"] }}</p>
+                {% endif %}
+                {% if transaction["receiver_account"] is not none %}
                 <p class="left-align"><strong>Receiver account:</strong> {{ transaction["receiver_account"] }}</p>
+                {% endif %}
+                {% if transaction["expedited_by"] is not none %}
                 <p class="left-align"><strong>Expedited by:</strong> {{ transaction["expedited_by"] }}</p>
+                {% endif %}
+                {% if transaction["transaction_type_name"] is not none %}
                 <p class="left-align"><strong>Transaction Type:</strong> {{ transaction["transaction_type_name"] }}</p>
+                {% endif %}
                 
                 
             </div>
