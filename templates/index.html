@@ -72,8 +72,9 @@ searchInput.addEventListener("keydown", function(event) {
             <tbody>
               {% for account in account_list %}
               <form method="POST" action="/">
-                <input type="hidden" name="accountnum" value='{{ account["accountnum"] }}'>
+                <input type="hidden" name="accountnum" value="{{ account['accountnum'] }}">
                 <input type="hidden" name="accountname" value="{{ account['accountname'] }}">
+                <input type="hidden" name="registration_number" value="{{ account['registration_number'] }}">
                 <tr onclick="this.querySelector('button').click();" style="cursor: pointer;">
                   <td class="left-align">{{ account["accountname"] }}</td>
                   <td>{{ account["registration_number"] ~ "-" ~ account["accountnum"] }}</td>
