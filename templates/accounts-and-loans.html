@@ -23,11 +23,11 @@
           <div class="form-floating mb-3">
             <select name="account_type" id="account_type" class="form-control">
               <optgroup label="Select Account Type" disabled>
-                <option selected>Select Account Type</option>
+                
               </optgroup>
+              <option value="Checking account" selected>Checking account</option>
               <option value="Savings account">Savings account</option>
-              <option value="Checking account">Checking account</option>
-            </select>
+              </select>
             <div class="dropdown-arrow"></div>
             <label for="account_type">Account Type</label>
           </div>
@@ -53,9 +53,8 @@
           <div class="form-floating mb-3">
             <select name="account_type" id="account_type" class="form-control">
               <optgroup label="Select Loan Type" disabled>
-                <option selected>Select Loan Type</option>
               </optgroup>
-              <option value="Mortgage">Mortgage</option>
+              <option value="Mortgage" selected>Mortgage</option>
               <option value="Car loan">Car loan</option>
             </select>
             <div class="dropdown-arrow"></div>
@@ -64,7 +63,7 @@
           
           <div class="form-floating mb-3">
             <input type="text" name="accountname" id="account_name" class="form-control" placeholder="Account Name" required>
-            <label for="accountname">Account Name</label>
+            <label for="accountname">Loan Name</label>
           </div>
           
           <button type="submit" class="my-button">Register loan</button>

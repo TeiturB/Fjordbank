@@ -256,7 +256,7 @@ table.icon-table {
 	cursor: pointer;
   }
 
-
+/* END OF SEARCH BUTTON STYLING */
 
 
 
@@ -316,7 +316,7 @@ table.icon-table {
   transform: translateY(0);
 }
 
-
+/* END OF NAV LINK STYLING */
 
 
 
@@ -330,10 +330,11 @@ table.icon-table {
 
 
 
-
 .overview.name {
 	text-align: left !important;
 }
+
+/* END OF ACCOUNT OVERVIEW STYLING */
 
 .my-form {
   display: flex;
@@ -406,7 +407,7 @@ table.icon-table {
   background-color: #0062cc;
 }
 
-/* Transaction extra info container (DELETE IF NOT USED) */
+/* Transaction extra info container */
 .extra-info-container {
   overflow: hidden;
   transition: height 0.3s ease-in-out;
@@ -414,86 +415,6 @@ table.icon-table {
 
 
 /* Tabs for Accounts and loans */
-/*
-* {
-  box-sizing: border-box;
-}
-
-.wrapper {
-  max-width: 50rem;
-  width: 100%;
-  margin: 0 auto;
-}
-.tabs {
-  position: relative;
-  margin: 3rem 0;
-  background: #007bff;
-  height: 3rem;
-  border-radius: 10px 10px 0px 0px;
-}
-.tabs::before,
-.tabs::after {
-  content: "";
-  display: table;
-}
-.tabs::after {
-  clear: both;
-}
-.tab {
-  float: left;
-}
-.tab-switch {
-  display: none;
-}
-.tab-label {
-  position: relative;
-  display: block;
-  line-height: 2.75em;
-  height: 3em;
-  padding: 0 1.618em;
-  background: #007bff;
-  border-right: 0.125rem solid #3895f8;
-  color: #fff;
-  cursor: pointer;
-  top: 0;
-  transition: all 0.25s;
-  border-radius: 10px 0px 0px 0px;
-}
-.tab-label:hover {
-  top: -0.25rem;
-  transition: top 0.25s;
-}
-.tab-content {
-  height: 12rem;
-  position: absolute;
-  z-index: 1;
-  top: 2.75em;
-  left: 0;
-  padding: 1.618rem;
-  background: #fff;
-  color: #2c3e50;
-  opacity: 0;
-  transition: all 0.35s;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  border-radius: 0px 0px 10px 10px;
-  width: -webkit-fill-available;
-  height: max-content;
-}
-.tab-switch:checked + .tab-label {
-  background: #0062CC;
-  color: #fff;
-  border-bottom: 0;
-  border-right: 0.125rem solid #fff;
-  transition: all 0.35s;
-  z-index: 1;
-  top: -0.0625rem;
-  border-radius: 10px 0px 0px 0px;
-}
-.tab-switch:checked + label + .tab-content {
-  z-index: 2;
-  opacity: 1;
-  transition: all 0.35s;
-}*/
 
 .tabs {
   position: relative;
@@ -577,6 +498,11 @@ table.icon-table {
   }
 }
 
+/* END OF TABS FOR ACCOUNTS AND LOANS */
+
+
+/* MODAL STYLING */
+
 .modal-body {
   max-height: 400px;
   overflow-y: auto;
@@ -655,4 +581,9 @@ table.icon-table {
 .modal-body > *:last-child {
   border-bottom: none;
   margin-bottom: 0;
+}
+/* END OF MODAL STYLING */
+
+.table thead th {
+  border-bottom: 2px solid #000000!important;
 }
