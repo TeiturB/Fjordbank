@@ -263,7 +263,7 @@ table.icon-table {
 
 /* Navigation link styling */
 .nav-link {
-	padding: 0rem 0rem;
+	padding: 0rem 0rem!important;
 }
 
 

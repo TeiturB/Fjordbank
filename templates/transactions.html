@@ -6,9 +6,14 @@
 
 {% block main %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script>function printTable() {
+<script>// Print function of print icon
+function printTable() {
     window.print();
-  }</script><script>function searchTable() {
+  }</script>
+  
+   
+  <script>// Search function of account table
+  function searchTable() {
   var input, filter, table, tr, td, i, j, txtValue;
   input = document.getElementById("search-input");
   filter = input.value.toUpperCase();
