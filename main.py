@@ -117,6 +117,7 @@ def index():
     else:
         session["accountnum"] = request.form.get("accountnum")
         session["accountname"] = request.form.get("accountname")
+        session["registration_number"] = request.form.get("registration_number")
 
         return redirect("/transactions")
 
@@ -165,6 +166,55 @@ def accounts_and_loans():
             return render_template('accounts-and-loans.html')
     else:
         return render_template('accounts-and-loans.html')
+
+
+@main.route("/dashboard", methods=["GET", "POST"])
+def dashboard():
+    """Show user dashboard"""
+    if request.method == "POST":
+
+        print("POST")
+
+    else:
+
+        # get the query parameter from the request URL
+        # query = request.args.get("bloop")
+
+        # namee = ":bloop"
+
+        # print(f"Query: {query}")
+
+        p_number = "010188121"
+
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
+        }
+
+        # make an HTTP GET request to the RESTful web service URL with the query parameter
+        response = requests.get(
+            f"https://apex.oracle.com/pls/apex/databasur/user/dashboard/?p_number={p_number}",
+            headers=headers,
+        )
+
+        print(f"Response: {response}")
+        # print(f"JSON response: {response.json()}")
+
+        # check if the request was successful
+        if response.status_code == 200:
+
+            # get the JSON data from the response
+            data = response.json()
+
+            print(data)
+
+            # return a formatted string with some data fields
+            return f"The result for query is: {data}"
+        # return render_template("dashboard.html")
+
+        else:
+
+            # return an error message if the request failed
+            return f"Something went wrong: {response.text}"
 
 
 @main.route("/login", methods=["GET", "POST"])
@@ -240,55 +290,6 @@ def logout():
 
     # Redirect user to login form
     return redirect("/")
-
-
-@main.route("/dashboard", methods=["GET", "POST"])
-def dashboard():
-    """Show user dashboard"""
-    if request.method == "POST":
-
-        print("POST")
-
-    else:
-
-        # get the query parameter from the request URL
-        # query = request.args.get("bloop")
-
-        # namee = ":bloop"
-
-        # print(f"Query: {query}")
-
-        p_number = "010188121"
-
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
-        }
-
-        # make an HTTP GET request to the RESTful web service URL with the query parameter
-        response = requests.get(
-            f"https://apex.oracle.com/pls/apex/databasur/user/dashboard/?p_number={p_number}",
-            headers=headers,
-        )
-
-        print(f"Response: {response}")
-        # print(f"JSON response: {response.json()}")
-
-        # check if the request was successful
-        if response.status_code == 200:
-
-            # get the JSON data from the response
-            data = response.json()
-
-            print(data)
-
-            # return a formatted string with some data fields
-            return f"The result for query is: {data}"
-        # return render_template("dashboard.html")
-
-        else:
-
-            # return an error message if the request failed
-            return f"Something went wrong: {response.text}"
 
 
 @main.route("/register", methods=["GET", "POST"])
@@ -459,13 +460,14 @@ def transactions():
     """Display account transactions"""
     accountnum = session["accountnum"]
     accountname = session["accountname"]
+    registration_number = session["registration_number"]
 
     print(f"Account name: {accountname}\nAccount number: {accountnum}")
 
 
     # Make an HTTP GET request
     response = requests.get(
-        f"https://apex.oracle.com/pls/apex/databasur/user/transactions?account={accountnum}",
+        f"https://apex.oracle.com/pls/apex/databasur/user/transactions/?account={accountnum}",
         headers=headers,
     )
 
@@ -475,8 +477,51 @@ def transactions():
 
         print(f"Transaction list: {transaction_list}")
 
-        return render_template("transactions.html", accountnum=accountnum, accountname=accountname, transaction_list=transaction_list)
+        return render_template("transactions.html", accountnum=accountnum, accountname=accountname, registration_number=registration_number, transaction_list=transaction_list)
+
+
+@main.route("/transfer", methods=["GET", "POST"])
+def transfer():
+
+    if request.method == "POST":
+        from_account = request.form.get("from_account")
+        to_account = request.form.get("to_account")
+        amount = request.form.get("amount")
+        to_message = request.form.get("to_message")
+        from_message = request.form.get("from_message")
+        due_date = request.form.get("due_date")
+
+        payload = {
+                "from_account": from_account,
+                "to_account": to_account,
+                "amount": amount,
+                "to_message": to_message,
+                "from_message": from_message,
+                "due_date": due_date
+            }
+
+        # Make the RESTful Service call to the open_account procedure
+        response = requests.post('https://apex.oracle.com/pls/apex/databasur/user/transfer/', json=payload, headers=headers)
+
+        # Check the response status code
+        if response.status_code == 200:
+            if mode == "deposit":
+                flash("Your deposit was successful")
+                return render_template('transfer.html')
+            elif mode == "transfer":
+                flash("Your transfer was successful")
+                return render_template('transfer.html')
+            elif mode == "withdraw":
+                flash("Your withdrawal was successful")
+                return render_template('transfer.html')
+        else:
+            flash("Error creating account: {}".format(response.text))
+            return render_template('transfer.html')
     
+    # If GET method
+    else:
+        return render_template("transfer.html")
+
 
 if __name__ == "__main__":
     main.run(host="127.0.0.1", port=8080, debug=True)
