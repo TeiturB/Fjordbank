@@ -57,7 +57,6 @@ searchInput.addEventListener("keydown", function(event) {
 
 <div class="container mt-3">
   <h2 class="overview name">{{ accountname }}</h2>
-  <h6 class="overview name">Account Number: {{ accountnum }}</h4>
   <table class="icon-table">
       <tr>
           <td colspan="2">
@@ -74,19 +73,17 @@ searchInput.addEventListener("keydown", function(event) {
           </td>
       </tr>
   </table>
-  <table id="print-table" class="table table-striped" style="table-layout: fixed;">
-    <col style="width: 20%;">
-    <col style="width: 30%;">
-    <col style="width: 25%;">
-    <col style="width: 25%;">
+  <table id="print-table" class="table table-striped">
       <thead>
-          <tr>
-              <th class="left-align">Transfer Date</th>
-              <th>Transaction Type</th>
-              <th class="right-align">Amount</th>
-              <th class="right-align">Balance</th>
-              <th></th>
-          </tr>
+        <tr>
+          <th colspan="4" class="left-align" style="font-size: 24px">Account Number: {{ transaction_list[0]['account'] }}</th>
+        </tr>
+        <tr>
+            <th class="left-align">Transfer Date</th>
+            <th>Transaction Type</th>
+            <th class="right-align">Amount</th>
+            <th class="right-align">Balance</th>
+        </tr>
       </thead>
       <tbody>
         <script>
