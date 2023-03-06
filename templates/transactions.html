@@ -72,18 +72,18 @@ searchInput.addEventListener("keydown", function(event) {
                     <td class="left-align">{{ transaction["transfer_date"] }}</td>
                     <td>{{ transaction["transaction_type_name"] }}</td>
                     {% if transaction["amount"] > 0 %}
-                        <td class="right-align"><span style="font-weight: bold; color: #aabe49;">{{ transaction["amount"] }}</span> DKK</td>
+                        <td class="right-align"><span style="font-weight: bold; color: #aabe49;">{{ transaction["amount"] | dkk }}</span> DKK</td>
                     {% elif transaction["amount"] < 0 %}
-                        <td class="right-align"><span style="font-weight: bold; color: #BE496F;">{{ transaction["amount"] }}</span> DKK</td>
+                        <td class="right-align"><span style="font-weight: bold; color: #BE496F;">{{ transaction["amount"] | dkk }}</span> DKK</td>
                         {% else %}
-                        <td class="right-align"><span style="font-weight: bold; color: black;">{{ transaction["amount"] }}</span> DKK</td>
+                        <td class="right-align"><span style="font-weight: bold; color: black;">{{ transaction["amount"] | dkk }}</span> DKK</td>
                     {% endif %}
                     {% if transaction["balance_updated"] > 0 %}
-                        <td class="right-align"><span style="font-weight: bold; color: #aabe49;">{{ transaction["balance_updated"] }}</span> DKK</td>
+                        <td class="right-align"><span style="font-weight: bold; color: #aabe49;">{{ transaction["balance_updated"] | dkk }}</span> DKK</td>
                     {% elif transaction["balance_updated"] < 0 %}
-                        <td class="right-align"><span style="font-weight: bold; color: #BE496F;">{{ transaction["balance_updated"] }}</span> DKK</td>
+                        <td class="right-align"><span style="font-weight: bold; color: #BE496F;">{{ transaction["balance_updated"] | dkk }}</span> DKK</td>
                     {% else %}
-                        <td class="right-align"><span style="font-weight: bold; color: black;">{{ transaction["balance_updated"] }}</span> DKK</td>
+                        <td class="right-align"><span style="font-weight: bold; color: black;">{{ transaction["balance_updated"] | dkk }}</span> DKK</td>
                     {% endif %}
                 </tr>
                 {% endfor %}
