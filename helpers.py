@@ -72,7 +72,7 @@ def lookup(symbol):
 def dkk(value):
     """Format value as DKK."""
     locale.setlocale(locale.LC_ALL, 'da_DK.UTF-8')
-    return f"{locale.format_string('%.2f DKK', value, grouping=True):>10}"
+    return f"{locale.format_string('%.2f', value, grouping=True):>10}"
 
 # Another way to achieve similar results
     # return f"{value:,.2f}".replace(",", ";").replace(".", ",").replace(";", ".") + "kr"
