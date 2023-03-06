@@ -38,55 +38,94 @@ searchInput.addEventListener("keydown", function(event) {
   }
 });</script>
 
-    <div class="container mt-3">
-        <h2 class="overview name">{{ accountname }}</h2>
-        <h6 class="overview name">Account Number: {{ accountnum }}</h4>
-        <table class="icon-table">
-            <tr>
-              <td colspan="2">
-                <form action="" class="search-bar">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+      $('.modal').modal('hide');
+  });
+</script>
+
+<div class="container mt-3">
+  <h2 class="overview name">{{ accountname }}</h2>
+  <h6 class="overview name">Account Number: {{ accountnum }}</h4>
+  <table class="icon-table">
+      <tr>
+          <td colspan="2">
+              <form action="" class="search-bar">
                   <input type="text" id="search-input" onkeyup="searchTable()" required onkeypress="return event.keyCode != 13;">
                   <button class="search-btn" type="submit">
-                    <span>Search</span>
+                      <span>Search</span>
                   </button>
-                </form>
-              </td>
-              <td>
-                <div class="print-icon" onclick="printTable()">
+              </form>
+          </td>
+          <td>
+              <div class="print-icon" onclick="printTable()">
                   <i class="fa fa-print"></i></div>
-              </td>
-            </tr>
-          </table>
-        <table id="print-table" class="table table-striped">
-            <thead>
-                <tr>
-                    <th class="left-align">Transfer Date</th>
-                    <th>Transaction Type</th>
-                    <th class="right-align">Amount</th>
-                    <th class="right-align">Balance</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for transaction in transaction_list %}
-                <tr>
-                    <td class="left-align">{{ transaction["transfer_date"] }}</td>
-                    <td>{{ transaction["transaction_type_name"] }}</td>
-                    {% if transaction["amount"] > 0 %}
-                        <td class="right-align"><span style="font-weight: bold; color: #aabe49;">{{ transaction["amount"] | dkk }}</span> DKK</td>
-                    {% elif transaction["amount"] < 0 %}
-                        <td class="right-align"><span style="font-weight: bold; color: #BE496F;">{{ transaction["amount"] | dkk }}</span> DKK</td>
-                        {% else %}
-                        <td class="right-align"><span style="font-weight: bold; color: black;">{{ transaction["amount"] | dkk }}</span> DKK</td>
-                    {% endif %}
-                    {% if transaction["balance_updated"] > 0 %}
-                        <td class="right-align"><span style="font-weight: bold; color: #aabe49;">{{ transaction["balance_updated"] | dkk }}</span> DKK</td>
-                    {% elif transaction["balance_updated"] < 0 %}
-                        <td class="right-align"><span style="font-weight: bold; color: #BE496F;">{{ transaction["balance_updated"] | dkk }}</span> DKK</td>
-                    {% else %}
-                        <td class="right-align"><span style="font-weight: bold; color: black;">{{ transaction["balance_updated"] | dkk }}</span> DKK</td>
-                    {% endif %}
-                </tr>
-                {% endfor %}
-        </table>
+          </td>
+      </tr>
+  </table>
+  <table id="print-table" class="table table-striped">
+      <thead>
+          <tr>
+              <th class="left-align">Transfer Date</th>
+              <th>Transaction Type</th>
+              <th class="right-align">Amount</th>
+              <th class="right-align">Balance</th>
+              <th></th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for transaction in transaction_list %}
+          <tr>
+              <td class="left-align">{{ transaction["transfer_date"] }}</td>
+              <td>{{ transaction["transaction_type_name"] }}</td>
+              {% if transaction["amount"] > 0 %}
+                  <td class="right-align"><span style="font-weight: bold; color: #aabe49;">{{ transaction["amount"] | dkk }}</span> DKK</td>
+              {% elif transaction["amount"] < 0 %}
+                  <td class="right-align"><span style="font-weight: bold; color: #BE496F;">{{ transaction["amount"] | dkk }}</span> DKK</td>
+              {% else %}
+                  <td class="right-align"><span style="font-weight: bold; color: black;">{{ transaction["amount"] | dkk }}</span> DKK</td>
+              {% endif %}
+              {% if transaction["balance_updated"] > 0 %}
+                  <td class="right-align"><span style="font-weight: bold; color: #aabe49;">{{ transaction["balance_updated"] | dkk }}</span> DKK</td>
+              {% elif transaction["balance_updated"] < 0 %}
+                  <td class="right-align"><span style="font-weight: bold; color: #BE496F;">{{ transaction["balance_updated"] | dkk }}</span> DKK</td>
+              {% else %}
+                  <td class="right-align"><span style="font-weight: bold; color: black;">{{ transaction["balance_updated"] | dkk }}</span> DKK</td>
+              {% endif %}
+              <td><a href="#" data-toggle="modal" data-target="#transactionModal{{ transaction.id }}">View Details</a></td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+<!-- Modal -->
+{% for transaction in transaction_list %}
+<div class="modal fade" id="transactionModal{{ transaction.id }}" tabindex="-1" role="dialog" aria-labelledby="transactionModalLabel{{ transaction.id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="transactionModalLabel{{ transaction.id }}">Transaction Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Transfer Date:</strong> {{ transaction["transfer_date"] }}</p>
+                <p><strong>Transaction Type:</strong> {{ transaction["transaction_type_name"] }}</p>
+                <p><strong>Amount:</strong> {{ transaction["amount"] | dkk }} DKK</p>
+                <p><strong>Balance:</strong> {{ transaction["balance_updated"] | dkk }} DKK</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
+</div>
+{% endfor %}
 {% endblock %}
