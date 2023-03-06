@@ -70,7 +70,11 @@ searchInput.addEventListener("keydown", function(event) {
           </td>
       </tr>
   </table>
-  <table id="print-table" class="table table-striped">
+  <table id="print-table" class="table table-striped" style="table-layout: fixed;">
+    <col style="width: 20%;">
+    <col style="width: 30%;">
+    <col style="width: 25%;">
+    <col style="width: 25%;">
       <thead>
           <tr>
               <th class="left-align">Transfer Date</th>
@@ -81,27 +85,37 @@ searchInput.addEventListener("keydown", function(event) {
           </tr>
       </thead>
       <tbody>
-          {% for transaction in transaction_list %}
-          <tr>
-              <td class="left-align">{{ transaction["transfer_date"] }}</td>
-              <td>{{ transaction["transaction_type_name"] }}</td>
-              {% if transaction["amount"] > 0 %}
-                  <td class="right-align"><span style="font-weight: bold; color: #aabe49;">{{ transaction["amount"] | dkk }}</span> DKK</td>
-              {% elif transaction["amount"] < 0 %}
-                  <td class="right-align"><span style="font-weight: bold; color: #BE496F;">{{ transaction["amount"] | dkk }}</span> DKK</td>
-              {% else %}
-                  <td class="right-align"><span style="font-weight: bold; color: black;">{{ transaction["amount"] | dkk }}</span> DKK</td>
-              {% endif %}
-              {% if transaction["balance_updated"] > 0 %}
-                  <td class="right-align"><span style="font-weight: bold; color: #aabe49;">{{ transaction["balance_updated"] | dkk }}</span> DKK</td>
-              {% elif transaction["balance_updated"] < 0 %}
-                  <td class="right-align"><span style="font-weight: bold; color: #BE496F;">{{ transaction["balance_updated"] | dkk }}</span> DKK</td>
-              {% else %}
-                  <td class="right-align"><span style="font-weight: bold; color: black;">{{ transaction["balance_updated"] | dkk }}</span> DKK</td>
-              {% endif %}
-              <td><a href="#" data-toggle="modal" data-target="#transactionModal{{ transaction['transaction_id'] }}">View Details</a></td>
-          </tr>
-          {% endfor %}
+        <script>
+          var tableRows = document.querySelectorAll("#print-table tbody tr");
+      
+          tableRows.forEach(function (row) {
+              row.addEventListener("click", function () {
+                  var modalId = row.dataset.target;
+                  var modal = document.querySelector(modalId);
+                  $(modal).modal("show");
+              });
+          });
+      </script>
+        {% for transaction in transaction_list %}
+        <tr data-toggle="modal" data-target="#transactionModal{{ transaction['transaction_id'] }}">
+            <td class="left-align">{{ transaction["transfer_date"] }}</td>
+            <td>{{ transaction["transaction_type_name"] }}</td>
+            {% if transaction["amount"] > 0 %}
+                <td class="right-align"><span style="font-weight: bold; color: #aabe49;">{{ transaction["amount"] | dkk }}</span> DKK</td>
+            {% elif transaction["amount"] < 0 %}
+                <td class="right-align"><span style="font-weight: bold; color: #BE496F;">{{ transaction["amount"] | dkk }}</span> DKK</td>
+            {% else %}
+                <td class="right-align"><span style="font-weight: bold; color: black;">{{ transaction["amount"] | dkk }}</span> DKK</td>
+            {% endif %}
+            {% if transaction["balance_updated"] > 0 %}
+                <td class="right-align"><span style="font-weight: bold; color: #aabe49;">{{ transaction["balance_updated"] | dkk }}</span> DKK</td>
+            {% elif transaction["balance_updated"] < 0 %}
+                <td class="right-align"><span style="font-weight: bold; color: #BE496F;">{{ transaction["balance_updated"] | dkk }}</span> DKK</td>
+            {% else %}
+                <td class="right-align"><span style="font-weight: bold; color: black;">{{ transaction["balance_updated"] | dkk }}</span> DKK</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
       </tbody>
   </table>
 <!-- Modal -->
@@ -156,11 +170,24 @@ searchInput.addEventListener("keydown", function(event) {
                 <p class="left-align"><strong>Transaction Type:</strong> {{ transaction["transaction_type_name"] }}</p>
                 {% endif %}
                 
-                
+                <script>
+                  function printTransaction() {
+                      var transactionDetails = document.querySelector('.modal-body').innerHTML;
+                      var printWindow = window.open('', 'Print Window', 'height=400,width=600');
+                      printWindow.document.write('<html><head><title>Transaction Details</title>');
+                      printWindow.document.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">');
+                      printWindow.document.write('</head><body>');
+                      printWindow.document.write(transactionDetails);
+                      printWindow.document.write('</body></html>');
+                      printWindow.document.close();
+                      printWindow.print();
+                  }
+                  </script>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" onclick="printTransaction()">Print</button>
+          </div>
         </div>
     </div>
 </div>
