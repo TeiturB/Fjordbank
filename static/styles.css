@@ -334,11 +334,9 @@ table.icon-table {
 	text-align: left !important;
 }
 
-<<<<<<< HEAD
 /* END OF ACCOUNT OVERVIEW STYLING */
-=======
+
 /* Accounts & Loans */
->>>>>>> c1a4f0255a57f6e6237f0f7fef66ff4977721208
 
 .my-form {
   display: flex;
@@ -469,7 +467,7 @@ table.icon-table {
   transition: all 0.35s;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   border-radius: 0px 0px 10px 10px;
-  width: -webkit-fill-available;
+  width: 100%;
   height: max-content;
   animation: fade-in-up 0.5s ease-in-out;
   animation-fill-mode: forwards;
