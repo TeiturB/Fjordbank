@@ -99,18 +99,18 @@ searchInput.addEventListener("keydown", function(event) {
               {% else %}
                   <td class="right-align"><span style="font-weight: bold; color: black;">{{ transaction["balance_updated"] | dkk }}</span> DKK</td>
               {% endif %}
-              <td><a href="#" data-toggle="modal" data-target="#transactionModal{{ transaction.id }}">View Details</a></td>
+              <td><a href="#" data-toggle="modal" data-target="#transactionModal{{ transaction['transaction_id'] }}">View Details</a></td>
           </tr>
           {% endfor %}
       </tbody>
   </table>
 <!-- Modal -->
 {% for transaction in transaction_list %}
-<div class="modal fade" id="transactionModal{{ transaction.id }}" tabindex="-1" role="dialog" aria-labelledby="transactionModalLabel{{ transaction.id }}" aria-hidden="true">
+<div class="modal fade" id="transactionModal{{ transaction['transaction_id'] }}" tabindex="-1" role="dialog" aria-labelledby="transactionModalLabel{{ transaction['transaction_id'] }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="transactionModalLabel{{ transaction.id }}">Transaction Details</h5>
+                <h5 class="modal-title" id="transactionModalLabel{{ transaction['transaction_id'] }}">Transaction Details</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
