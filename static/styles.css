@@ -470,7 +470,6 @@ table.icon-table {
   height: max-content;
   animation: fade-in-up 0.5s ease-in-out;
   animation-fill-mode: forwards;
-  display: none;
 }
 .tab-switch:checked + .tab-label {
   background: #0062CC;
