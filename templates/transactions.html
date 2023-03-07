@@ -76,7 +76,7 @@ searchInput.addEventListener("keydown", function(event) {
   <table id="print-table" class="table table-striped">
       <thead>
         <tr>
-          <th colspan="4" class="left-align" style="font-size: 24px">Account Number: {{ transaction_list[0]['account'] }}</th>
+          <th colspan="4" class="left-align" style="font-size: 24px">Account Number: {{ registration_number ~ '-' ~ transaction_list[0]['account'] }}</th>
         </tr>
         <tr>
             <th class="left-align">Transfer Date</th>
