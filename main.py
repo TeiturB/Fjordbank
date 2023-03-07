@@ -237,7 +237,7 @@ def account_settings():
 
 
         response = requests.post(
-            "https://apex.oracle.com/pls/apex/databasur/user/accounts_and_loans/",
+            "https://apex.oracle.com/pls/apex/databasur/user/account_settings/",
             json=personinfo,
             headers=headers,
         )
@@ -251,6 +251,10 @@ def account_settings():
             return render_template("account_settings.html")
 
     else:
+        response = requests.get(
+            "https://apex.oracle.com/pls/apex/databasur/user/account_settings/",
+            headers=headers,
+        )
         return render_template("account_settings.html")
 
 
