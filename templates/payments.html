@@ -19,8 +19,6 @@
     <!-- Include Bootstrap Datepicker JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
-    <!-- Include showTab JavaScript -->
-    <script src="{{ url_for('static', filename='showTab.js') }}"></script>
 </head>  
 
 <center>
@@ -28,7 +26,7 @@
       <div class="tabs">
         <div class="tab">
           <input type="radio" name="css-tabs" id="tab-1" checked class="tab-switch">
-          <label for="tab-1" class="tab-label" onclick="showTab('tab-1')">Deposit</label>
+          <label for="tab-1" class="tab-label">Deposit</label>
           <div class="tab-content2"><div class="container">
             <form method="post" action="/payments" style="
             margin: 8% 0% 0% 0%;
@@ -70,7 +68,7 @@
 
         <div class="tab">
             <input type="radio" name="css-tabs" id="tab-2" checked class="tab-switch">
-            <label for="tab-2" class="tab-label" onclick="showTab('tab-2')">Transfer</label>
+            <label for="tab-2" class="tab-label">Transfer</label>
             <div class="tab-content2"><div class="container">
               <form method="post" action="/payments" style="
               margin: 8% 0% 0% 0%;
@@ -129,7 +127,7 @@
 
         <div class="tab">
           <input type="radio" name="css-tabs" id="tab-3" class="tab-switch">
-          <label for="tab-3" class="tab-label" onclick="showTab('tab-3')">Withdraw</label>
+          <label for="tab-3" class="tab-label">Withdraw</label>
           <div class="tab-content2"><div class="container">
             <form method="post" action="/payments" style="
             margin: 8% 0% 0% 0%;

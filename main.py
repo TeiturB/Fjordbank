@@ -563,7 +563,18 @@ def payments():
 
     # If GET method
     else:
-        return render_template("payments.html")
+        
+        customer_id = session["customer_id"]
+        print(customer_id)
+
+        url = f"https://apex.oracle.com/pls/apex/databasur/user/transfer/?customer_id={customer_id}"
+        response = requests.get(url, headers=headers)
+
+        account_list = json.loads(response.content)['items']
+
+        print(f"List of accounts: {account_list}")
+
+        return render_template("payments.html", account_list=account_list)
 
 
 if __name__ == "__main__":
