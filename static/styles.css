@@ -158,6 +158,7 @@ input {
 }
 .search-bar {
 	margin: auto;
+	padding: 1.5em;
 	justify-content: center;
 	max-width: 30em;
 }
@@ -334,7 +335,6 @@ table.icon-table {
 }
 
 /* END OF ACCOUNT OVERVIEW STYLING */
-
 /* Accounts & Loans */
 
 .my-form {
@@ -415,7 +415,7 @@ table.icon-table {
 }
 
 
-/* Tabs for Accounts and loans */
+/* Tabs for Accounts and loans + payments */
 
 .tabs {
   position: relative;
@@ -466,11 +466,32 @@ table.icon-table {
   transition: all 0.35s;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   border-radius: 0px 0px 10px 10px;
-  width: 100%;
+  width: -webkit-fill-available;
   height: max-content;
   animation: fade-in-up 0.5s ease-in-out;
   animation-fill-mode: forwards;
 }
+
+
+.tab-content2 {
+height: 12rem;
+position: absolute;
+z-index: 1;
+top: 2.75em;
+left: 0;
+padding: 1.618rem;
+background: #fff;
+color: #2c3e50;
+opacity: 0;
+transition: all 0.35s;
+box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
+border-radius: 0px 0px 10px 10px;
+width: 100%;
+height: 750px;
+animation: fade-in-up 0.5s ease-in-out;
+animation-fill-mode: forwards;
+}
+
 .tab-switch:checked + .tab-label {
   background: #0062CC;
   color: #fff;
@@ -488,6 +509,13 @@ table.icon-table {
   transition: all 0.35s;
 }
 
+
+.tab-switch:checked + label + .tab-content2 {
+  z-index: 2;
+  opacity: 1;
+  transition: all 0.35s;
+}
+
 @keyframes fade-in-up {
   0% {
     opacity: 0;
@@ -499,7 +527,38 @@ table.icon-table {
   }
 }
 
-/* END OF TABS FOR ACCOUNTS AND LOANS */
+@media only screen and (max-width: 600px) {
+  .tabs {
+    flex-wrap: wrap;
+    height: auto;
+    width: 100%;
+  }
+  
+  .tab {
+    width: 100%;
+  }
+  
+  .tab-content {
+    top: 3em;
+    height: auto;
+    padding: 1rem;
+  }
+  
+  .tab-label {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    height: 1.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .tab-content2 {
+    top: 3em;
+    height: auto;
+    padding: 1rem;
+  }
+}
+
+/* END OF TABS FOR ACCOUNTS AND LOANS + PAYMENTS*/
 
 
 /* MODAL STYLING */
@@ -589,21 +648,4 @@ table.icon-table {
   border-bottom: 2px solid #000000!important;
 }
 
-/* Icons */
-
-.form-control[type="datetime"] {
-  padding-left: 30px;
-  position: relative;
-}
-
-.form-control[type="datetime"]::before {
-  content: "";
-  background-image: url("/static/calendar-icon.png");
-  background-size: 20px 20px;
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  left: 5px;
-  top: 5px;
-  z-index: 1;
-}
+/* END OF MODAL STYLING */
