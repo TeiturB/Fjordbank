@@ -588,3 +588,22 @@ table.icon-table {
 .table thead th {
   border-bottom: 2px solid #000000!important;
 }
+
+/* Icons */
+
+.form-control[type="datetime"] {
+  padding-left: 30px;
+  position: relative;
+}
+
+.form-control[type="datetime"]::before {
+  content: "";
+  background-image: url("/static/calendar-icon.png");
+  background-size: 20px 20px;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  z-index: 1;
+}
