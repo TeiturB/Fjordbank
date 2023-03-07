@@ -198,14 +198,10 @@ def accounts_and_loans():
 @main.route("/account_settings", methods=["GET", "POST"])
 def account_settings():
     """Show user account_settings"""
-    if request.method == "POST":
-        
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
-            }
+    # Get p_number from session
+    p_number = session["p_number"]
 
-        # Get p_number from session
-        p_number = session["p_number"]
+    if request.method == "POST":
 
         first_name = request.form['first_name']
         middle_name = request.form['middle_name']
@@ -217,10 +213,6 @@ def account_settings():
         street_number = request.form['street_number']
         postal_code = request.form['postal_code']
 
-
-        update_person_info(p_p_number=p_number, p_address_id=address_id, p_phone_id=phone_id, p_email_id=email_id, p_first_name=first_name,
-                           p_middle_name=middle_name, p_last_name=last_name, p_hash=hash, p_street_name=street_name,
-                           p_street_number=street_number, p_postal_code=postal_code, p_email=email, p_phone_number=phone_number)
 
         personinfo = {
             "p_number": p_number,
@@ -251,9 +243,10 @@ def account_settings():
             return render_template("account_settings.html")
 
     else:
+
         response = requests.get(
-            "https://apex.oracle.com/pls/apex/databasur/user/account_settings/",
-            headers=headers, 
+            "https://apex.oracle.com/pls/apex/databasur/user/account_settings/?p_number={p_number}",
+            headers=headers
         )
         return render_template("account_settings.html")
 
