@@ -253,7 +253,7 @@ def account_settings():
     else:
         response = requests.get(
             "https://apex.oracle.com/pls/apex/databasur/user/account_settings/",
-            headers=headers,
+            headers=headers, 
         )
         return render_template("account_settings.html")
 
