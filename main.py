@@ -218,10 +218,6 @@ def account_settings():
         postal_code = request.form['postal_code']
 
 
-        update_person_info(p_p_number=p_number, p_address_id=address_id, p_phone_id=phone_id, p_email_id=email_id, p_first_name=first_name,
-                           p_middle_name=middle_name, p_last_name=last_name, p_hash=hash, p_street_name=street_name,
-                           p_street_number=street_number, p_postal_code=postal_code, p_email=email, p_phone_number=phone_number)
-
         personinfo = {
             "p_number": p_number,
             "first_name": first_name,
