@@ -196,52 +196,65 @@ def accounts_and_loans():
 
 
 @main.route("/account_settings", methods=["GET", "POST"])
-def dashboard():
-    """Show account settings"""
+def account_settings():
+    """Show user account_settings"""
     if request.method == "POST":
-
-        print("POST")
-
-    else:
-
-        # get the query parameter from the request URL
-        # query = request.args.get("bloop")
-
-        # namee = ":bloop"
-
-        # print(f"Query: {query}")
-
-        p_number = "010188121"
-
+        
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
+            }
+
+        # Get p_number from session
+        p_number = session["p_number"]
+
+        first_name = request.form['first_name']
+        middle_name = request.form['middle_name']
+        last_name = request.form['last_name']
+        hash = request.form['hash']
+        age = request.form['age']
+        email = request.form['email']
+        phone_number = request.form['phone_number']
+        street_name = request.form['street_name']
+        street_number = request.form['street_number']
+        postal_code = request.form['postal_code']
+
+
+        update_person_info(p_p_number=p_number, p_address_id=address_id, p_phone_id=phone_id, p_email_id=email_id, p_first_name=first_name,
+                           p_middle_name=middle_name, p_last_name=last_name, p_hash=hash, p_street_name=street_name,
+                           p_street_number=street_number, p_postal_code=postal_code, p_email=email, p_phone=phone_number)
+
+        personinfo = {
+            "p_number": p_number,
+            "first_name": first_name,
+            "middle_name": middle_name,
+            "last_name": last_name,
+            "hash": hash,
+            "age": age,
+            "email": email,
+            "phone_number": phone_number,
+            "street_name": street_name,
+            "street_number": street_number,
+            "postal_code": postal_code
         }
 
-        # make an HTTP GET request to the RESTful web service URL with the query parameter
-        response = requests.get(
-            f"https://apex.oracle.com/pls/apex/databasur/user/account_settings/?p_number={p_number}",
+
+        response = requests.post(
+            "https://apex.oracle.com/pls/apex/databasur/user/accounts_and_loans/",
+            json=personinfo,
             headers=headers,
         )
 
-        print(f"Response: {response}")
-        # print(f"JSON response: {response.json()}")
-
-        # check if the request was successful
+        # Check the response status code
         if response.status_code == 200:
-
-            # get the JSON data from the response
-            data = response.json()
-
-            print(data)
-
-            # return a formatted string with some data fields
-            return f"The result for query is: {data}"
-        # return render_template("dashboard.html")
-
+            flash("Account settings changed successfully")
+            return render_template("account_settings.html")
         else:
+            flash("Error changing settings: {}".format(response.text))
+            return render_template("account_settings.html")
 
-            # return an error message if the request failed
-            return f"Something went wrong: {response.text}"
+    else:
+        return render_template("account_settings.html")
+
 
 
 @main.route("/login", methods=["GET", "POST"])
@@ -514,6 +527,7 @@ def transactions():
 
 @main.route("/payments", methods=["GET", "POST"])
 def payments():
+    action = request.form.get("mode")
 
     if request.method == "POST":
         from_account = request.form.get("from_account")
@@ -531,7 +545,6 @@ def payments():
             "from_message": from_message,
             "due_date": due_date,
         }
-        
 
         # Make the RESTful Service call to the open_account procedure
         response = requests.post(
@@ -540,34 +553,18 @@ def payments():
             headers=headers,
         )
 
-
         # Check the response status code
         if response.status_code == 200:
-            
-            action = request.form.get("action")
             flash(f"Your {action} was successful")
-            
             return render_template("payments.html")
 
         else:
-
             flash("Error creating account: {}".format(response.text))
             return render_template("payments.html")
 
     # If GET method
     else:
-        
-        customer_id = session["customer_id"]
-        print(customer_id)
-
-        url = f"https://apex.oracle.com/pls/apex/databasur/user/transfer/?customer_id={customer_id}"
-        response = requests.get(url, headers=headers)
-
-        account_list = json.loads(response.content)['items']
-
-        print(f"List of accounts: {account_list}")
-
-        return render_template("payments.html", account_list=account_list)
+        return render_template("payments.html")
 
 
 if __name__ == "__main__":

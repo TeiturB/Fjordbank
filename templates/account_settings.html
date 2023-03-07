@@ -7,14 +7,26 @@
 {% block main %}
     <div class="container mt-3">
         <h2>Account Settings</h2>
-        <form action="/buy" method="post">
-            <div class="mb-3">
-                <input autocomplete="off" autofocus class="form-control mt-3 mx-auto w-auto" name="symbol" placeholder="T.d. NFLX" type="text">
-            </div>
-            <div class="mb-3">
-                <input autocomplete="off" class="form-control mt-3 mx-auto w-auto" name="shares" placeholder="Nøgd" min="1" max="1000000000000000" step="1" onfocus="this.previousValue = this.value" onkeydown="this.previousValue = this.value" oninput="validity.valid || (value = this.previousValue)" type="number">
-            </div>
-            <button class="btn btn-primary" type="submit">Keyp</button>
-        </form>
+        <form action="/account_settings" method="POST">
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name" value="{{ first_name }}">
+
+            <label for="middle_name">Middle Name:</label>
+            <input type="text" id="middle_name" name="middle_name" value="{{ middle_name }}">
+          
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name" value="{{ last_name }}">
+          
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{ email }}">
+
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" value="{{ phone_number }}">
+          
+            <label for="hash">Password:</label>
+            <input type="hash" id="hash" name="hash">
+          
+            <button type="submit">Save Changes</button>
+          </form>
     </div>
 {% endblock %}
