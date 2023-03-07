@@ -526,10 +526,14 @@ def transactions():
 
 @main.route("/payments", methods=["GET", "POST"])
 def payments():
+<<<<<<< HEAD
     #action = request.form.get("mode")
 
     
 
+=======
+    """Manage deposits, transfers, and withdrawals"""
+>>>>>>> 94e0cf04c00268fab68e68360ad1d9dbb00263e7
     if request.method == "POST":
         from_account = request.form.get("from_account")
         to_account = request.form.get("to_account")
