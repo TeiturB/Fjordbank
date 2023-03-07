@@ -6,7 +6,7 @@
 
 {% block main %}
 
-<head>
+
     <!-- Include Bootstrap Datepicker CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
   
@@ -17,9 +17,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   
     <!-- Include Bootstrap Datepicker JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-
-</head>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>  
 
 <center>
     <div class="wrapper">
@@ -47,24 +45,24 @@
               </div>
               
               <div class="form-floating mb-3">
-                <input type="text" name="amount" id="amount" class="form-control" placeholder="Amount" required>
-                <label for="amount">Amount</label>
+                <input type="number" name="amount_DKK" id="amount_DKK" class="form-control" placeholder="Amount" required>
+                <label for="amount_DKK">Amount</label>
               </div>
 
               <div class="form-floating mb-3">
-                <input type="text" name="to_message" id="message" class="form-control" placeholder="Message">
-                <label for="message">Message</label>
+                <input type="text" name="message_text" id="message_text" class="form-control" placeholder="Message">
+                <label for="message_text">Message</label>
               </div>
               
               <div class="form-floating mb-3">
-                <input type="datetime" name="due_date" id="due_date" class="form-control" placeholder="Due Date" data-provide="datepicker" data-date-format="yyyy-mm-dd" required>
+                <input type="date" name="due_date" id="due_date" class="form-control" placeholder="Due Date" data-provide="datepicker" data-date-format="yyyy-mm-dd" required>
                 <label for="due_date">Due Date</label>
               </div>
 
               <button type="submit" class="my-button">Deposit</button>
             </form>
           </div></div>
-        </div>
+        </div>-
 
         <div class="tab">
             <input type="radio" name="css-tabs" id="tab-2" checked class="tab-switch">
@@ -96,27 +94,27 @@
                     -->
 
                     <div class="form-floating mb-3">
-                      <input type="text" name="to_account" id="to_account" class="form-control" placeholder="To Account" required>
+                      <input type="number" name="to_account" id="to_account" class="form-control" placeholder="To Account" required>
                       <label for="to_account">To Account</label>
                     </div>
                     
                     <div class="form-floating mb-3">
-                      <input type="text" name="amount" id="amount" class="form-control" placeholder="Amount" required>
-                      <label for="amount">Amount</label>
+                      <input type="number" name="amount_DKK" id="amount_DKK" class="form-control" placeholder="Amount" required>
+                      <label for="amount_DKK">Amount</label>
                     </div>
       
                     <div class="form-floating mb-3">
-                      <input type="text" name="from_message" id="from_message" class="form-control" placeholder="From Message">
-                      <label for="from_message">From Message</label>
+                      <input type="text" name="message_text" id="message_text" class="form-control" placeholder="From Message">
+                      <label for="message_text">From Message</label>
                     </div>
       
                     <div class="form-floating mb-3">
-                      <input type="text" name="to_message" id="to_message" class="form-control" placeholder="To Message">
-                      <label for="to_message">To Message</label>
+                      <input type="text" name="own_text" id="own_text" class="form-control" placeholder="own_text">
+                      <label for="own_text">To Message</label>
                     </div>
                     
                     <div class="form-floating mb-3">
-                      <input type="datetime" name="due_date" id="due_date" class="form-control" placeholder="Due Date" data-provide="datepicker" data-date-format="yyyy-mm-dd" required>
+                      <input type="datetime" name="due_date" id="due_date" class="form-control" data-provide="datepicker" data-date-format="mm-dd-yyyy" placeholder="Due Date" required >
                       <label for="due_date">Due Date</label>
                     </div>
       
@@ -147,12 +145,12 @@
               </div>
               
               <div class="form-floating mb-3">
-                <input type="text" name="amount" id="amount" class="form-control" placeholder="Amount" required>
-                <label for="amount">Amount</label>
+                <input type="text" name="amount_DKK" id="amount_DKK3" class="form-control" placeholder="Amount" required>
+                <label for="amount_DKK">Amount</label>
               </div>
 
               <div class="form-floating mb-3">
-                <input type="datetime" name="due_date" id="due_date" class="form-control" placeholder="Due Date" data-provide="datepicker" data-date-format="yyyy-mm-dd" required>
+                <input type="date" name="due_date" id="due_date" class="form-control" placeholder="Due Date" data-provide="datepicker" data-date-format="yyyy-mm-dd" required>
                 <label for="due_date">Due Date</label>
               </div>
               

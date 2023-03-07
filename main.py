@@ -526,39 +526,43 @@ def transactions():
 
 @main.route("/payments", methods=["GET", "POST"])
 def payments():
-    action = request.form.get("mode")
+    #action = request.form.get("mode")
+
+    
 
     if request.method == "POST":
         from_account = request.form.get("from_account")
         to_account = request.form.get("to_account")
-        amount = request.form.get("amount")
-        to_message = request.form.get("to_message")
-        from_message = request.form.get("from_message")
+        amount_DKK = request.form.get("amount_DKK")
+        message_text = request.form.get("message_text")
+        own_text = request.form.get("own_text")
         due_date = request.form.get("due_date")
 
         payload = {
             "from_account": from_account,
             "to_account": to_account,
-            "amount": amount,
-            "to_message": to_message,
-            "from_message": from_message,
+            "amount_DKK": amount_DKK,
+            "message_text": message_text,
+            "own_text": own_text,
             "due_date": due_date,
-        }
+            }
 
         # Make the RESTful Service call to the open_account procedure
         response = requests.post(
-            "https://apex.oracle.com/pls/apex/databasur/user/transfer/",
+            "https://apex.oracle.com/pls/apex/databasur/user/payments/",
             json=payload,
             headers=headers,
         )
 
+        print(response.status_code)
+
         # Check the response status code
         if response.status_code == 200:
-            flash(f"Your {action} was successful")
+            flash(f"Your transfer was successful")
             return render_template("payments.html")
 
         else:
-            flash("Error creating account: {}".format(response.text))
+            #flash("Errror occurred while performing transfer: {}".format(response.content))
             return render_template("payments.html")
 
     # If GET method
@@ -567,7 +571,7 @@ def payments():
         customer_id = session["customer_id"]
         print(customer_id)
 
-        url = f"https://apex.oracle.com/pls/apex/databasur/user/transfer/?customer_id={customer_id}"
+        url = f"https://apex.oracle.com/pls/apex/databasur/user/payments/?customer_id={customer_id}"
         response = requests.get(url, headers=headers)
 
         account_list = json.loads(response.content)['items']
