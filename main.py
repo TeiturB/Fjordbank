@@ -211,7 +211,6 @@ def account_settings():
         middle_name = request.form['middle_name']
         last_name = request.form['last_name']
         hash = request.form['hash']
-        age = request.form['age']
         email = request.form['email']
         phone_number = request.form['phone_number']
         street_name = request.form['street_name']
@@ -221,7 +220,7 @@ def account_settings():
 
         update_person_info(p_p_number=p_number, p_address_id=address_id, p_phone_id=phone_id, p_email_id=email_id, p_first_name=first_name,
                            p_middle_name=middle_name, p_last_name=last_name, p_hash=hash, p_street_name=street_name,
-                           p_street_number=street_number, p_postal_code=postal_code, p_email=email, p_phone=phone_number)
+                           p_street_number=street_number, p_postal_code=postal_code, p_email=email, p_phone_number=phone_number)
 
         personinfo = {
             "p_number": p_number,
@@ -229,7 +228,6 @@ def account_settings():
             "middle_name": middle_name,
             "last_name": last_name,
             "hash": hash,
-            "age": age,
             "email": email,
             "phone_number": phone_number,
             "street_name": street_name,
