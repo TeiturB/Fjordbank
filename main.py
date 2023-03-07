@@ -80,7 +80,7 @@ def index():
         print(f"HEREERERERERERERE!!!!!! {response2}")
 
         if response.status_code == 200:
-
+            
             response_data = json.loads(json.loads(response.content)["items"][0]["json_data"]) if len(json.loads(response.content)["items"]) > 0 else {}
 
             print(f"JSON content: {response_data}")
@@ -96,6 +96,8 @@ def index():
             related_customers = response_data["related_customers"]
 
             session["customer_id"] = customer_id
+
+            
 
             full_name = (
                 f"{first_name} {middle_name + ' ' if middle_name else ''}{last_name}"
@@ -148,6 +150,7 @@ def index():
         session["registration_number"] = request.form.get("registration_number")
 
         return redirect("/transactions")
+
 
 
 @main.route("/accounts", methods=["GET", "POST"])
