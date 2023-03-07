@@ -526,8 +526,7 @@ def transactions():
 
 @main.route("/payments", methods=["GET", "POST"])
 def payments():
-    action = request.form.get("mode")
-
+    """Manage deposits, transfers, and withdrawals"""
     if request.method == "POST":
         from_account = request.form.get("from_account")
         to_account = request.form.get("to_account")
@@ -554,6 +553,7 @@ def payments():
 
         # Check the response status code
         if response.status_code == 200:
+            action = request.form.get("action")
             flash(f"Your {action} was successful")
             return render_template("payments.html")
 
