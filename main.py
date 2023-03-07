@@ -159,10 +159,6 @@ def accounts():
 def accounts_and_loans():
     if request.method == "POST":
 
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
-        }
-
         # Get p_number from session
         p_number = session["p_number"]
 
@@ -200,9 +196,6 @@ def account_settings():
     """Show user account_settings"""
     if request.method == "POST":
         
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
-            }
 
         # Get p_number from session
         p_number = session["p_number"]
@@ -230,7 +223,7 @@ def account_settings():
             "street_number": street_number,
             "postal_code": postal_code
         }
-
+        print(personinfo)
 
         response = requests.post(
             "https://apex.oracle.com/pls/apex/databasur/user/account_settings/",
@@ -247,10 +240,12 @@ def account_settings():
             return render_template("account_settings.html")
 
     else:
+        
         response = requests.get(
             "https://apex.oracle.com/pls/apex/databasur/user/account_settings/",
             headers=headers, 
         )
+        
         return render_template("account_settings.html")
 
 

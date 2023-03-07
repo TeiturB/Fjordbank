@@ -20,11 +20,20 @@
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" value="{{ email }}">
 
-            <label for="phone">Phone</label>
-            <input type="tel" id="phone" name="phone" value="{{ phone_number }}">
+            <label for="phone_number">Phone number:</label>
+            <input type="tel" id="phone_number" name="phone_number" value="{{ phone_number }}">
+
+            <label for="postal_code">Postal code:</label>
+            <input type="number" id="postal_code" name="postal_code" value="{{ postal_code }}">
+
+            <label for="street_name">Street name:</label>
+            <input type="text" id="street_name" name="street_name" value="{{ street_name }}">
+
+            <label for="street_number">Street number:</label>
+            <input type="text" id="street_number" name="street_number" value="{{ street_number }}">
           
             <label for="hash">Password:</label>
-            <input type="hash" id="hash" name="hash">
+            <input type="password" id="hash" name="hash">
           
             <button type="submit">Save Changes</button>
           </form>
