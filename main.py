@@ -194,11 +194,10 @@ def accounts_and_loans():
 @main.route("/account_settings", methods=["GET", "POST"])
 def account_settings():
     """Show user account_settings"""
-    if request.method == "POST":
-        
+    # Get p_number from session
+    p_number = session["p_number"]
 
-        # Get p_number from session
-        p_number = session["p_number"]
+    if request.method == "POST":
 
         first_name = request.form['first_name']
         middle_name = request.form['middle_name']
@@ -240,10 +239,9 @@ def account_settings():
             return render_template("account_settings.html")
 
     else:
-        
         response = requests.get(
-            "https://apex.oracle.com/pls/apex/databasur/user/account_settings/",
-            headers=headers, 
+            "https://apex.oracle.com/pls/apex/databasur/user/account_settings/?p_number={p_number}",
+            headers=headers
         )
         
         return render_template("account_settings.html")
