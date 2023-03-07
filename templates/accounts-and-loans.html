@@ -1,9 +1,14 @@
 {% extends "layout.html" %}
 
-<script src="{{ url_for('static', filename='form-validation.js') }}"></script>
+<head>
+  <script src="{{ url_for('static', filename='form-validation.js') }}"></script>
+
+  <!-- Include showTab JavaScript -->
+  <script src="{{ url_for('static', filename='showTab.js') }}"></script>
+</head>
 
 {% block title %}
-    Open account
+    Accounts & Loans
 {% endblock %}
 
 {% block main %}  
