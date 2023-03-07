@@ -71,9 +71,13 @@ def index():
         url = f"https://apex.oracle.com/pls/apex/databasur/user/index/?p_number={p_number}"
         response = requests.get(url, headers=headers)
 
+        response2 = requests.get("https://apex.oracle.com/pls/apex/databasur/user/test/", headers=headers)
+
         print(response.status_code)
 
         print(f"CONTENT HERE!!! {response.content}")
+
+        print(f"HEREERERERERERERE!!!!!! {response2}")
 
         if response.status_code == 200:
 
@@ -191,9 +195,9 @@ def accounts_and_loans():
         return render_template("accounts-and-loans.html")
 
 
-@main.route("/dashboard", methods=["GET", "POST"])
+@main.route("/account_settings", methods=["GET", "POST"])
 def dashboard():
-    """Show user dashboard"""
+    """Show account settings"""
     if request.method == "POST":
 
         print("POST")
@@ -215,7 +219,7 @@ def dashboard():
 
         # make an HTTP GET request to the RESTful web service URL with the query parameter
         response = requests.get(
-            f"https://apex.oracle.com/pls/apex/databasur/user/dashboard/?p_number={p_number}",
+            f"https://apex.oracle.com/pls/apex/databasur/user/account_settings/?p_number={p_number}",
             headers=headers,
         )
 
@@ -510,7 +514,6 @@ def transactions():
 
 @main.route("/payments", methods=["GET", "POST"])
 def payments():
-    action = request.form.get("mode")
 
     if request.method == "POST":
         from_account = request.form.get("from_account")
@@ -528,6 +531,7 @@ def payments():
             "from_message": from_message,
             "due_date": due_date,
         }
+        
 
         # Make the RESTful Service call to the open_account procedure
         response = requests.post(
@@ -536,18 +540,34 @@ def payments():
             headers=headers,
         )
 
+
         # Check the response status code
         if response.status_code == 200:
+            
+            action = request.form.get("action")
             flash(f"Your {action} was successful")
+            
             return render_template("payments.html")
 
         else:
+
             flash("Error creating account: {}".format(response.text))
             return render_template("payments.html")
 
     # If GET method
     else:
-        return render_template("payments.html")
+        
+        customer_id = session["customer_id"]
+        print(customer_id)
+
+        url = f"https://apex.oracle.com/pls/apex/databasur/user/transfer/?customer_id={customer_id}"
+        response = requests.get(url, headers=headers)
+
+        account_list = json.loads(response.content)['items']
+
+        print(f"List of accounts: {account_list}")
+
+        return render_template("payments.html", account_list=account_list)
 
 
 if __name__ == "__main__":
