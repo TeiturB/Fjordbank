@@ -73,6 +73,8 @@ def index():
 
         print(response.status_code)
 
+        print(f"CONTENT HERE!!! {response.content}")
+
         if response.status_code == 200:
 
             response_data = json.loads(
