@@ -71,17 +71,14 @@ def index():
         url = f"https://apex.oracle.com/pls/apex/databasur/user/index/?p_number={p_number}"
         response = requests.get(url, headers=headers)
 
-        response2 = requests.get("https://apex.oracle.com/pls/apex/databasur/user/test/", headers=headers)
-
         print(response.status_code)
-
-        print(f"CONTENT HERE!!! {response.content}")
-
-        print(f"HEREERERERERERERE!!!!!! {response2}")
 
         if response.status_code == 200:
             
-            response_data = json.loads(json.loads(response.content)["items"][0]["json_data"]) if len(json.loads(response.content)["items"]) > 0 else {}
+            print("YOOOOOOOOOOO")
+            print(json.loads(response.content))
+
+            response_data = json.loads(json.loads(response.content)["items"][0]["json_data"])
 
             print(f"JSON content: {response_data}")
 
@@ -91,22 +88,27 @@ def index():
             except:
                 middle_name = False
             last_name = response_data["last_name"]
-            customer_id = response_data["customer_id"]
-            account_list = response_data["accounts"]
-            related_customers = response_data["related_customers"]
-
-            session["customer_id"] = customer_id
-
-            
-
             full_name = (
                 f"{first_name} {middle_name + ' ' if middle_name else ''}{last_name}"
             )
-
             print(f"Name: {full_name}")
+
+            customer_id = response_data["customer_id"]
+            session["customer_id"] = customer_id
             print(f"Customer_id: {customer_id}")
+            
+
+            account_list = response_data["accounts"]
             print(f"List of user accounts: {account_list}")
+
+            
+
+            related_customers = response_data["related_customers"]
             print(f"Related customers: {related_customers}")
+
+
+
+
 
             if len(account_list) > 0:
 
@@ -115,8 +117,6 @@ def index():
                 total_balance = sum([account["balance"] for account in account_list])
 
                 print(f"Total balance: {total_balance}")
-                
-
 
                 return render_template(
                     "index.html",
@@ -125,7 +125,6 @@ def index():
                     account_list=account_list,
                     related_customers=related_customers,
                     total_balance=total_balance,
-                    
                 )
             
 
@@ -135,8 +134,9 @@ def index():
 
                 return render_template(
                     "index.html",
-                    full_name,
+                    full_name=full_name,
                     customer_id=customer_id,
+                    related_customers=related_customers
                 )
 
         else:
