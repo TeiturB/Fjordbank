@@ -650,12 +650,9 @@ animation-fill-mode: forwards;
 
 /* END OF MODAL STYLING */
 
-.nav-icon {
-  font-size: 20px;
-  color: #333;
-}
 
-
+/* ROUND BUTTON IN CORNER */
+/*
 .round-button {
   position: fixed;
   bottom: 20px;
@@ -678,3 +675,62 @@ animation-fill-mode: forwards;
 .round-button img {
   color: white;
 }
+
+
+.round-button2 {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: #007bff;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 50px;
+  color: white;
+  font-size: 24px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.round-button2:hover {
+  background-color: #0062cc;
+}
+
+.round-button2 img {
+  color: white;
+}
+/* ROUND BUTTON IN CORNER END */
+
+
+/* ROUND BUTTON IN CORNER */
+  .round-button-wrapper {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .round-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #007bff;
+    margin: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5)
+  }
+
+  .round-button:hover {
+    background-color: #0062cc;
+  }
+
+  .round-button img {
+    width: 25px;
+    height: 25px;
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(18deg) brightness(104%) contrast(100%);
+  }
+  /* ROUND BUTTON IN CORNER END */
