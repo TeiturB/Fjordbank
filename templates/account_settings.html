@@ -8,31 +8,31 @@
     <div class="container mt-3">
         <h2>Account Settings</h2>
         <form action="/account_settings" method="POST">
-            <label for="first_name">First Name:</label>
-            <input type="text" id="first_name" name="first_name" value="{{ first_name }}">
+            <label for="first_name">First Name</label>
+            <input type="text" id="first_name" name="first_name" value="{{ first_name }}" placeholder="{{ first_name }}">
 
-            <label for="middle_name">Middle Name:</label>
-            <input type="text" id="middle_name" name="middle_name" value="{{ middle_name }}">
+            <label for="middle_name">Middle Name</label>
+            <input type="text" id="middle_name" name="middle_name" value="{{ middle_name }}" placeholder="{{ middle_name }}">
           
-            <label for="last_name">Last Name:</label>
+            <label for="last_name">Last Name</label>
             <input type="text" id="last_name" name="last_name" value="{{ last_name }}">
           
-            <label for="email">Email:</label>
+            <label for="email">Email</label>
             <input type="email" id="email" name="email" value="{{ email }}">
 
-            <label for="phone_number">Phone number:</label>
+            <label for="phone_number">Phone number</label>
             <input type="tel" id="phone_number" name="phone_number" value="{{ phone_number }}">
 
-            <label for="postal_code">Postal code:</label>
+            <label for="postal_code">Postal code</label>
             <input type="number" id="postal_code" name="postal_code" value="{{ postal_code }}">
 
-            <label for="street_name">Street name:</label>
+            <label for="street_name">Street name</label>
             <input type="text" id="street_name" name="street_name" value="{{ street_name }}">
 
-            <label for="street_number">Street number:</label>
+            <label for="street_number">Street number</label>
             <input type="text" id="street_number" name="street_number" value="{{ street_number }}">
           
-            <label for="hash">Password:</label>
+            <label for="hash">Password</label>
             <input type="password" id="hash" name="hash">
           
             <button type="submit">Save Changes</button>
