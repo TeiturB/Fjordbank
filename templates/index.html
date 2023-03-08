@@ -100,7 +100,7 @@ searchInput.addEventListener("keydown", function(event) {
                 <td></td>
                 <td></td>
                 {% if total_balance > 0 %}
-                    <td class="right-align"><span style="font-weight: bold; color: #aabe49;">{{ total_balance | dkk }}</span> DKK</td>
+                    <td class="right-align"><span style="font-weight: bold; color: #aabe49;"><u>{{ total_balance | dkk }}</u></span> DKK</td>
                 {% elif total_balance < 0 %}
                     <td class="right-align"><span style="font-weight: bold; color: #BE496F;"><u>{{ total_balance | dkk }}</u></span> DKK</td>
                 {% else %}
@@ -113,12 +113,14 @@ searchInput.addEventListener("keydown", function(event) {
 
 <!-- HTML code for displaying the related customer's accounts -->
   
-  {% for related_customer in related_customers %}
+{% for related_customer in related_customers %}
+      {% set i = loop.index0 %}
+
     
       <table id="print-table" class="table table-striped">
         <thead>
           <tr>
-            <th colspan="4" class="left-align" style="font-size: 24px">{{ r_full_name }}</th>
+            <th colspan="4" class="left-align" style="font-size: 24px">{{ related_customers_dict["full_names"][i] }}</th>
           </tr>
           <tr>
             <th class="left-align">Account Name</th>
@@ -128,7 +130,7 @@ searchInput.addEventListener("keydown", function(event) {
           </tr>
         </thead>
         <tbody>
-          {% for account in r_account_list %}
+          {% for account in related_customers_dict["account_lists"][i] %}
           <form method="POST" action="/">
             <input type="hidden" name="accountnum" value="{{ account['accountnum'] }}">
             <input type="hidden" name="accountname" value="{{ account['accountname'] }}">
@@ -149,21 +151,24 @@ searchInput.addEventListener("keydown", function(event) {
           </form>
           {% endfor %}
         </tbody>
-        <tfoot style="border-bottom: 2px solid #000000;">
-          <tr>
-            <td class="left-align"><span style="font-weight: bold;">Total Balance</span></d>
-            <td></td>
-            <td></td>
-            {% if total_balance > 0 %}
-                <td class="right-align"><span style="font-weight: bold; color: #aabe49;">{{ total_balance | dkk }}</span> DKK</td>
-            {% elif total_balance < 0 %}
-                <td class="right-align"><span style="font-weight: bold; color: #BE496F;"><u>{{ total_balance | dkk }}</u></span> DKK</td>
-            {% else %}
-            <td class="right-align"><span style="font-weight: bold; color: black;"><u>{{ total_balance | dkk }}</u></span> DKK</td>
-                
-            {% endif %}
-          </tr>
-        </tfoot>
+    
+
+    <tfoot style="border-bottom: 2px solid #000000;">
+      <tr>
+        <td class="left-align"><span style="font-weight: bold;">Total Balance</span></d>
+          <td></td>
+          <td></td>
+          {% if related_customers_dict["total_balances"][i] > 0 %}
+          <td class="right-align"><span style="font-weight: bold; color: #aabe49;"><u>{{ related_customers_dict["total_balances"][i] | dkk }}</u></span> DKK</td>
+          {% elif related_customers_dict["total_balances"][i] < 0 %}
+          <td class="right-align"><span style="font-weight: bold; color: #BE496F;"><u>{{ related_customers_dict["total_balances"][i] | dkk }}</u></span> DKK</td>
+          {% else %}
+          <td class="right-align"><span style="font-weight: bold; color: black;"><u>{{ related_customers_dict["total_balances"][i] | dkk }}</u></span> DKK</td>
+          
+          {% endif %}
+        </tr>
+      </tfoot>
     </table>
-{% endfor %}
+    {% endfor %}
+
 {% endblock %}
