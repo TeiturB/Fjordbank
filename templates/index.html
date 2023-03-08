@@ -118,7 +118,7 @@ searchInput.addEventListener("keydown", function(event) {
       <table id="print-table" class="table table-striped">
         <thead>
           <tr>
-            <th colspan="4" class="left-align" style="font-size: 24px">{{ related_customer["full_name"] }}</th>
+            <th colspan="4" class="left-align" style="font-size: 24px">{{ r_full_name }}</th>
           </tr>
           <tr>
             <th class="left-align">Account Name</th>
@@ -128,7 +128,7 @@ searchInput.addEventListener("keydown", function(event) {
           </tr>
         </thead>
         <tbody>
-          {% for account in account_list %}
+          {% for account in r_account_list %}
           <form method="POST" action="/">
             <input type="hidden" name="accountnum" value="{{ account['accountnum'] }}">
             <input type="hidden" name="accountname" value="{{ account['accountname'] }}">
@@ -166,46 +166,4 @@ searchInput.addEventListener("keydown", function(event) {
         </tfoot>
     </table>
 {% endfor %}
-
-
-
-
-
-
-
-
-
-
-{% if related_customers %}
-  {% for related_customer in related_customers %} 
-    <h2>{{ related_customer["first_name"] }} {{ related_customer["last_name"] }}</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Account Name</th>
-          <th>Account Number</th>
-          <th>Account Type</th>
-          <th>Balance</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for account in related_customer["accounts"] %}
-          <tr>
-            <td>{{ account["accountname"] }}</td>
-            <td>{{ account["registration_number"] ~ "-" ~ account["accountnum"] }}</td>
-            <td>{{ account["account_type"] }}</td>
-            {% if account["balance"] > 0 %}
-              <td><span style="font-weight: bold; color: #aabe49;">{{ account["balance"] | dkk }}</span> DKK</td>
-            {% elif account["balance"] < 0 %}
-              <td><span style="font-weight: bold; color: #A23333;">{{ account["balance"] | dkk }}</span> DKK</td>
-            {% else %}
-              <td><span style="font-weight: bold; color: black;">{{ account["balance"] | dkk }}</span> DKK</td>
-            {% endif %}
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  {% endfor %}
-{% endif %}
-    </div>
 {% endblock %}

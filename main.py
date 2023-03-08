@@ -104,19 +104,29 @@ def index():
 
 
             for i, related_customer in enumerate(related_customers):
-                print(f"Related Customer #{i + 1}: {related_customer}")
+
+                r_first_name = related_customer["first_name"]
+                try:
+                    r_middle_name = related_customer["middle_name"]
+                except:
+                    r_middle_name = False
+                r_last_name = related_customer["last_name"]
+                r_full_name = (
+                    f"{r_first_name} {r_middle_name + ' ' if r_middle_name else ''}{r_last_name}"
+                )
+                print(f"Related Customer #{i + 1}'s name: {r_full_name}")
 
                 r_account_list = related_customer["accounts"]
-
-                print(r_account_list)
+                print(f"Related customer #{i + 1}'s accounts: {r_account_list}")
 
                 r_total_balance = []
                 total = 0
                 for account in r_account_list:
                     total += account["balance"]
+
                 r_total_balance.append(total)
 
-                print(r_total_balance)
+                print(f"Related customer #{i + 1}'s total balance: {r_total_balance}")
 
                 if len(account_list) > 0:
 
@@ -131,6 +141,10 @@ def index():
                         account_list=account_list,
                         related_customers=related_customers,
                         total_balance=total_balance,
+
+                        r_full_name=r_full_name,
+                        r_account_list=r_account_list,
+                        r_total_balance=r_total_balance
                     )
                 
 
@@ -143,7 +157,11 @@ def index():
                         full_name=full_name,
                         customer_id=customer_id,
                         related_customers=related_customers,
-                        total_balance=total_balance
+                        total_balance=total_balance,
+
+                        r_full_name=r_full_name,
+                        r_account_list=r_account_list,
+                        r_total_balance=r_total_balance
                     )
 
         else:
