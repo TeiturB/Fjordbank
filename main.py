@@ -102,35 +102,44 @@ def index():
 
             total_balance = sum([account["balance"] for account in account_list])
 
-            r_full_name = []
-            r_account_list = []
-            r_total_balance = []
+            # Declare lists for displaying tables of related customers
+            r_full_name_list = []
+            r_account_list_list = []
+            r_total_balance_list = []
 
+            # For each customer, append to the lists
             for i, related_customer in enumerate(related_customers):
 
-                r_first_name = related_customer["first_name"]
+                l_first_name = related_customer["first_name"]
                 try:
-                    r_middle_name = related_customer["middle_name"]
+                    l_middle_name = related_customer["middle_name"]
                 except:
-                    r_middle_name = False
-                r_last_name = related_customer["last_name"]
-                l_full_name = f"{r_first_name} {r_middle_name + ' ' if r_middle_name else ''}{r_last_name}"
+                    l_middle_name = False
+                l_last_name = related_customer["last_name"]
+                l_full_name = f"{l_first_name} {l_middle_name + ' ' if l_middle_name else ''}{l_last_name}"
                 print(f"Related Customer #{i + 1}'s name: {l_full_name}")
 
-                l_full_name.append(full_name)
+                r_full_name_list.append(l_full_name)
 
                 l_account_list = related_customer["accounts"]
                 print(f"Related customer #{i + 1}'s accounts: {l_account_list}")
 
-                r_account_list.append(l_account_list)
+                r_account_list_list.append(l_account_list)
 
                 total = 0
-                for account in r_account_list:
+                for account in l_account_list:
                     total += account["balance"]
                 print(f"Related customer #{i + 1}'s total balance: {total}")
 
-                r_total_balance.append(total)
+                r_total_balance_list.append(total)
 
+
+            print(f"r_full_name_list: {r_full_name_list}")
+            print(f"r_account_list_list: {r_account_list_list}")
+            print(f"r_total_balance_list: {r_total_balance_list}")
+
+            # Make a dictionary of all related customers' lists
+            related_customers_dict = {'full_names': r_full_name_list, 'account_lists': r_account_list_list, 'total_balances': r_total_balance_list}
 
             if len(account_list) > 0:
 
@@ -143,12 +152,10 @@ def index():
                     full_name=full_name,
                     customer_id=customer_id,
                     account_list=account_list,
-                    related_customers=related_customers,
                     total_balance=total_balance,
-
-                    r_full_name=r_full_name,
-                    r_account_list=r_account_list,
-                    r_total_balance=r_total_balance
+                    
+                    related_customers=related_customers,
+                    related_customers_dict=related_customers_dict,
                 )
             
 
@@ -160,12 +167,10 @@ def index():
                     "index.html",
                     full_name=full_name,
                     customer_id=customer_id,
-                    related_customers=related_customers,
                     total_balance=total_balance,
 
-                    r_full_name=r_full_name,
-                    r_account_list=r_account_list,
-                    r_total_balance=r_total_balance
+                    related_customers=related_customers,
+                    related_customers_dict=related_customers_dict
                 )
 
         else:
