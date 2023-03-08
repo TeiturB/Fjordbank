@@ -100,34 +100,53 @@ def index():
             related_customers = response_data["related_customers"]
             print(f"Related customers: {related_customers}")
 
-            if len(account_list) > 0:
+            total_balance = sum([account["balance"] for account in account_list])
 
-                print("User has accounts!")
 
-                total_balance = sum([account["balance"] for account in account_list])
+            for i, related_customer in enumerate(related_customers):
+                print(f"Related Customer #{i + 1}: {related_customer}")
 
-                print(f"Total balance: {total_balance}")
+                r_account_list = related_customer["accounts"]
 
-                return render_template(
-                    "index.html",
-                    full_name=full_name,
-                    customer_id=customer_id,
-                    account_list=account_list,
-                    related_customers=related_customers,
-                    total_balance=total_balance,
-                )
-            
+                print(r_account_list)
 
-            else:
+                r_total_balance = []
+                total = 0
+                for account in r_account_list:
+                    total += account["balance"]
+                r_total_balance.append(total)
 
-                print("User does not have accounts!")
+                print(r_total_balance)
 
-                return render_template(
-                    "index.html",
-                    full_name=full_name,
-                    customer_id=customer_id,
-                    related_customers=related_customers
-                )
+                r_total_balance_list
+
+                if len(account_list) > 0:
+
+                    print("User has accounts!")
+
+                    print(f"Total balance: {total_balance}")
+
+                    return render_template(
+                        "index.html",
+                        full_name=full_name,
+                        customer_id=customer_id,
+                        account_list=account_list,
+                        related_customers=related_customers,
+                        total_balance=total_balance,
+                    )
+                
+
+                else:
+
+                    print("User does not have accounts!")
+
+                    return render_template(
+                        "index.html",
+                        full_name=full_name,
+                        customer_id=customer_id,
+                        related_customers=related_customers,
+                        total_balance=total_balance
+                    )
 
         else:
             flash("Database error!")
