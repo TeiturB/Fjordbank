@@ -251,13 +251,13 @@ def account_settings():
             f"https://apex.oracle.com/pls/apex/databasur/user/account_settings/?p_number={p_number}",
             headers=headers,
         )
+        
         # Extract the values of the fields you want to show in the input boxes
-        response_data = None
-        response_json = json.loads(response.content)
-        print(response.content)
-        if "items" in response_json and len(response_json["items"]) > 0:
-            response_data = json.loads(response_json["items"][0]["json_data"])
+        response_data = json.loads(response.content)
 
+        if "items" in response_data and len(response_data["items"]) > 0:
+            response_data = response_data["items"][0]
+            
             first_name = response_data['first_name']
             try:
                 middle_name = response_data["middle_name"]
