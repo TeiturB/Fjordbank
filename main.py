@@ -204,7 +204,7 @@ def account_settings():
     """Show user account_settings"""
     # Get p_number from session
     p_number = session["p_number"]
-
+    
     if request.method == "POST":
 
         first_name = request.form['first_name']
@@ -248,12 +248,40 @@ def account_settings():
 
     else:
         response = requests.get(
-            "https://apex.oracle.com/pls/apex/databasur/user/account_settings/?p_number={p_number}",
-            headers=headers
+            f"https://apex.oracle.com/pls/apex/databasur/user/account_settings/?p_number={p_number}",
+            headers=headers,
         )
-        
+        # Extract the values of the fields you want to show in the input boxes
+        response_data = None
+        response_json = json.loads(response.content)
+        print(response.content)
+        if "items" in response_json and len(response_json["items"]) > 0:
+            response_data = json.loads(response_json["items"][0]["json_data"])
+
+            first_name = response_data['first_name']
+            try:
+                middle_name = response_data["middle_name"]
+            except:
+                middle_name = False
+            last_name = response_data['last_name']
+            email = response_data['email']
+            phone_number = response_data['phone_number']
+            street_name = response_data['street_name']
+            street_number = response_data['street_number']
+            postal_code = response_data['postal_code']
+            return render_template("account_settings.html",
+                               first_name=first_name,
+                               middle_name=middle_name,
+                               last_name=last_name,
+                               email=email,
+                               phone_number=phone_number,
+                               street_name=street_name,
+                               street_number=street_number,
+                               postal_code=postal_code)
+
         return render_template("account_settings.html")
 
+       # return render_template("account_settings.html")
 
 
 @main.route("/login", methods=["GET", "POST"])
