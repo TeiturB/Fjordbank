@@ -102,6 +102,9 @@ def index():
 
             total_balance = sum([account["balance"] for account in account_list])
 
+            r_full_name = []
+            r_account_list = []
+            r_total_balance = []
 
             for i, related_customer in enumerate(related_customers):
 
@@ -111,58 +114,59 @@ def index():
                 except:
                     r_middle_name = False
                 r_last_name = related_customer["last_name"]
-                r_full_name = (
-                    f"{r_first_name} {r_middle_name + ' ' if r_middle_name else ''}{r_last_name}"
-                )
-                print(f"Related Customer #{i + 1}'s name: {r_full_name}")
+                l_full_name = f"{r_first_name} {r_middle_name + ' ' if r_middle_name else ''}{r_last_name}"
+                print(f"Related Customer #{i + 1}'s name: {l_full_name}")
 
-                r_account_list = related_customer["accounts"]
-                print(f"Related customer #{i + 1}'s accounts: {r_account_list}")
+                l_full_name.append(full_name)
 
-                r_total_balance = []
+                l_account_list = related_customer["accounts"]
+                print(f"Related customer #{i + 1}'s accounts: {l_account_list}")
+
+                r_account_list.append(l_account_list)
+
                 total = 0
                 for account in r_account_list:
                     total += account["balance"]
+                print(f"Related customer #{i + 1}'s total balance: {total}")
 
                 r_total_balance.append(total)
 
-                print(f"Related customer #{i + 1}'s total balance: {r_total_balance}")
 
-                if len(account_list) > 0:
+            if len(account_list) > 0:
 
-                    print("User has accounts!")
+                print("User has accounts!")
 
-                    print(f"Total balance: {total_balance}")
+                print(f"Total balance: {total_balance}")
 
-                    return render_template(
-                        "index.html",
-                        full_name=full_name,
-                        customer_id=customer_id,
-                        account_list=account_list,
-                        related_customers=related_customers,
-                        total_balance=total_balance,
+                return render_template(
+                    "index.html",
+                    full_name=full_name,
+                    customer_id=customer_id,
+                    account_list=account_list,
+                    related_customers=related_customers,
+                    total_balance=total_balance,
 
-                        r_full_name=r_full_name,
-                        r_account_list=r_account_list,
-                        r_total_balance=r_total_balance
-                    )
-                
+                    r_full_name=r_full_name,
+                    r_account_list=r_account_list,
+                    r_total_balance=r_total_balance
+                )
+            
 
-                else:
+            else:
 
-                    print("User does not have accounts!")
+                print("User does not have accounts!")
 
-                    return render_template(
-                        "index.html",
-                        full_name=full_name,
-                        customer_id=customer_id,
-                        related_customers=related_customers,
-                        total_balance=total_balance,
+                return render_template(
+                    "index.html",
+                    full_name=full_name,
+                    customer_id=customer_id,
+                    related_customers=related_customers,
+                    total_balance=total_balance,
 
-                        r_full_name=r_full_name,
-                        r_account_list=r_account_list,
-                        r_total_balance=r_total_balance
-                    )
+                    r_full_name=r_full_name,
+                    r_account_list=r_account_list,
+                    r_total_balance=r_total_balance
+                )
 
         else:
             flash("Database error!")
