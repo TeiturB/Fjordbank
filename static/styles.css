@@ -649,3 +649,8 @@ animation-fill-mode: forwards;
 }
 
 /* END OF MODAL STYLING */
+
+.nav-icon {
+  font-size: 20px;
+  color: #333;
+}
