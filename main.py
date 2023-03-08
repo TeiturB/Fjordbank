@@ -525,19 +525,12 @@ def transactions():
 
 
 @main.route("/payments", methods=["GET", "POST"])
-def payments():
-<<<<<<< HEAD
-    #action = request.form.get("mode")
+def payments():    
 
-    
-
-=======
-    """Manage deposits, transfers, and withdrawals"""
->>>>>>> 94e0cf04c00268fab68e68360ad1d9dbb00263e7
     if request.method == "POST":
         from_account = request.form.get("from_account")
         to_account = request.form.get("to_account")
-        amount_DKK = request.form.get("amount_DKK")
+        amount = request.form.get("amount")
         message_text = request.form.get("message_text")
         own_text = request.form.get("own_text")
         due_date = request.form.get("due_date")
@@ -545,7 +538,7 @@ def payments():
         payload = {
             "from_account": from_account,
             "to_account": to_account,
-            "amount_DKK": amount_DKK,
+            "amount": amount,
             "message_text": message_text,
             "own_text": own_text,
             "due_date": due_date,
@@ -553,7 +546,7 @@ def payments():
 
         # Make the RESTful Service call to the open_account procedure
         response = requests.post(
-            "https://apex.oracle.com/pls/apex/databasur/user/payments/",
+            "https://apex.oracle.com/pls/apex/databasur/user/transfer/",
             json=payload,
             headers=headers,
         )
@@ -562,11 +555,12 @@ def payments():
 
         # Check the response status code
         if response.status_code == 200:
-            flash(f"Your transfer was successful")
+            action = request.form.get("mode")
+            flash(f"Your {action} was successful")
             return render_template("payments.html")
 
         else:
-            #flash("Errror occurred while performing transfer: {}".format(response.content))
+            flash("Error occurred while performing {action}: {}".format(response.content))
             return render_template("payments.html")
 
     # If GET method
