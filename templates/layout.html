@@ -31,11 +31,11 @@
                 <div class="collapse navbar-collapse" id="navbar">
                     {% if session["p_number"] %}
                         <ul class="navbar-nav me-auto mt-2">
-                        <li class="nav-item"><img class="userinfo" src="https://img.icons8.com/material-outlined/24/000000/user.png" style="height:20px; width:20px; color: rgba(0,0,0,.55);"><a class="nav-link" href="/account_settings">Account Settings</a></li>
+                        <li class="nav-item"><img class="userinfo" src="https://img.icons8.com/material-outlined/24/000000/user.png" style="height:20px; width:20px; color: rgba(0,0,0,.55);"/><a class="nav-link" href="/account_settings">Account Settings</a></li>
                             
                         {% if session["customer_id"] %}
-                            <a href="/accounts_and_loans"><li class="nav-item"><a class="nav-link" href="/accounts_and_loans">Accounts & Loans</a></li></a>
-                            <a href="/payments"><li class="nav-item"><a class="nav-link" href="/payments">Payments</a></li></a>
+                            <a href="/accounts_and_loans"><li class="nav-item"><a class="nav-link" href="/accounts_and_loans"><img src="https://img.icons8.com/ios/50/000000/bank-building--v1.png" style="height:15px; width:15px;"/> Accounts & Loans</a></li></a>
+                            <a href="/payments"><li class="nav-item"><a class="nav-link" href="/payments"><img src="https://img.icons8.com/ios/50/000000/money--v1.png" style="height:15px; width:15px;"/> Payments</a></li></a>
                             
                         {% endif %}
                         <!--{% if session["employee_id"] %}
