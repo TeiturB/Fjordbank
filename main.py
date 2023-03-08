@@ -584,11 +584,13 @@ def transactions():
 @main.route("/payments", methods=["GET", "POST"])
 def payments():    
 
+    payment_method = None
     if request.method == "POST":
-
+        
         payment_method = request.form.get("payment_method")
+        
 
-        if payment_method is "deposit":
+        if payment_method == "deposit":
 
             to_account = request.form.get("to_account")
             amount = request.form.get("amount")
@@ -602,7 +604,7 @@ def payments():
                 "due_date": due_date,
                 }
 
-        elif payment_method is "transfer":
+        elif payment_method == "transfer":
 
             from_account = request.form.get("from_account")
             to_account = request.form.get("to_account")
@@ -620,7 +622,7 @@ def payments():
                 "due_date": due_date,
                 }
             
-        elif payment_method is "withdraw":
+        elif payment_method == "withdraw":
 
             from_account = request.form.get("from_account")
             amount = request.form.get("amount")
@@ -633,10 +635,10 @@ def payments():
                 "own_text": own_text,
                 "due_date": due_date,
                 }
-
+            
         # Make the RESTful Service call to the appropriate procedure
         response = requests.post(
-            "https://apex.oracle.com/pls/apex/databasur/user/{payment_method}/",
+            f"https://apex.oracle.com/pls/apex/databasur/user/{payment_method}/",
             json=payload,
             headers=headers,
         )
@@ -645,6 +647,8 @@ def payments():
 
         # Check the response status code
         if response.status_code != 200:
+            print(payment_method)
+            print(response.content)
             flash("Error occurred while performing {payment_method}: {}".format(response.content))
             return render_template("payments.html")
 
@@ -664,7 +668,7 @@ def payments():
 
         print(f"List of accounts: {account_list}")
 
-        return render_template("payments.html", account_list=account_list)
+        return render_template("payments.html", payment_method=payment_method, account_list=account_list)
 
 
 if __name__ == "__main__":
