@@ -74,9 +74,6 @@ def index():
         print(response.status_code)
 
         if response.status_code == 200:
-            
-            print("YOOOOOOOOOOO")
-            print(json.loads(response.content))
 
             response_data = json.loads(json.loads(response.content)["items"][0]["json_data"])
 
@@ -96,19 +93,12 @@ def index():
             customer_id = response_data["customer_id"]
             session["customer_id"] = customer_id
             print(f"Customer_id: {customer_id}")
-            
 
             account_list = response_data["accounts"]
             print(f"List of user accounts: {account_list}")
 
-            
-
             related_customers = response_data["related_customers"]
             print(f"Related customers: {related_customers}")
-
-
-
-
 
             if len(account_list) > 0:
 
@@ -583,7 +573,7 @@ def payments():
 
         # Check the response status code
         if response.status_code == 200:
-            action = request.form.get("mode")
+            action = request.form.get("action")
             flash(f"Your {action} was successful")
             return render_template("payments.html")
 
