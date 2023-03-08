@@ -118,8 +118,6 @@ def index():
 
                 print(r_total_balance)
 
-                r_total_balance_list
-
                 if len(account_list) > 0:
 
                     print("User has accounts!")
