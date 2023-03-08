@@ -113,12 +113,12 @@ searchInput.addEventListener("keydown", function(event) {
 
 <!-- HTML code for displaying the related customer's accounts -->
   
-  {% if related_customers %}
+  {% for related_customer in related_customers %}
     
       <table id="print-table" class="table table-striped">
         <thead>
           <tr>
-            <th colspan="4" class="left-align" style="font-size: 24px">{{ full_name }}</th>
+            <th colspan="4" class="left-align" style="font-size: 24px">{{ related_customer["full_name"] }}</th>
           </tr>
           <tr>
             <th class="left-align">Account Name</th>
@@ -165,7 +165,7 @@ searchInput.addEventListener("keydown", function(event) {
           </tr>
         </tfoot>
     </table>
-{% endif %}
+{% endfor %}
 
 
 
