@@ -210,7 +210,7 @@ def account_settings():
         first_name = request.form['first_name']
         middle_name = request.form['middle_name']
         last_name = request.form['last_name']
-        hash = request.form['hash']
+        hash = generate_password_hash(request.form['hash'])
         email = request.form['email']
         phone_number = request.form['phone_number']
         street_name = request.form['street_name']
