@@ -26,7 +26,7 @@
           <input type="radio" name="css-tabs" id="tab-1" checked class="tab-switch">
           <label for="tab-1" class="tab-label">Deposit</label>
           <div class="tab-content2"><div class="container">
-            <form method="post" action="/deposit" style="
+            <form method="post" action="/payments" style="
             margin: 8% 0% 0% 0%;
             padding: 2% 2% 2% 2%;
             border-radius: 10px;" required>
@@ -59,7 +59,7 @@
                 <label for="due_date">Due Date</label>
               </div>
 
-              <button type="submit" class="my-button" value="Deposit">Deposit</button>
+              <button type="submit" class="my-button" name="payment_method" value="Deposit">Deposit</button>
             </form>
           </div></div>
         </div>
@@ -68,7 +68,7 @@
             <input type="radio" name="css-tabs" id="tab-2" checked class="tab-switch">
             <label for="tab-2" class="tab-label">Transfer</label>
             <div class="tab-content2"><div class="container">
-              <form method="post" action="/transfer" style="
+              <form method="post" action="/payments" style="
               margin: 8% 0% 0% 0%;
               padding: 2% 2% 2% 2%;
               border-radius: 10px;" required>
@@ -118,7 +118,7 @@
                       <label for="due_date">Due Date</label>
                     </div>
       
-                    <button type="submit" class="my-button" value="Transfer">Transfer</button>
+                    <button type="submit" class="my-button" name="payment_method" value="Transfer">Transfer</button>
               </form>
             </div></div>
         </div>
@@ -127,7 +127,7 @@
           <input type="radio" name="css-tabs" id="tab-3" class="tab-switch">
           <label for="tab-3" class="tab-label">Withdraw</label>
           <div class="tab-content2"><div class="container">
-            <form method="post" action="/withdraw" style="
+            <form method="post" action="/payments" style="
             margin: 8% 0% 0% 0%;
             padding: 2% 2% 2% 2%;
             border-radius: 10px;">
@@ -159,7 +159,7 @@
                 <label for="due_date">Due Date</label>
               </div>
               
-              <button type="submit" class="my-button" value="Withdraw">Withdraw</button>
+              <button type="submit" class="my-button" name="payment_method" value="Withdraw">Withdraw</button>
             </form>
           </div></div>
         </div>
