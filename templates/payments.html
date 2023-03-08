@@ -55,11 +55,11 @@
               </div>
               
               <div class="form-floating mb-3">
-                <input type="date" name="due_date" id="due_date" class="form-control" placeholder="Due Date" data-provide="datepicker" data-date-format="mm-dd-yyyy" autocomplete="off" required>
+                <input type="datetime" name="due_date" id="due_date" class="form-control" placeholder="Due Date" data-provide="datepicker" data-date-format="mm-dd-yyyy" autocomplete="off" required>
                 <label for="due_date">Due Date</label>
               </div>
 
-              <button type="submit" class="my-button" name="payment_method" value="Deposit">Deposit</button>
+              <button type="submit" class="my-button" name="payment_method" value="deposit">Deposit</button>
             </form>
           </div></div>
         </div>
@@ -76,7 +76,7 @@
                 <div class="form-floating mb-3">
                   
                     <select name="from_account" id="from_account" class="form-control">
-                        <optgroup label="Select Account" disabled>
+                        <optgroup label="Select Account">
                         </optgroup>
                         {% for account in account_list %}
                         <option value="{{ account['accountnum'] }}" selected>{{ account["accountnum"] ~ ": " ~ account["accountname"] }}</option>
@@ -114,11 +114,11 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                      <input type="date" name="due_date" id="due_date" class="form-control" data-provide="datepicker" data-date-format="mm-dd-yyyy" placeholder="Due Date" autocomplete="off" required >
+                      <input type="text" name="due_date" id="due_date" class="form-control" placeholder="Due Date" data-date-format="mm-dd-yyyy" autocomplete="off" >
                       <label for="due_date">Due Date</label>
                     </div>
       
-                    <button type="submit" class="my-button" name="payment_method" value="Transfer">Transfer</button>
+                    <button type="submit" class="my-button" name="payment_method" value="transfer">Transfer</button>
               </form>
             </div></div>
         </div>
@@ -155,11 +155,11 @@
               </div>
 
               <div class="form-floating mb-3">
-                <input type="date" name="due_date" id="due_date" class="form-control" placeholder="Due Date" data-provide="datepicker" data-date-format="mm-dd-yyyy" autocomplete="off" required>
+                <input type="datetime" name="due_date" id="due_date" class="form-control" placeholder="Due Date" data-provide="datepicker" data-date-format="mm-dd-yyyy" autocomplete="off" required>
                 <label for="due_date">Due Date</label>
               </div>
               
-              <button type="submit" class="my-button" name="payment_method" value="Withdraw">Withdraw</button>
+              <button type="submit" class="my-button" name="payment_method" value="withdraw">Withdraw</button>
             </form>
           </div></div>
         </div>
