@@ -45,17 +45,17 @@
               </div>
               
               <div class="form-floating mb-3">
-                <input type="number" name="amount_DKK" id="amount_DKK" class="form-control" placeholder="Amount" required>
-                <label for="amount_DKK">Amount</label>
+                <input type="number" name="amount" id="amount" class="form-control" placeholder="Amount" required>
+                <label for="amount">Amount</label>
               </div>
 
               <div class="form-floating mb-3">
                 <input type="text" name="message_text" id="message_text" class="form-control" placeholder="Message">
-                <label for="message_text">Message</label>
+                <label for="message_text">Personal Note</label>
               </div>
               
               <div class="form-floating mb-3">
-                <input type="date" name="due_date" id="due_date" class="form-control" placeholder="Due Date" data-provide="datepicker" data-date-format="yyyy-mm-dd" required>
+                <input type="date" name="due_date" id="due_date" class="form-control" placeholder="Due Date" data-provide="datepicker" data-date-format="mm-dd-yyyy" required>
                 <label for="due_date">Due Date</label>
               </div>
 
@@ -99,20 +99,20 @@
                     </div>
                     
                     <div class="form-floating mb-3">
-                      <input type="number" name="amount_DKK" id="amount_DKK" class="form-control" placeholder="Amount" required>
-                      <label for="amount_DKK">Amount</label>
+                      <input type="number" name="amount" id="amount" class="form-control" placeholder="Amount" required>
+                      <label for="amount">Amount</label>
                     </div>
       
                     <div class="form-floating mb-3">
-                      <input type="text" name="message_text" id="message_text" class="form-control" placeholder="From Message">
-                      <label for="message_text">From Message</label>
-                    </div>
-      
-                    <div class="form-floating mb-3">
-                      <input type="text" name="own_text" id="own_text" class="form-control" placeholder="own_text">
-                      <label for="own_text">To Message</label>
+                      <input type="text" name="message_text" id="message_text" class="form-control" placeholder="Message to Recipient">
+                      <label for="message_text">Message to Recipient</label>
                     </div>
                     
+                    <div class="form-floating mb-3">
+                      <input type="text" name="own_text" id="own_text" class="form-control" placeholder="own_text">
+                      <label for="own_text">Personal Note</label>
+                    </div>
+
                     <div class="form-floating mb-3">
                       <input type="datetime" name="due_date" id="due_date" class="form-control" data-provide="datepicker" data-date-format="mm-dd-yyyy" placeholder="Due Date" required >
                       <label for="due_date">Due Date</label>
@@ -145,12 +145,17 @@
               </div>
               
               <div class="form-floating mb-3">
-                <input type="text" name="amount_DKK" id="amount_DKK3" class="form-control" placeholder="Amount" required>
-                <label for="amount_DKK">Amount</label>
+                <input type="text" name="amount" id="amount" class="form-control" placeholder="Amount" required>
+                <label for="amount">Amount</label>
               </div>
 
               <div class="form-floating mb-3">
-                <input type="date" name="due_date" id="due_date" class="form-control" placeholder="Due Date" data-provide="datepicker" data-date-format="yyyy-mm-dd" required>
+                <input type="text" name="own_text" id="own_text" class="form-control" placeholder="own_text">
+                <label for="own_text">Personal Note</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input type="date" name="due_date" id="due_date" class="form-control" placeholder="Due Date" data-provide="datepicker" data-date-format="mm-dd-yyyy" required>
                 <label for="due_date">Due Date</label>
               </div>
               
