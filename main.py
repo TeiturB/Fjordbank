@@ -546,25 +546,58 @@ def transactions():
 def payments():    
 
     if request.method == "POST":
-        from_account = request.form.get("from_account")
-        to_account = request.form.get("to_account")
-        amount = request.form.get("amount")
-        message_text = request.form.get("message_text")
-        own_text = request.form.get("own_text")
-        due_date = request.form.get("due_date")
 
-        payload = {
-            "from_account": from_account,
-            "to_account": to_account,
-            "amount": amount,
-            "message_text": message_text,
-            "own_text": own_text,
-            "due_date": due_date,
-            }
+        payment_method = request.form.get("payment_method")
 
-        # Make the RESTful Service call to the open_account procedure
+        if payment_method is "deposit":
+
+            to_account = request.form.get("to_account")
+            amount = request.form.get("amount")
+            message_text = request.form.get("message_text")
+            due_date = request.form.get("due_date")
+
+            payload = {
+                "to_account": to_account,
+                "amount": amount,
+                "message_text": message_text,
+                "due_date": due_date,
+                }
+
+        elif payment_method is "transfer":
+
+            from_account = request.form.get("from_account")
+            to_account = request.form.get("to_account")
+            amount = request.form.get("amount")
+            message_text = request.form.get("message_text")
+            own_text = request.form.get("own_text")
+            due_date = request.form.get("due_date")
+
+            payload = {
+                "from_account": from_account,
+                "to_account": to_account,
+                "amount": amount,
+                "message_text": message_text,
+                "own_text": own_text,
+                "due_date": due_date,
+                }
+            
+        elif payment_method is "withdraw":
+
+            from_account = request.form.get("from_account")
+            amount = request.form.get("amount")
+            own_text = request.form.get("own_text")
+            due_date = request.form.get("due_date")
+
+            payload = {
+                "from_account": from_account,
+                "amount": amount,
+                "own_text": own_text,
+                "due_date": due_date,
+                }
+
+        # Make the RESTful Service call to the appropriate procedure
         response = requests.post(
-            "https://apex.oracle.com/pls/apex/databasur/user/transfer/",
+            "https://apex.oracle.com/pls/apex/databasur/user/{payment_method}/",
             json=payload,
             headers=headers,
         )
@@ -572,14 +605,12 @@ def payments():
         print(response.status_code)
 
         # Check the response status code
-        if response.status_code == 200:
-            action = request.form.get("action")
-            flash(f"Your {action} was successful")
+        if response.status_code != 200:
+            flash("Error occurred while performing {payment_method}: {}".format(response.content))
             return render_template("payments.html")
 
-        else:
-            flash("Error occurred while performing {action}: {}".format(response.content))
-            return render_template("payments.html")
+        flash(f"Your {payment_method} was successful")
+        return render_template("payments.html")
 
     # If GET method
     else:
