@@ -19,6 +19,13 @@
     <!-- Include Bootstrap Datepicker JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>  
 
+
+    <script>
+      $(document).ready(function() {
+          $('#due_date').datepicker();
+      });
+  </script>
+
 <center>
     <div class="wrapper">
       <div class="tabs">
@@ -55,7 +62,7 @@
               </div>
               
               <div class="form-floating mb-3">
-                <input type="datetime" name="due_date" id="due_date" class="form-control" placeholder="Due Date" data-provide="datepicker" data-date-format="mm-dd-yyyy" autocomplete="off" required>
+                <input type="datetime" name="due_date" id="due_date" class="form-control" placeholder="Due Date" data-provide="datepicker" autocomplete="off" required>
                 <label for="due_date">Due Date</label>
               </div>
 
@@ -114,7 +121,7 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                      <input type="text" name="due_date" id="due_date" class="form-control" placeholder="Due Date" data-date-format="mm-dd-yyyy" autocomplete="off" >
+                      <input type="datetime" name="due_date" id="due_date" class="form-control" placeholder="Due Date" data-provide="datepicker" autocomplete="off" required>
                       <label for="due_date">Due Date</label>
                     </div>
       
@@ -155,7 +162,7 @@
               </div>
 
               <div class="form-floating mb-3">
-                <input type="datetime" name="due_date" id="due_date" class="form-control" placeholder="Due Date" data-provide="datepicker" data-date-format="mm-dd-yyyy" autocomplete="off" required>
+                <input type="datetime" name="due_date" id="due_date" class="form-control" placeholder="Due Date" data-provide="datepicker" autocomplete="off" required>
                 <label for="due_date">Due Date</label>
               </div>
               
@@ -167,11 +174,7 @@
       </div>
     </div></center>
 
-    <script>
-        $(document).ready(function() {
-            $('#due_date').datepicker();
-        });
-    </script>
+
       
 
 {% endblock %}
