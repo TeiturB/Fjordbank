@@ -77,95 +77,97 @@ def index():
             )
             print(f"Name: {full_name}")
 
-            customer_id = response_data["customer_id"]
-            session["customer_id"] = customer_id
-            print(f"Customer_id: {customer_id}")
+            if response_data["customer_id"]:
 
-            account_list = response_data["accounts"]
+                customer_id = response_data["customer_id"]
+                session["customer_id"] = customer_id
+                print(f"Customer_id: {customer_id}")
 
-            related_customers = response_data["related_customers"]
+                account_list = response_data["accounts"]
 
-            total_balance = sum([account["balance"] for account in account_list])
-            print(f"Total balance: {total_balance}")
-            print()
+                related_customers = response_data["related_customers"]
 
-            print(f"List of user accounts: {account_list}")
-            print()
-
-            # Declare lists for displaying tables of related customers
-            r_full_name_list = []
-            r_account_list_list = []
-            r_total_balance_list = []
-
-            # For each customer, append to the lists
-            for i, related_customer in enumerate(related_customers):
-
-                l_first_name = related_customer["first_name"]
-                try:
-                    l_middle_name = related_customer["middle_name"]
-                except:
-                    l_middle_name = False
-                l_last_name = related_customer["last_name"]
-                l_full_name = f"{l_first_name} {l_middle_name + ' ' if l_middle_name else ''}{l_last_name}"
-                print(f"Related Customer #{i + 1}'s name: {l_full_name}")
+                total_balance = sum([account["balance"] for account in account_list])
+                print(f"Total balance: {total_balance}")
                 print()
 
-                r_full_name_list.append(l_full_name)
-
-                l_account_list = related_customer["accounts"]
-
-                r_account_list_list.append(l_account_list)
-
-                total = 0
-                for account in l_account_list:
-                    total += account["balance"]
-                print(f"{l_full_name}'s total balance: {total}")
+                print(f"List of user accounts: {account_list}")
                 print()
 
-                r_total_balance_list.append(total)
+                # Declare lists for displaying tables of related customers
+                r_full_name_list = []
+                r_account_list_list = []
+                r_total_balance_list = []
 
-                print(f"{l_full_name}'s accounts: {l_account_list}")
-                print()
+                # For each customer, append to the lists
+                for i, related_customer in enumerate(related_customers):
 
-            # Make a dictionary of all related customers' lists
-            related_customers_dict = {
-                "full_names": r_full_name_list,
-                "account_lists": r_account_list_list,
-                "total_balances": r_total_balance_list,
-            }
+                    l_first_name = related_customer["first_name"]
+                    try:
+                        l_middle_name = related_customer["middle_name"]
+                    except:
+                        l_middle_name = False
+                    l_last_name = related_customer["last_name"]
+                    l_full_name = f"{l_first_name} {l_middle_name + ' ' if l_middle_name else ''}{l_last_name}"
+                    print(f"Related Customer #{i + 1}'s name: {l_full_name}")
+                    print()
 
-            if len(account_list) > 0:
+                    r_full_name_list.append(l_full_name)
 
-                print(f"{full_name} holds accounts!")
-                print()
+                    l_account_list = related_customer["accounts"]
 
-                return render_template(
-                    "index.html",
-                    full_name=full_name,
-                    customer_id=customer_id,
-                    account_list=account_list,
-                    total_balance=total_balance,
-                    related_customers=related_customers,
-                    related_customers_dict=related_customers_dict,
-                )
+                    r_account_list_list.append(l_account_list)
+
+                    total = 0
+                    for account in l_account_list:
+                        total += account["balance"]
+                    print(f"{l_full_name}'s total balance: {total}")
+                    print()
+
+                    r_total_balance_list.append(total)
+
+                    print(f"{l_full_name}'s accounts: {l_account_list}")
+                    print()
+
+                # Make a dictionary of all related customers' lists
+                related_customers_dict = {
+                    "full_names": r_full_name_list,
+                    "account_lists": r_account_list_list,
+                    "total_balances": r_total_balance_list,
+                }
+
+                if len(account_list) > 0:
+
+                    print(f"{full_name} holds accounts!")
+                    print()
+
+                    return render_template(
+                        "index.html",
+                        full_name=full_name,
+                        customer_id=customer_id,
+                        account_list=account_list,
+                        total_balance=total_balance,
+                        related_customers=related_customers,
+                        related_customers_dict=related_customers_dict,
+                    )
+
+                else:
+
+                    print(f"{full_name} does not hold accounts!")
+                    print()
+
+                    return render_template(
+                        "index.html",
+                        full_name=full_name,
+                        customer_id=customer_id,
+                        total_balance=total_balance,
+                        related_customers=related_customers,
+                        related_customers_dict=related_customers_dict,
+                    )
 
             else:
-
-                print(f"{full_name} does not hold accounts!")
-                print()
-
-                return render_template(
-                    "index.html",
-                    full_name=full_name,
-                    customer_id=customer_id,
-                    total_balance=total_balance,
-                    related_customers=related_customers,
-                    related_customers_dict=related_customers_dict,
-                )
-
-        else:
-            flash("Database error!")
-            return render_template("login.html")
+                flash("No customer_id")
+                return render_template("login.html")
 
     # If POST
     else:
@@ -299,11 +301,14 @@ def account_settings():
         return render_template("account-settings.html")
 
 
-@main.route("/emplyee_portal", methods=["GET", "POST"])
-def login():
+@main.route("/employee_portal", methods=["GET", "POST"])
+def employee_portal():
     """Endpoint to retrieve and display employee information"""
-    print("TODO")
+    if request.method == "POST":
+        print("TODO")
 
+    else:
+        print("TODO")
 
 @main.route("/login", methods=["GET", "POST"])
 def login():
