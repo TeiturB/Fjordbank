@@ -77,6 +77,7 @@ searchInput.addEventListener("keydown", function(event) {
 
 
 
+{% if f_transaction_list|length > 0 %}
 
 
   <script>var futurePaymentsAccordion = new bootstrap.Accordion(document.getElementById('future-payments-accordion'))</script>
@@ -91,12 +92,110 @@ searchInput.addEventListener("keydown", function(event) {
       <div id="future-payments-collapse" class="accordion-collapse collapse" aria-labelledby="future-payments-header" data-bs-parent="#future-payments-accordion">
         <div class="accordion-body">
           
-          
-          
-          <p>my Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+          <table class="table table-striped">
+      <thead>
+        <tr>
+          <th colspan="4"></th>
+        </tr>
+        <tr>
+            <th class="left-align">Due Date</th>
+            <th>Sender</th>
+            <th>Transaction Type</th>
+            <th class="right-align">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+
         
+
+        {% for transaction in f_transaction_list %}
+        <tr data-toggle="modal" data-target="#transactionModal{{ transaction['transaction_id'] }}">
+            <td class="left-align">{{ transaction["due_date"] }}</td>
+            <td>{{ transaction["sender_name"] }}</td>
+            <td>{{ transaction["transaction_type_name"] }}</td>
+            {% if transaction["amount"] > 0 %}
+                <td class="right-align"><span style="font-weight: bold; color: #aabe49;">{{ transaction["amount"] | dkk }}</span> DKK</td>
+            {% elif transaction["amount"] < 0 %}
+                <td class="right-align"><span style="font-weight: bold; color: #BE496F;">{{ transaction["amount"] | dkk }}</span> DKK</td>
+            {% else %}
+                <td class="right-align"><span style="font-weight: bold; color: black;">{{ transaction["amount"] | dkk }}</span> DKK</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
         
-        
+        </table>
+
+        <!-- Modal -->
+{% for transaction in f_transaction_list %}
+<div class="modal fade" id="transactionModal{{ transaction['transaction_id'] }}" tabindex="-1" role="dialog" aria-labelledby="transactionModalLabel{{ transaction['transaction_id'] }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="transactionModalLabel{{ transaction['transaction_id'] }}">Transaction Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% if transaction["amount"] is not none %}
+                <p class="left-align"><strong>Amount:</strong> {{ transaction["amount"] | dkk }} DKK</p>
+                {% endif %}
+                {% if transaction["transaction_id"] is not none %}
+                <p class="left-align"><strong>Transaction ID:</strong> {{ transaction["transaction_id"] }}</p>
+                {% endif %}
+                {% if transaction["account"] is not none %}
+                <p class="left-align"><strong>Account:</strong> {{ registration_number }}-{{ accountnum }}</p>
+                {% endif %}
+                {% if transaction["message_to_receiver"] is not none %}
+                <p class="left-align"><strong>Text from sender:</strong> {{ transaction["message_to_receiver"] }}</p>
+                {% endif %}
+                {% if transaction["own_text"] is not none %}
+                <p class="left-align"><strong>Own text:</strong> {{ transaction["own_text"] }}</p>
+                {% endif %}
+                {% if transaction["due_date"] is not none %}
+                <p class="left-align"><strong>Due Date:</strong> {{ transaction["due_date"] }}</p>
+                {% endif %}
+                {% if transaction["sender_name"] is not none %}
+                <p class="left-align"><strong>Sender:</strong> {{ transaction["sender_name"] }}</p>
+                {% endif %}
+                {% if transaction["sender_account"] is not none %}
+                <p class="left-align"><strong>Sender account:</strong> {{ registration_number }}-{{ transaction["sender_account"] }}</p>
+                {% endif %}
+                {% if transaction["receiver_name"] is not none %}
+                <p class="left-align"><strong>Receiver:</strong> {{ transaction["receiver_name"] }}</p>
+                {% endif %}
+                {% if transaction["receiver_account"] is not none %}
+                <p class="left-align"><strong>Receiver account:</strong> {{ transaction["receiver_account"] }}</p>
+                {% endif %}
+                {% if transaction["expedited_by"] is not none %}
+                <p class="left-align"><strong>Expedited by:</strong> {{ transaction["expedited_by"] }}</p>
+                {% endif %}
+                {% if transaction["transaction_type_name"] is not none %}
+                <p class="left-align"><strong>Transaction Type:</strong> {{ transaction["transaction_type_name"] }}</p>
+                {% endif %}
+                
+                <script>
+                  function printTransaction() {
+                      var transactionDetails = document.querySelector('.modal-body').innerHTML;
+                      var printWindow = window.open('', 'Print Window', 'height=400,width=600');
+                      printWindow.document.write('<html><head><title>Transaction Details</title>');
+                      printWindow.document.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">');
+                      printWindow.document.write('</head><body>');
+                      printWindow.document.write(transactionDetails);
+                      printWindow.document.write('</body></html>');
+                      printWindow.document.close();
+                      printWindow.print();
+                  }
+                  </script>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" onclick="printTransaction()">Print</button>
+          </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
         
         
           </div>
@@ -105,7 +204,7 @@ searchInput.addEventListener("keydown", function(event) {
   </div>
 </div>
 
-
+{% endif %}
 
 
 
