@@ -1,12 +1,8 @@
-from heapq import heapify
 import json
-from symtable import Symbol
 
-from cs50 import SQL
 from flask import (
     Flask,
     flash,
-    jsonify,
     redirect,
     render_template,
     request,
@@ -14,11 +10,10 @@ from flask import (
 )
 import requests
 from flask_session import Session
-from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 import main
 
-from helpers import apology, login_required, lookup, dkk
+from helpers import login_required, dkk
 
 # Configure application
 main = Flask(__name__)
@@ -29,15 +24,10 @@ main.config["TEMPLATES_AUTO_RELOAD"] = True
 # Custom filter
 main.jinja_env.filters["dkk"] = dkk
 
-# app.jinja_env.filters["dkk"] = dkk
-
 # Configure session to use filesystem (instead of signed cookies)
 main.config["SESSION_PERMANENT"] = False
 main.config["SESSION_TYPE"] = "filesystem"
 Session(main)
-
-# Configure Library to use SQLite database
-db = SQL("sqlite:///finance.db")
 
 # Declare header for Oracle APEX database
 headers = {
@@ -63,21 +53,18 @@ def index():
         # Get and declare variables
         p_number = session["p_number"]
 
-        # customer_id = session["customer_id"]
-
+        print()
         print(f"Session p_number: {p_number}")
 
         # Get account data from database
         url = f"https://apex.oracle.com/pls/apex/databasur/user/index/?p_number={p_number}"
         response = requests.get(url, headers=headers)
 
-        print(response.status_code)
-
         if response.status_code == 200:
 
-            response_data = json.loads(json.loads(response.content)["items"][0]["json_data"])
-
-            print(f"JSON content: {response_data}")
+            response_data = json.loads(
+                json.loads(response.content)["items"][0]["json_data"]
+            )
 
             first_name = response_data["first_name"]
             try:
@@ -95,12 +82,15 @@ def index():
             print(f"Customer_id: {customer_id}")
 
             account_list = response_data["accounts"]
-            print(f"List of user accounts: {account_list}")
 
             related_customers = response_data["related_customers"]
-            print(f"Related customers: {related_customers}")
 
             total_balance = sum([account["balance"] for account in account_list])
+            print(f"Total balance: {total_balance}")
+            print()
+
+            print(f"List of user accounts: {account_list}")
+            print()
 
             # Declare lists for displaying tables of related customers
             r_full_name_list = []
@@ -118,34 +108,36 @@ def index():
                 l_last_name = related_customer["last_name"]
                 l_full_name = f"{l_first_name} {l_middle_name + ' ' if l_middle_name else ''}{l_last_name}"
                 print(f"Related Customer #{i + 1}'s name: {l_full_name}")
+                print()
 
                 r_full_name_list.append(l_full_name)
 
                 l_account_list = related_customer["accounts"]
-                print(f"Related customer #{i + 1}'s accounts: {l_account_list}")
 
                 r_account_list_list.append(l_account_list)
 
                 total = 0
                 for account in l_account_list:
                     total += account["balance"]
-                print(f"Related customer #{i + 1}'s total balance: {total}")
+                print(f"{l_full_name}'s total balance: {total}")
+                print()
 
                 r_total_balance_list.append(total)
 
-
-            print(f"r_full_name_list: {r_full_name_list}")
-            print(f"r_account_list_list: {r_account_list_list}")
-            print(f"r_total_balance_list: {r_total_balance_list}")
+                print(f"{l_full_name}'s accounts: {l_account_list}")
+                print()
 
             # Make a dictionary of all related customers' lists
-            related_customers_dict = {'full_names': r_full_name_list, 'account_lists': r_account_list_list, 'total_balances': r_total_balance_list}
+            related_customers_dict = {
+                "full_names": r_full_name_list,
+                "account_lists": r_account_list_list,
+                "total_balances": r_total_balance_list,
+            }
 
             if len(account_list) > 0:
 
-                print("User has accounts!")
-
-                print(f"Total balance: {total_balance}")
+                print(f"{full_name} holds accounts!")
+                print()
 
                 return render_template(
                     "index.html",
@@ -153,24 +145,22 @@ def index():
                     customer_id=customer_id,
                     account_list=account_list,
                     total_balance=total_balance,
-                    
                     related_customers=related_customers,
                     related_customers_dict=related_customers_dict,
                 )
-            
 
             else:
 
-                print("User does not have accounts!")
+                print(f"{full_name} does not hold accounts!")
+                print()
 
                 return render_template(
                     "index.html",
                     full_name=full_name,
                     customer_id=customer_id,
                     total_balance=total_balance,
-
                     related_customers=related_customers,
-                    related_customers_dict=related_customers_dict
+                    related_customers_dict=related_customers_dict,
                 )
 
         else:
@@ -184,17 +174,6 @@ def index():
         session["registration_number"] = request.form.get("registration_number")
 
         return redirect("/transactions")
-
-
-
-@main.route("/accounts", methods=["GET", "POST"])
-def accounts():
-    """Show portfolio of accounts"""
-    if request.method == "POST":
-        print("TODO")
-
-    else:
-        return render_template("accounts.html")
 
 
 @main.route("/accounts_and_loans", methods=["GET", "POST"])
@@ -238,19 +217,18 @@ def account_settings():
     """Show user account_settings"""
     # Get p_number from session
     p_number = session["p_number"]
-    
+
     if request.method == "POST":
 
-        first_name = request.form['first_name']
-        middle_name = request.form['middle_name']
-        last_name = request.form['last_name']
-        hash = generate_password_hash(request.form['hash'])
-        email = request.form['email']
-        phone_number = request.form['phone_number']
-        street_name = request.form['street_name']
-        street_number = request.form['street_number']
-        postal_code = request.form['postal_code']
-
+        first_name = request.form["first_name"]
+        middle_name = request.form["middle_name"]
+        last_name = request.form["last_name"]
+        hash = generate_password_hash(request.form["hash"])
+        email = request.form["email"]
+        phone_number = request.form["phone_number"]
+        street_name = request.form["street_name"]
+        street_number = request.form["street_number"]
+        postal_code = request.form["postal_code"]
 
         personinfo = {
             "p_number": p_number,
@@ -262,9 +240,12 @@ def account_settings():
             "phone_number": phone_number,
             "street_name": street_name,
             "street_number": street_number,
-            "postal_code": postal_code
+            "postal_code": postal_code,
         }
-        print(personinfo)
+
+        print()
+        print(f"User account info changed: {personinfo}")
+        print()
 
         response = requests.post(
             "https://apex.oracle.com/pls/apex/databasur/user/account_settings/",
@@ -275,10 +256,10 @@ def account_settings():
         # Check the response status code
         if response.status_code == 200:
             flash("Account settings changed successfully")
-            return render_template("account_settings.html")
+            return render_template("account-settings.html")
         else:
             flash("Error changing settings: {}".format(response.text))
-            return render_template("account_settings.html")
+            return render_template("account-settings.html")
 
     else:
         response = requests.get(
@@ -292,30 +273,30 @@ def account_settings():
         if "items" in response_data and len(response_data["items"]) > 0:
             response_data = response_data["items"][0]
 
-            first_name = response_data['first_name']
+            first_name = response_data["first_name"]
             try:
                 middle_name = response_data["middle_name"]
             except:
                 middle_name = False
-            last_name = response_data['last_name']
-            email = response_data['email']
-            phone_number = response_data['phone_number']
-            street_name = response_data['street_name']
-            street_number = response_data['street_number']
-            postal_code = response_data['postal_code']
-            return render_template("account_settings.html",
-                               first_name=first_name,
-                               middle_name=middle_name,
-                               last_name=last_name,
-                               email=email,
-                               phone_number=phone_number,
-                               street_name=street_name,
-                               street_number=street_number,
-                               postal_code=postal_code)
+            last_name = response_data["last_name"]
+            email = response_data["email"]
+            phone_number = response_data["phone_number"]
+            street_name = response_data["street_name"]
+            street_number = response_data["street_number"]
+            postal_code = response_data["postal_code"]
+            return render_template(
+                "account-settings.html",
+                first_name=first_name,
+                middle_name=middle_name,
+                last_name=last_name,
+                email=email,
+                phone_number=phone_number,
+                street_name=street_name,
+                street_number=street_number,
+                postal_code=postal_code,
+            )
 
-        return render_template("account_settings.html")
-
-       # return render_template("account_settings.html")
+        return render_template("account-settings.html")
 
 
 @main.route("/login", methods=["GET", "POST"])
@@ -359,9 +340,6 @@ def login():
             except:
                 flash("User does not exist")
                 return render_template("login.html", form_data=form_data)
-
-            print(f"Login GET data: {data}")
-            print(f"len of login data: {len(data)}")
 
             # Ensure p_number exists and password is correct
             if not check_password_hash(data["hash"], request.form.get("password")):
@@ -532,9 +510,6 @@ def register():
         }
         response = requests.post(url, json=data, headers=headers)
 
-        print(data)
-        print(f"Response: {response}")
-
         if response.status_code == 201:
             session["p_number"] = p_number
             flash(f"Welcome, {first_name}!")
@@ -543,7 +518,10 @@ def register():
 
         else:
             flash(response.reason)
+
+            print()
             print("Error: ", response.reason)
+            print()
 
             return render_template(
                 "register.html", form_data=form_data, country_codes=country_codes
@@ -552,7 +530,6 @@ def register():
     # User reached route via GET (as by clicking a link or via redirect)
     else:
 
-        print(f"country_codes: {country_codes}")
         return render_template("register.html", country_codes=country_codes)
 
 
@@ -563,7 +540,10 @@ def transactions():
     accountname = session["accountname"]
     registration_number = session["registration_number"]
 
-    print(f"Account name: {accountname}\nAccount number: {accountnum}")
+    print()
+    print(f"Account name: {accountname}")
+    print(f"Account number: {accountnum}")
+    print()
 
     # HTTP GET transactions
     response_transactions = requests.get(
@@ -577,15 +557,14 @@ def transactions():
         headers=headers,
     )
 
-    if response_transactions.status_code == 200 and response_f_transactions.status_code == 200:
+    if (
+        response_transactions.status_code == 200
+        and response_f_transactions.status_code == 200
+    ):
 
         transaction_list = json.loads(response_transactions.content)["items"]
 
-        print(f"Transaction list: {transaction_list}")
-
         f_transaction_list = json.loads(response_f_transactions.content)["items"]
-
-        print(f"Future transaction list: {f_transaction_list}")
 
         return render_template(
             "transactions.html",
@@ -593,28 +572,30 @@ def transactions():
             accountname=accountname,
             registration_number=registration_number,
             transaction_list=transaction_list,
-            f_transaction_list=f_transaction_list
+            f_transaction_list=f_transaction_list,
         )
-    
+
     else:
-        flash("Error while fetching transaction list: {}".format(response_transactions.reason))
+        flash(
+            "Error while fetching transaction list: {}".format(
+                response_transactions.reason
+            )
+        )
 
 
 @main.route("/payments", methods=["GET", "POST"])
-def payments():    
+def payments():
 
     customer_id = session["customer_id"]
-    print(customer_id)
 
     url = f"https://apex.oracle.com/pls/apex/databasur/user/payments/?customer_id={customer_id}"
     response = requests.get(url, headers=headers)
 
-    account_list = json.loads(response.content)['items']
+    account_list = json.loads(response.content)["items"]
 
     if request.method == "POST":
-        
+
         payment_method = request.form.get("payment_method")
-        
 
         if payment_method == "deposit":
 
@@ -629,10 +610,10 @@ def payments():
                 "to_account": to_account,
                 "amount": amount,
                 "message_text": message_text,
-                "own_text" : own_text,
-                "cashier_id" : cashier_id,
+                "own_text": own_text,
+                "cashier_id": cashier_id,
                 "due_date": due_date,
-                }
+            }
 
         elif payment_method == "transfer":
 
@@ -650,8 +631,8 @@ def payments():
                 "message_text": message_text,
                 "own_text": own_text,
                 "due_date": due_date,
-                }
-            
+            }
+
         elif payment_method == "withdrawal":
 
             from_account = request.form.get("from_account")
@@ -665,11 +646,11 @@ def payments():
                 "from_account": from_account,
                 "amount": amount,
                 "message_text": message_text,
-                "own_text" : own_text,
-                "cashier_id" : cashier_id,
+                "own_text": own_text,
+                "cashier_id": cashier_id,
                 "due_date": due_date,
-                }
-            
+            }
+
         # Make the RESTful Service call to the appropriate procedure
         response = requests.post(
             f"https://apex.oracle.com/pls/apex/databasur/user/{payment_method}/",
@@ -677,12 +658,12 @@ def payments():
             headers=headers,
         )
 
-        print(response.status_code)
+        print()
+        print(f"Status: {response.status_code}")
+        print()
 
         # Check the response status code
         if response.status_code != 200:
-            print(payment_method)
-            print(response.content)
             flash(f"Error occurred while performing {payment_method}")
             return render_template("payments.html", account_list=account_list)
 
@@ -691,8 +672,6 @@ def payments():
 
     # If GET method
     else:
-
-        print(f"List of accounts: {account_list}")
 
         return render_template("payments.html", account_list=account_list)
 
