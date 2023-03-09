@@ -600,12 +600,16 @@ def payments():
             to_account = request.form.get("to_account")
             amount = request.form.get("amount")
             message_text = request.form.get("message_text")
+            own_text = request.form.get("own_text")
+            cashier_id = request.form.get("cashier_id")
             due_date = request.form.get("due_date")
 
             payload = {
                 "to_account": to_account,
                 "amount": amount,
                 "message_text": message_text,
+                "own_text" : own_text,
+                "cashier_id" : cashier_id,
                 "due_date": due_date,
                 }
 
@@ -631,13 +635,17 @@ def payments():
 
             from_account = request.form.get("from_account")
             amount = request.form.get("amount")
+            message_text = request.form.get("message_text")
             own_text = request.form.get("own_text")
+            cashier_id = request.form.get("cashier_id")
             due_date = request.form.get("due_date")
 
             payload = {
                 "from_account": from_account,
                 "amount": amount,
-                "own_text": own_text,
+                "message_text": message_text,
+                "own_text" : own_text,
+                "cashier_id" : cashier_id,
                 "due_date": due_date,
                 }
             
