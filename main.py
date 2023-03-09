@@ -577,7 +577,7 @@ def transactions():
         headers=headers,
     )
 
-    if response_transactions.status_code == 200:
+    if response_transactions.status_code == 200 and response_f_transactions.status_code == 200:
 
         transaction_list = json.loads(response_transactions.content)["items"]
 
