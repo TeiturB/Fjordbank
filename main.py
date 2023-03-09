@@ -565,17 +565,27 @@ def transactions():
 
     print(f"Account name: {accountname}\nAccount number: {accountnum}")
 
-    # Make an HTTP GET request
-    response = requests.get(
+    # HTTP GET transactions
+    response_transactions = requests.get(
         f"https://apex.oracle.com/pls/apex/databasur/user/transactions/?account={accountnum}",
         headers=headers,
     )
 
-    if response.status_code == 200:
+    # HTTP GET future transactions
+    response_f_transactions = requests.get(
+        f"https://apex.oracle.com/pls/apex/databasur/user/future_transactions/?account={accountnum}",
+        headers=headers,
+    )
 
-        transaction_list = json.loads(response.content)["items"]
+    if response_transactions.status_code == 200:
+
+        transaction_list = json.loads(response_transactions.content)["items"]
 
         print(f"Transaction list: {transaction_list}")
+
+        f_transaction_list = json.loads(response_f_transactions.content)["items"]
+
+        print(f"Future transaction list: {f_transaction_list}")
 
         return render_template(
             "transactions.html",
@@ -583,7 +593,11 @@ def transactions():
             accountname=accountname,
             registration_number=registration_number,
             transaction_list=transaction_list,
+            f_transaction_list=f_transaction_list
         )
+    
+    else:
+        flash("Error while fetching transaction list: {}".format(response_transactions.reason))
 
 
 @main.route("/payments", methods=["GET", "POST"])
