@@ -769,6 +769,16 @@ def portal_login():
     else:
 
         return render_template("portal-login.html")
+    
+
+@main.route("/portal_logout")
+def portal_logout():
+    """Log employee out"""
+    # Forget any user_id
+    session.clear()
+
+    # Redirect user to login form
+    return redirect("/portal-login")
 
 
 if __name__ == "__main__":
