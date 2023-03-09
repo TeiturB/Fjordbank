@@ -723,7 +723,31 @@ def portal_customer_search():
         return render_template("portal_customer_search.html")
 
     else: # if POST
-        print("TODO")
+
+        p_number = request.form.get("p_number")
+
+        # Query database for customer list
+        response = requests.get(
+            f"https://apex.oracle.com/pls/apex/databasur/portal/customer_search/?p_number={p_number}",
+            headers=headers
+        )
+
+        customer_dict = response.content
+
+        print(json.loads(customer_dict))
+
+        first_name = customer_dict["first_name"]
+        try:
+            middle_name = customer_dict["middle_name"]
+        except:
+            middle_name = False
+        last_name = customer_dict["last_name"]
+        full_name = (
+            f"{first_name} {middle_name + ' ' if middle_name else ''}{last_name}"
+        )
+        print(f"Name: {full_name}")
+
+        return render_template("portal_customer_search.html", customer_dict=customer_dict, full_name=full_name)
 
 
 @main.route("/portal-login", methods=["GET", "POST"])
@@ -752,13 +776,11 @@ def portal_login():
             flash("Password required")
             return render_template("portal-login.html", form_data=form_data)
 
-        # Query database for p_number and hash
+        # Query database for login information
         response = requests.get(
             f"https://apex.oracle.com/pls/apex/databasur/portal/login/?p_number={p_number}",
             headers=headers
         )
-
-        print(f"YOOOOOOOOO: {json.loads(response.content)}")
 
         if response.status_code == 200:
 

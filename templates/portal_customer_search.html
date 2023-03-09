@@ -6,6 +6,51 @@
 
 {% block main %}
 
+<div>
+    <form action="/portal_customer_search" method="GET">
+                
+        <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="p_number" name="p_number" value="{{ p_number }}" placeholder="p_number"><label for="p_number"></label>
+        <label for="p_number">P-number</label></div>
 
+        <button class="btn btn-primary" type="submit">Search</button>
+    </form>
+</div>
+<body>
+    <h1>Customer Information</h1>
+    <table>
+      <tr>
+        <th>Customer Number</th>
+        <th>Person Number</th>
+        <th>Full Name</th>
+        <th>Date of Birth</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>Postal Code</th>
+        <th>City</th>
+        <th>Street Name</th>
+        <th>Street Number</th>
+        <th>Apartment Number</th>
+        <th>Phone Number</th>
+        <th>Email</th>
+      </tr>
+      {% for row in rows %}
+      <tr>
+        <td>{{ customer_dict["customer_number"] }}</td>
+        <td>{{ customer_dict["p_number"] }}</td>
+        <td>{{ customer_dict["date_of_birth"] }}</td>
+        <td>{{ customer_dict["age"] }}</td>
+        <td>{{ customer_dict["gender"] }}</td>
+        <td>{{ customer_dict["postal_code"] }}</td>
+        <td>{{ customer_dict["city"] }}</td>
+        <td>{{ customer_dict["street_name"] }}</td>
+        <td>{{ customer_dict["street_number"] }}</td>
+        <td>{{ customer_dict["apartment_number"] }}</td>
+        <td>{{ customer_dict["phone_number"] }}</td>
+        <td>{{ customer_dict["email"] }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
 
 {% endblock %}
