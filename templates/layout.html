@@ -12,11 +12,16 @@
         <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"></script>
 
         <!-- https://favicon.io/emoji-favicons/money-bag/ -->
-        <link href="/static/favicon.ico" rel="icon">
+        
+        {% if 'portal' not in request.path %}
+            <link href="/static/favicon_FB.ico" rel="icon">
+        {% else %}
+            <link href="/static/favicon_FP.ico" rel="icon">
+        {% endif %}
 
         <link href="/static/styles.css" rel="stylesheet">
-
-        <title>FjordBank: {% block title %}{% endblock %}</title>
+        
+            <title>{% if 'portal' not in request.path %}FjordBank: {% else %}FjordPortal: {% endif %}{% block title %}{% endblock %}</title>
 
     </head>
 
@@ -66,9 +71,9 @@
                         {% if 'employee_id' in session %}
                         <!-- TODO: Tabs -->
                         <ul class="navbar-nav me-auto mt-2">
-                            <li class="nav-item"><img class="userinfo" src="https://img.icons8.com/material-outlined/24/000000/user.png" style="height:20px; width:20px; color: rgba(0,0,0,.55);"/><a class="nav-link" href="/portal_customer_search">Customer Search</a></li>
-                            <li class="nav-item"><img class="userinfo" src="https://img.icons8.com/material-rounded/512/family.png" style="height:20px; width:20px;"/><a class="nav-link" href="/portal_customer_relation"></a>Customer Relation</a></li>
-                            <li class="nav-item"><img class="userinfo" src="https://img.icons8.com/material-rounded/512/wallet.png" style="height:20px; width:20px;"/><a class="nav-link" href="/portal_account_management"></a>Account Management</a></li>
+                            <li class="nav-item"><img class="userinfo" src="https://img.icons8.com/material-rounded/512/search-client.png" style="height:20px; width:20px; color: rgba(0,0,0,.55);"/><a class="nav-link" href="/portal_customer_search">Customer Search</a></li>
+                            <li class="nav-item"><img class="userinfo" src="https://img.icons8.com/material-rounded/512/family.png" style="height:20px; width:20px;"/><a class="nav-link" href="/portal_customer_relations">Customer Relations</a></li>
+                            <li class="nav-item"><img class="userinfo" src="https://img.icons8.com/material-rounded/512/wallet.png" style="height:20px; width:20px;"/><a class="nav-link" href="/portal_account_management">Account Management</a></li>
                         </ul>
 
                         <ul class="navbar-nav ms-auto mt-2">
