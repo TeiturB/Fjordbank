@@ -299,6 +299,12 @@ def account_settings():
         return render_template("account-settings.html")
 
 
+@main.route("/emplyee_portal", methods=["GET", "POST"])
+def login():
+    """Endpoint to retrieve and display employee information"""
+    print("TODO")
+
+
 @main.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
