@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Transactions
+{% endblock %}
+
+{% block main %}
+
+<script src="{{ url_for('static', filename='form-validation.js') }}"></script>
+
+<div class="container">
+  <form action="/portal-login" method="post" style="
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    margin: 8% 0% 0% 0%;
+    padding: 2% 2% 2% 2%;
+    border-radius: 10px;
+">
+<h2 style="Margin: 0% 0% 20% 0%;/* font-family: var(--bs-body-font-family); */font-family: var(--bs-body-font-family);/* font-size: var(--bs-body-font-size); */font-weight: var(--bs-body-font-weight);line-height: var(--bs-body-line-height);color: var(--bs-body-color);text-align: var(--bs-body-text-align);background-color: var(--bs-body-bg);-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: transparent;"><span style="color:#537FBE;">Fjord</span><span style="color:#FF9D33;">Portal</span> Login</h2>
+    <div class="form-floating mb-3">
+      <input
+        autocomplete="off"
+        autofocus
+        class="form-control"
+        id="p_number"
+        name="p_number"
+        placeholder="P-number"
+        type="text"
+        {% if request.form.get('p_number') %}
+          value="{{ request.form.get('p_number') }}"
+        {% else %}
+          value=""
+        {% endif %}
+      />
+      <label for="p_number">P-number</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input
+        class="form-control"
+        id="password"
+        name="password"
+        placeholder="Password"
+        type="password"
+      />
+      <label for="password">Password</label>
+    </div>
+    <button class="btn btn-primary" type="submit">Log in</button>
+  </form>
+</div>
+
+{% endblock %}

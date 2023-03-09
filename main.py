@@ -60,6 +60,8 @@ def index():
         url = f"https://apex.oracle.com/pls/apex/databasur/user/index/?p_number={p_number}"
         response = requests.get(url, headers=headers)
 
+        print(json.loads(response.content))
+
         if response.status_code == 200:
 
             response_data = json.loads(
@@ -166,7 +168,7 @@ def index():
                     )
 
             else:
-                flash("No customer_id")
+                flash(f"{first_name} is not a customer")
                 return render_template("login.html")
 
     # If POST
@@ -300,15 +302,6 @@ def account_settings():
 
         return render_template("account-settings.html")
 
-
-@main.route("/employee_portal", methods=["GET", "POST"])
-def employee_portal():
-    """Endpoint to retrieve and display employee information"""
-    if request.method == "POST":
-        print("TODO")
-
-    else:
-        print("TODO")
 
 @main.route("/login", methods=["GET", "POST"])
 def login():
@@ -685,6 +678,97 @@ def payments():
     else:
 
         return render_template("payments.html", account_list=account_list)
+
+
+@main.route("/portal", methods=["GET", "POST"])
+def portal():
+    """Endpoint to retrieve and display employee information"""
+    if request.method == "GET":
+        p_number = session["p_number"]
+        employee_id = session["employee_id"]
+        
+        print("TODO")
+
+        return render_template("portal.html")
+
+
+    else: #POST
+        print("TODO")
+
+
+@main.route("/portal-login", methods=["GET", "POST"])
+def portal_login():
+    # Forget any p_number
+    session.clear()
+
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+
+        # Retain form data to reduce UX irretability
+        session["login_form_data"] = request.form
+        form_data = session.pop("login_form_data")
+
+        # Get variables from form
+        p_number = request.form.get("p_number")
+        password = request.form.get("password")
+
+        # Ensure p_number is provided
+        if not p_number:
+            flash("P-number required")
+            return render_template("portal-login.html", form_data=form_data)
+
+        # Ensure password is provided
+        if not password:
+            flash("Password required")
+            return render_template("portal-login.html", form_data=form_data)
+
+        # Query database for p_number and hash
+        response = requests.get(
+            f"https://apex.oracle.com/pls/apex/databasur/portal/portal_login/?p_number={p_number}",
+            headers=headers
+        )
+
+        print(f"YOOOOOOOOO: {json.loads(response.content)}")
+
+        if response.status_code == 200:
+
+            try:
+                # Unpack person dict from json object
+                data = response.json()["items"][0]
+            except:
+                flash("User does not exist")
+                return render_template("portal-login.html", form_data=form_data)
+
+            # Ensure p_number exists and password is correct
+            if not check_password_hash(data["hash"], request.form.get("password")):
+                flash("Incorrect password")
+                return render_template("portal-login.html", form_data=form_data)
+
+            try:
+                employee_id = data["employee_id"]
+                session["employee_id"] = employee_id
+            except:
+                flash("User is not an employee at FjordBank")
+                return render_template("portal-login.html", form_data=form_data)
+
+            print()
+            print(f"P-number: {p_number}")
+            print(f"Employee ID: {employee_id}")
+            print()
+
+            session["p_number"] = p_number
+            flash(f"Get to work, {data['first_name']}!")
+
+            return redirect("/portal")
+
+        else:
+            flash(response.reason)
+            return render_template("portal-login.html", form_data=form_data)
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+
+        return render_template("portal-login.html")
 
 
 if __name__ == "__main__":
