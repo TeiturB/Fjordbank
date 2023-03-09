@@ -76,7 +76,7 @@ searchInput.addEventListener("keydown", function(event) {
   <table id="print-table" class="table table-striped">
       <thead>
         <tr>
-          <th colspan="4" class="left-align" style="font-size: 24px">Account Number: {{ registration_number ~ '-' ~ transaction_list[0]['account'] }}</th>
+          <th colspan="4" class="left-align" style="font-size: 24px">Account Number: {{ registration_number ~ '-' ~ accountnum }}</th>
         </tr>
         <tr>
             <th class="left-align">Transfer Date</th>
@@ -141,7 +141,7 @@ searchInput.addEventListener("keydown", function(event) {
                 <p class="left-align"><strong>Transaction ID:</strong> {{ transaction["transaction_id"] }}</p>
                 {% endif %}
                 {% if transaction["account"] is not none %}
-                <p class="left-align"><strong>Account:</strong> {{ registration_number }}-{{ transaction["account"] }}</p>
+                <p class="left-align"><strong>Account:</strong> {{ registration_number }}-{{ accountnum }}</p>
                 {% endif %}
                 {% if transaction["message_to_receiver"] is not none %}
                 <p class="left-align"><strong>Text from sender:</strong> {{ transaction["message_to_receiver"] }}</p>
