@@ -589,7 +589,14 @@ def transactions():
 @main.route("/payments", methods=["GET", "POST"])
 def payments():    
 
-    payment_method = None
+    customer_id = session["customer_id"]
+    print(customer_id)
+
+    url = f"https://apex.oracle.com/pls/apex/databasur/user/payments/?customer_id={customer_id}"
+    response = requests.get(url, headers=headers)
+
+    account_list = json.loads(response.content)['items']
+
     if request.method == "POST":
         
         payment_method = request.form.get("payment_method")
@@ -631,7 +638,7 @@ def payments():
                 "due_date": due_date,
                 }
             
-        elif payment_method == "withdraw":
+        elif payment_method == "withdrawal":
 
             from_account = request.form.get("from_account")
             amount = request.form.get("amount")
@@ -662,26 +669,18 @@ def payments():
         if response.status_code != 200:
             print(payment_method)
             print(response.content)
-            flash("Error occurred while performing {payment_method}: {}".format(response.content))
-            return render_template("payments.html")
+            flash(f"Error occurred while performing {payment_method}")
+            return render_template("payments.html", account_list=account_list)
 
         flash(f"Your {payment_method} was successful")
-        return render_template("payments.html")
+        return render_template("payments.html", account_list=account_list)
 
     # If GET method
     else:
-        
-        customer_id = session["customer_id"]
-        print(customer_id)
-
-        url = f"https://apex.oracle.com/pls/apex/databasur/user/payments/?customer_id={customer_id}"
-        response = requests.get(url, headers=headers)
-
-        account_list = json.loads(response.content)['items']
 
         print(f"List of accounts: {account_list}")
 
-        return render_template("payments.html", payment_method=payment_method, account_list=account_list)
+        return render_template("payments.html", account_list=account_list)
 
 
 if __name__ == "__main__":
