@@ -696,6 +696,36 @@ def portal():
         print("TODO")
 
 
+@main.route("/portal_account_management")
+def portal_account_management():
+    if request.method == "GET":
+
+        return render_template("portal_account_management.html")
+
+    else: # if POST
+        print("TODO")
+
+
+@main.route("/portal_customer_relations")
+def portal_customer_relations():
+    if request.method == "GET":
+        
+        return render_template("portal_customer_relations.html")
+
+    else: # if POST
+        print("TODO")
+
+
+@main.route("/portal_customer_search")
+def portal_customer_search():
+    if request.method == "GET":
+        
+        return render_template("portal_customer_search.html")
+
+    else: # if POST
+        print("TODO")
+
+
 @main.route("/portal-login", methods=["GET", "POST"])
 def portal_login():
     # Forget any p_number
@@ -724,7 +754,7 @@ def portal_login():
 
         # Query database for p_number and hash
         response = requests.get(
-            f"https://apex.oracle.com/pls/apex/databasur/portal/portal_login/?p_number={p_number}",
+            f"https://apex.oracle.com/pls/apex/databasur/portal/login/?p_number={p_number}",
             headers=headers
         )
 
