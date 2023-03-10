@@ -739,15 +739,59 @@ def portal_account_management():
         return render_template("portal_account_management.html")
 
 
-@main.route("/portal_customer_relations")
+@main.route("/portal_customer_relations", methods=["GET", "POST"])
 @login_required
 def portal_customer_relations():
-    if request.method == "GET":
-        
-        return render_template("portal_customer_relations.html")
+    if request.method == "POST":
 
-    else: # if POST
-        print("TODO")
+
+        if relation == "spouse":
+        # Define the payload for the RESTful Service call
+
+            relation = request.form.get("relation")
+                # Get p_number from session
+            p_number = request.form["p_number"]
+            related_p_number = request.form["p_number"]
+            payload = {
+                "p_number": p_number,
+                "p_number": related_p_number,
+            }
+
+            # Make the RESTful Service call to the open_account procedure
+            response = requests.post(
+                f"https://apex.oracle.com/pls/apex/databasur/portal/customer_relations/{relation}",
+                json=payload,
+                headers=headers,
+            )
+
+        elif relation == "parent":
+
+            relation = request.form.get("relation")
+                # Get p_number from session
+            p_number = request.form["p_number"]
+            related_p_number = request.form["p_number"]
+            payload = {
+                "p_number": p_number,
+                "p_number": related_p_number,
+            }
+
+            # Make the RESTful Service call to the open_account procedure
+            response = requests.post(
+                "https://apex.oracle.com/pls/apex/databasur/portal/customer_relations/{relation}",
+                json=payload,
+                headers=headers,
+            )
+
+
+        # Check the response status code
+        if response.status_code == 200:
+            flash("Account created successfully")
+            return render_template("portal_customer_relations.html")
+        else:
+            flash("Error creating account: {}".format(response.reason))
+            return render_template("portal_customer_relations.html")
+    else:
+        return render_template("portal_customer_relations.html")
 
 
 @main.route("/portal_customer_search")

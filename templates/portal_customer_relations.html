@@ -1,11 +1,90 @@
 {% extends "layout.html" %}
 
+<head>
+    <script src="{{ url_for('static', filename='form-validation.js') }}"></script>
+  
+    <!-- Include showTab JavaScript -->
+    <script src="{{ url_for('static', filename='showTab.js') }}"></script>
+  </head>
+
 {% block title %}
     Customer Relations
 {% endblock %}
 
 {% block main %}
 
+<center>
+    <div class="wrapper">
+      <div class="tabs">
+        <div class="tab">
+          <input type="radio" name="css-tabs" id="tab-1" checked class="tab-switch">
+          <label for="tab-1" class="tab-label">Spouse</label>
+          <div class="tab-content"><div class="container">
+            <form method="post" action="/portal_customer_relations" style="
+            margin: 8% 0% 0% 0%;
+            padding: 2% 2% 2% 2%;
+            border-radius: 10px;" required>
+            <center><img src="https://img.icons8.com/ios/50/000000/bank-building--v1.png" style="height:40px; width:40px;"/></center><h2 style="Margin: 5% 0% 10% 0%;/* font-family: var(--bs-body-font-family); */font-family: var(--bs-body-font-family);/* font-size: var(--bs-body-font-size); */font-weight: var(--bs-body-font-weight);line-height: var(--bs-body-line-height);color: var(--bs-body-color);text-align: var(--bs-body-text-align);background-color: var(--bs-body-bg);-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: transparent;">Create spousal relation</h2>
+              
+    
+                <div class="form-floating mb-3">
+                    <input type="text" name="p_number" id="p_number" class="form-control" placeholder="p_number" required>
+                    <label for="p_number">Customer P-number</label>
+                  </div>
 
+                  <div class="form-floating mb-3">
+                    <input type="text" name="p_number" id="related_p_number" class="form-control" placeholder="p_number" required>
+                    <label for="related_p_number">Related Customer P-number</label>
+                  </div>
+              
+              <button type="submit" class="my-button" name="relation" value="spouse">Create Spouse Relation</button>
+            </form>
+          </div></div>
+        </div>
+        
+
+        <div class="tab">
+        <input type="radio" name="css-tabs" id="tab-2" class="tab-switch">
+        <label for="tab-2" class="tab-label">Parent</label>
+        <div class="tab-content">
+          <div class="container">
+            <form method="post" action="/portal_customer_relations" style="
+              margin: 8% 0% 0% 0%;
+              padding: 2% 2% 2% 2%;
+              border-radius: 10px;">
+              <center>
+                <img src="https://img.icons8.com/ios/50/000000/bank-building--v1.png" style="height:40px; width:40px;"/>
+              </center>
+              <h2 style="
+                Margin: 5% 0% 10% 0%;
+                font-family: var(--bs-body-font-family);
+                font-weight: var(--bs-body-font-weight);
+                line-height: var(--bs-body-line-height);
+                color: var(--bs-body-color);
+                text-align: var(--bs-body-text-align);
+                background-color: var(--bs-body-bg);
+                -webkit-text-size-adjust: 100%;
+                -webkit-tap-highlight-color: transparent;">
+                Create a parental relation
+              </h2>
+
+                <div class="form-floating mb-3">
+                  <input type="text" name="p_number" id="p_number" class="form-control" placeholder="p_number" required>
+                  <label for="p_number">Customer P-number</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="text" name="p_number" id="related_p_number" class="form-control" placeholder="p_number" required>
+                  <label for="related_p_number">Related Customer P-number</label>
+                </div>
+                <button type="submit" class="my-button" name="relation" value="spouse">Create Parent Relation</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </center>
 
 {% endblock %}
