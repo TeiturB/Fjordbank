@@ -229,15 +229,15 @@ def account_settings():
 
     if request.method == "POST":
 
-        first_name = request.form.get["first_name"]
-        middle_name = request.form.get["middle_name"]
-        last_name = request.form.get["last_name"]
+        first_name = request.form.get("first_name")
+        middle_name = request.form.get("middle_name")
+        last_name = request.form.get("last_name")
         hash = generate_password_hash(request.form.get["hash"])
-        email = request.form.get["email"]
-        phone_number = request.form.get["phone_number"]
-        street_name = request.form.get["street_name"]
-        street_number = request.form.get["street_number"]
-        postal_code = request.form.get["postal_code"]
+        email = request.form.get("email")
+        phone_number = request.form.get("phone_number")
+        street_name = request.form.get("street_name")
+        street_number = request.form.get("street_number")
+        postal_code = request.form.get("postal_code")
 
         personinfo = {
             "p_number": p_number,
@@ -331,7 +331,7 @@ def login():
             return render_template("login.html", form_data=form_data)
 
         # Ensure password is provided
-        if not password:
+        #if not password:
             flash("Password required")
             return render_template("login.html", form_data=form_data)
 
@@ -710,9 +710,9 @@ def portal_account_management():
     if request.method == "POST":
 
         # Get p_number from session
-        p_number = request.form.get["p_number"]
-        account_type = request.form.get["account_type"]
-        account_name = request.form.get["accountname"]
+        p_number = request.form.get("p_number")
+        account_type = request.form.get("account_type")
+        account_name = request.form.get("accountname")
 
         # Define the payload for the RESTful Service call
         payload = {
