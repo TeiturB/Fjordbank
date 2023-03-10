@@ -257,6 +257,11 @@ table.icon-table {
 	cursor: pointer;
   }
 
+  #print-table2 tbody tr:hover {
+    background-color: #CFE2FF;
+    cursor: pointer;
+    }
+
 /* END OF SEARCH BUTTON STYLING */
 
 
