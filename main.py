@@ -83,8 +83,6 @@ def index():
                 session["customer_id"] = customer_id
                 print(f"Customer_id: {customer_id}")
 
-                print(f"Response Data!!!!!!! : {response_data}")
-
                 account_list = response_data["accounts"]
 
                 related_customers = response_data["related_customers"]
@@ -186,6 +184,7 @@ def index():
 
 
 @main.route("/accounts_and_loans", methods=["GET", "POST"])
+@login_required
 def accounts_and_loans():
     if request.method == "POST":
 
@@ -222,6 +221,7 @@ def accounts_and_loans():
 
 
 @main.route("/account_settings", methods=["GET", "POST"])
+@login_required
 def account_settings():
     """Show user account_settings"""
     # Get p_number from session
@@ -543,6 +543,7 @@ def register():
 
 
 @main.route("/transactions", methods=["GET"])
+@login_required
 def transactions():
     """Display account transactions"""
     accountnum = session["accountnum"]
@@ -593,6 +594,7 @@ def transactions():
 
 
 @main.route("/payments", methods=["GET", "POST"])
+@login_required
 def payments():
 
     customer_id = session["customer_id"]
@@ -686,6 +688,7 @@ def payments():
 
 
 @main.route("/portal", methods=["GET", "POST"])
+@login_required
 def portal():
     """Endpoint to retrieve and display employee information"""
     if request.method == "GET":
@@ -702,6 +705,7 @@ def portal():
 
 
 @main.route("/portal_account_management", methods=["GET", "POST"])
+@login_required
 def portal_account_management():
     if request.method == "POST":
 
@@ -736,6 +740,7 @@ def portal_account_management():
 
 
 @main.route("/portal_customer_relations")
+@login_required
 def portal_customer_relations():
     if request.method == "GET":
         
@@ -746,6 +751,7 @@ def portal_customer_relations():
 
 
 @main.route("/portal_customer_search")
+@login_required
 def portal_customer_search():
     if request.method == "GET":
         
