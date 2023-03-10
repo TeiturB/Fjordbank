@@ -232,7 +232,7 @@ def account_settings():
         first_name = request.form.get("first_name")
         middle_name = request.form.get("middle_name")
         last_name = request.form.get("last_name")
-        hash = generate_password_hash(request.form.get["hash"])
+        hash = generate_password_hash(request.form.get("hash"))
         email = request.form.get("email")
         phone_number = request.form.get("phone_number")
         street_name = request.form.get("street_name")
@@ -331,7 +331,7 @@ def login():
             return render_template("login.html", form_data=form_data)
 
         # Ensure password is provided
-        #if not password:
+        if not password:
             flash("Password required")
             return render_template("login.html", form_data=form_data)
 
