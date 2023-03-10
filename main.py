@@ -192,8 +192,8 @@ def accounts_and_loans():
         p_number = session["p_number"]
 
         # Get the account type and account name from the HTML form
-        account_type = request.form.get["account_type"]
-        account_name = request.form.get["accountname"]
+        account_type = request.form.get("account_type")
+        account_name = request.form.get("accountname")
 
         # Define the payload for the RESTful Service call
         payload = {
