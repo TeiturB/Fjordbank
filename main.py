@@ -701,14 +701,38 @@ def portal():
         print("TODO")
 
 
-@main.route("/portal_account_management")
+@main.route("/portal_account_management", methods=["GET", "POST"])
 def portal_account_management():
-    if request.method == "GET":
+    if request.method == "POST":
 
+        # Get p_number from session
+        p_number = request.form["p_number"]
+        account_type = request.form["account_type"]
+        account_name = request.form["accountname"]
+
+        # Define the payload for the RESTful Service call
+        payload = {
+            "p_number": p_number,
+            "account_type": account_type,
+            "accountname": account_name,
+        }
+
+        # Make the RESTful Service call to the open_account procedure
+        response = requests.post(
+            "https://apex.oracle.com/pls/apex/databasur/portal/account_management/",
+            json=payload,
+            headers=headers,
+        )
+
+        # Check the response status code
+        if response.status_code == 200:
+            flash("Account created successfully")
+            return render_template("portal_account_management.html")
+        else:
+            flash("Error creating account: {}".format(response.reason))
+            return render_template("portal_account_management.html")
+    else:
         return render_template("portal_account_management.html")
-
-    else: # if POST
-        print("TODO")
 
 
 @main.route("/portal_customer_relations")

@@ -6,9 +6,10 @@
 
 {% block main %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script>function printTable() {
-    window.print();
-  }</script>
+<script>function printTable(tableId) {
+  var tableToPrint = document.getElementById(tableId);
+  window.print();
+}</script>
   
   <script>function searchTable() {
   var input, filter, table, tr, td, i, j, txtValue;
@@ -30,7 +31,11 @@
       }
     }
   }
-}</script><script>// Get search input element
+}</script>
+
+
+
+<script>// Get search input element
 var searchInput = document.getElementById("search-input");
 
 // Add event listener to search input
@@ -116,7 +121,15 @@ searchInput.addEventListener("keydown", function(event) {
 {% for related_customer in related_customers %}
       {% set i = loop.index0 %}
 
-    
+      <div>
+          
+        <table class="icon-table">
+            <tr>
+              <td colspan="2">
+              </td>
+              <td>
+              </td>
+            </tr>
       <table id="print-table" class="table table-striped">
         <thead>
           <tr>
@@ -135,7 +148,7 @@ searchInput.addEventListener("keydown", function(event) {
             <input type="hidden" name="accountnum" value="{{ account['accountnum'] }}">
             <input type="hidden" name="accountname" value="{{ account['accountname'] }}">
             <input type="hidden" name="registration_number" value="{{ account['registration_number'] }}">
-            <tr onclick="this.querySelector('button').click();" style="cursor: pointer;">
+            <tr onclick="this.querySelector('button').click();" style="cursor: pointer; ">
               <td class="left-align">{{ account["accountname"] }}</td>
               <td>{{ account["registration_number"] ~ "-" ~ account["accountnum"] }}</td>
               <td>{{ account["account_type"] }}</td>
@@ -169,6 +182,8 @@ searchInput.addEventListener("keydown", function(event) {
         </tr>
       </tfoot>
     </table>
+    </table>
+    </div>
     {% endfor %}
 
 {% endblock %}
