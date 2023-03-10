@@ -60,8 +60,6 @@ def index():
         url = f"https://apex.oracle.com/pls/apex/databasur/user/index/?p_number={p_number}"
         response = requests.get(url, headers=headers)
 
-        print(json.loads(response.content))
-
         if response.status_code == 200:
 
             response_data = json.loads(
@@ -84,6 +82,8 @@ def index():
                 customer_id = response_data["customer_id"]
                 session["customer_id"] = customer_id
                 print(f"Customer_id: {customer_id}")
+
+                print(f"Response Data!!!!!!! : {response_data}")
 
                 account_list = response_data["accounts"]
 
@@ -174,7 +174,7 @@ def index():
             
         # If not status code 200
         else:
-            flash("Database error: {}".format(response.text))
+            flash("Database error: {}".format(response.reason))
 
     # If POST
     else:
