@@ -167,9 +167,14 @@ def index():
                         related_customers_dict=related_customers_dict,
                     )
 
+            # If not customer
             else:
                 flash(f"{first_name} is not a customer")
                 return render_template("login.html")
+            
+        # If not status code 200
+        else:
+            flash("Database error: {}".format(response.text))
 
     # If POST
     else:
