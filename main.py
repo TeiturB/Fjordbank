@@ -743,11 +743,11 @@ def portal_account_management():
 @login_required
 def portal_customer_relations():
     
-if request.method == "POST":
+    if request.method == "POST":
 
         relation = request.form.get("relation")
-        p_number = request.form["p_number"]
-        related_p_number = request.form["p_number"]
+        p_number = request.form.get["p_number"]
+        related_p_number = request.form.get["p_number"]
         payload = {
             "p_number": p_number,
             "p_number": related_p_number,
@@ -759,45 +759,7 @@ if request.method == "POST":
             json=payload,
             headers=headers,
         )
-        if relation == "spouse":
-        # Define the payload for the RESTful Service call
-
-
-                # Get p_number from session
-            p_number = request.form["p_number"]
-            related_p_number = request.form["p_number"]
-            
-            payload = {
-                "p_number": p_number,
-                "p_number": related_p_number,
-            }
-
-            # Make the RESTful Service call to the open_account procedure
-            response = requests.post(
-                f"https://apex.oracle.com/pls/apex/databasur/portal/customer_relations/{relation}",
-                json=payload,
-                headers=headers,
-            )
-
-        elif relation == "parent":
-
-                # Get p_number from session
-            p_number = request.form["p_number"]
-            related_p_number = request.form["p_number"]
-            
-            payload = {
-                "p_number": p_number,
-                "p_number": related_p_number,
-            }
-
-            # Make the RESTful Service call to the open_account procedure
-            response = requests.post(
-                f"https://apex.oracle.com/pls/apex/databasur/portal/customer_relations/{relation}",
-                json=payload,
-                headers=headers,
-            )
-
-
+        
         # Check the response status code
         if response.status_code == 200:
             flash("Account created successfully")
@@ -805,6 +767,8 @@ if request.method == "POST":
         else:
             flash("Error creating Relation: {}".format(response.reason))
             return render_template("portal_customer_relations.html")
+    
+    # If get
     else:
         return render_template("portal_customer_relations.html")
 
