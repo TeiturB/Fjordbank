@@ -742,16 +742,31 @@ def portal_account_management():
 @main.route("/portal_customer_relations", methods=["GET", "POST"])
 @login_required
 def portal_customer_relations():
-    if request.method == "POST":
+    
+if request.method == "POST":
 
+        relation = request.form.get("relation")
+        p_number = request.form["p_number"]
+        related_p_number = request.form["p_number"]
+        payload = {
+            "p_number": p_number,
+            "p_number": related_p_number,
+        }
 
+        # Make the RESTful Service call
+        response = requests.post(
+            f"https://apex.oracle.com/pls/apex/databasur/portal/customer_relations/{relation}",
+            json=payload,
+            headers=headers,
+        )
         if relation == "spouse":
         # Define the payload for the RESTful Service call
 
-            relation = request.form.get("relation")
+
                 # Get p_number from session
             p_number = request.form["p_number"]
             related_p_number = request.form["p_number"]
+            
             payload = {
                 "p_number": p_number,
                 "p_number": related_p_number,
@@ -766,10 +781,10 @@ def portal_customer_relations():
 
         elif relation == "parent":
 
-            relation = request.form.get("relation")
                 # Get p_number from session
             p_number = request.form["p_number"]
             related_p_number = request.form["p_number"]
+            
             payload = {
                 "p_number": p_number,
                 "p_number": related_p_number,
@@ -777,7 +792,7 @@ def portal_customer_relations():
 
             # Make the RESTful Service call to the open_account procedure
             response = requests.post(
-                "https://apex.oracle.com/pls/apex/databasur/portal/customer_relations/{relation}",
+                f"https://apex.oracle.com/pls/apex/databasur/portal/customer_relations/{relation}",
                 json=payload,
                 headers=headers,
             )
@@ -788,7 +803,7 @@ def portal_customer_relations():
             flash("Account created successfully")
             return render_template("portal_customer_relations.html")
         else:
-            flash("Error creating account: {}".format(response.reason))
+            flash("Error creating Relation: {}".format(response.reason))
             return render_template("portal_customer_relations.html")
     else:
         return render_template("portal_customer_relations.html")
