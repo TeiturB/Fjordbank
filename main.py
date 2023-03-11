@@ -746,23 +746,41 @@ def portal_customer_relations():
     if request.method == "POST":
 
         relation = request.form.get("relation")
-        p_number = request.form.get("p_number")
-        related_p_number = request.form.get("related_p_number")
-        payload = {
-            "p_number": p_number,
-            "related_p_number": related_p_number,
-        }
+
+        if relation == "spouse":
+            
+            p_number = request.form.get("p_number")
+            related_p_number = request.form.get("related_p_number")
+            
+            payload = {
+                "p_number": p_number,
+                "related_p_number": related_p_number,
+            }
+
+        if relation == "parent":
+
+            p_number = request.form.get("p_number")
+            related_p_number = request.form.get("related_p_number")
+            
+            payload = {
+                "p_number": p_number,
+                "related_p_number": related_p_number,
+            }
 
         # Make the RESTful Service call
         response = requests.post(
-            f"https://apex.oracle.com/pls/apex/databasur/portal/customer_relations/{relation}",
+            f"https://apex.oracle.com/pls/apex/databasur/portal/customer_relations/{relation}/",
             json=payload,
             headers=headers,
         )
+
+        print()
+        print(f"Status: {response.status_code}")
+        print()
         
         # Check the response status code
         if response.status_code == 200:
-            flash("Account created successfully")
+            flash("Relation created successfully")
             return render_template("portal_customer_relations.html")
         else:
             flash("Error creating Relation: {}".format(response.reason))
