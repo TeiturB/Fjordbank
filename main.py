@@ -879,7 +879,95 @@ def portal_login():
     else:
 
         return render_template("portal-login.html")
-    
+
+
+@main.route("/portal_payments", methods=["GET", "POST"])
+@login_required
+def payments():
+
+    if request.method == "POST":
+
+        payment_method = request.form.get("payment_method")
+
+        if payment_method == "deposit":
+
+            to_account = request.form.get("to_account")
+            amount = request.form.get("amount")
+            message_text = request.form.get("message_text")
+            own_text = request.form.get("own_text")
+            cashier_id = request.form.get("cashier_id")
+            due_date = request.form.get("due_date")
+
+            payload = {
+                "to_account": to_account,
+                "amount": amount,
+                "message_text": message_text,
+                "own_text": own_text,
+                "cashier_id": cashier_id,
+                "due_date": due_date,
+            }
+
+        elif payment_method == "transfer":
+
+            from_account = request.form.get("from_account")
+            to_account = request.form.get("to_account")
+            amount = request.form.get("amount")
+            message_text = request.form.get("message_text")
+            own_text = request.form.get("own_text")
+            due_date = request.form.get("due_date")
+
+            payload = {
+                "from_account": from_account,
+                "to_account": to_account,
+                "amount": amount,
+                "message_text": message_text,
+                "own_text": own_text,
+                "due_date": due_date,
+            }
+
+        elif payment_method == "withdrawal":
+
+            from_account = request.form.get("from_account")
+            amount = request.form.get("amount")
+            message_text = request.form.get("message_text")
+            own_text = request.form.get("own_text")
+            cashier_id = request.form.get("cashier_id")
+            due_date = request.form.get("due_date")
+
+            payload = {
+                "from_account": from_account,
+                "amount": amount,
+                "message_text": message_text,
+                "own_text": own_text,
+                "cashier_id": cashier_id,
+                "due_date": due_date,
+            }
+
+        # Make the RESTful Service call to the appropriate procedure
+        response = requests.post(
+            f"https://apex.oracle.com/pls/apex/databasur/user/{payment_method}/",
+            json=payload,
+            headers=headers,
+        )
+
+        print()
+        print(f"Status: {response.status_code}")
+        print()
+
+        # Check the response status code
+        if response.status_code != 200:
+            flash(f"Error occurred while performing {payment_method}")
+            return render_template("payments.html", account_list=account_list)
+
+        flash(f"Your {payment_method} was successful")
+        return render_template("payments.html", account_list=account_list)
+
+    # If GET method
+    else:
+
+        return render_template("payments.html", account_list=account_list)
+
+
 
 @main.route("/portal_logout")
 def portal_logout():
