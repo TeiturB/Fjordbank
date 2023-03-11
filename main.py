@@ -881,9 +881,9 @@ def portal_login():
         return render_template("portal-login.html")
 
 
-@main.route("/portal_payments", methods=["GET", "POST"])
+@main.route("/portal-payments", methods=["GET", "POST"])
 @login_required
-def payments():
+def portal_payments():
 
     if request.method == "POST":
 
@@ -907,13 +907,14 @@ def payments():
                 "due_date": due_date,
             }
 
-        elif payment_method == "transfer":
+        elif payment_method == "transfer_on_behalf":
 
             from_account = request.form.get("from_account")
             to_account = request.form.get("to_account")
             amount = request.form.get("amount")
             message_text = request.form.get("message_text")
             own_text = request.form.get("own_text")
+            cashier_id = request.form.get("cashier_id")
             due_date = request.form.get("due_date")
 
             payload = {
@@ -922,6 +923,7 @@ def payments():
                 "amount": amount,
                 "message_text": message_text,
                 "own_text": own_text,
+                "cashier_id": cashier_id,
                 "due_date": due_date,
             }
 
@@ -945,7 +947,7 @@ def payments():
 
         # Make the RESTful Service call to the appropriate procedure
         response = requests.post(
-            f"https://apex.oracle.com/pls/apex/databasur/user/{payment_method}/",
+            f"https://apex.oracle.com/pls/apex/databasur/portal/{payment_method}/",
             json=payload,
             headers=headers,
         )
@@ -957,15 +959,15 @@ def payments():
         # Check the response status code
         if response.status_code != 200:
             flash(f"Error occurred while performing {payment_method}")
-            return render_template("payments.html", account_list=account_list)
+            return render_template("portal-payments.html")
 
         flash(f"Your {payment_method} was successful")
-        return render_template("payments.html", account_list=account_list)
+        return render_template("portal-payments.html")
 
     # If GET method
     else:
 
-        return render_template("payments.html", account_list=account_list)
+        return render_template("portal-payments.html")
 
 
 
