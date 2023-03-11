@@ -47,19 +47,44 @@
                             
                             <!-- Navbar tabs -->
                             <ul class="navbar-nav me-auto mt-2">
-                                <li class="nav-item"><img class="userinfo" src="https://img.icons8.com/material-outlined/24/000000/user.png" style="height:20px; width:20px; color: rgba(0,0,0,.55);"/><a class="nav-link" href="/account_settings">Account Settings</a></li>
-                                <a href="/accounts_and_loans"><li class="nav-item"><a class="nav-link" href="/accounts_and_loans"><img src="https://img.icons8.com/ios/50/000000/bank-building--v1.png" style="height:15px; width:15px;"/> Accounts & Loans</a></li></a>
-                                <a href="/payments"><li class="nav-item"><a class="nav-link" href="/payments"><img src="https://img.icons8.com/ios/50/000000/money--v1.png" style="height:15px; width:15px;"/> Payments</a></li></a>
+                                
+                                <a class="nav-link" href="/account_settings">
+                                    <li class="nav-item ">
+                                        <img src="https://img.icons8.com/material-outlined/24/000000/user.png" style="height:20px; width:20px;"/>
+                                        Account Settings
+                                    </li>
+                                </a>
+
+                                <a class="nav-link" href="/accounts_and_loans">
+                                    <li class="nav-item ">                                
+                                      <img src="https://img.icons8.com/ios/50/000000/bank-building--v1.png" style="height:20px; width:20px;"/>
+                                      Accounts & Loans
+                                  </li>
+                                </a>
+                                  
+                                <a class="nav-link" href="/payments">
+                                    <li class="nav-item">
+                                      <img src="https://img.icons8.com/pastel-glyph/512/transfer-money.png" style="height:20px; width:20px;"/>
+                                      Payments
+                                    </li>
+                                </a>
+                                  
                             </ul>
                             <ul class="navbar-nav ms-auto mt-2">
-                                <li class="nav-item"><img class"userinfo" src="https://img.icons8.com/material-outlined/512/exit.png" style="height:20px; width:20px;"/><a class="nav-link" href="/logout">Log Out</a></li>
+
+                                <a class="nav-link" href="/logout">
+                                    <li class="nav-item">
+                                        <img class="userinfo" src="https://img.icons8.com/material-outlined/512/exit.png" style="height:20px; width:20px;"/>
+                                        Log Out
+                                    </li>
+                                </a>
 
                             </ul>
 
                             <!-- Round buttons -->
                             <div class="round-button-wrapper">
                             <a href="/payments" class="round-button">
-                                <img src="https://img.icons8.com/ios/50/000000/money--v1.png" style="height:20px; width:20px;"/>
+                                <img src="https://img.icons8.com/pastel-glyph/512/transfer-money.png" style="height:20px; width:20px;"/>
                             </a>
                             <a href="/" class="round-button">
                                 <img src="https://img.icons8.com/material-rounded/50/000000/overview-pages-1.png" style="height:20px; width:20px;"/>
@@ -69,16 +94,48 @@
                             
                         <!-- FjordPortal logged in -->
                         {% if 'employee_id' in session %}
-                        <!-- TODO: Tabs -->
+
                         <ul class="navbar-nav me-auto mt-2">
-                            <li class="nav-item"><img class="userinfo" src="https://img.icons8.com/material-rounded/512/search-client.png" style="height:20px; width:20px; color: rgba(0,0,0,.55);"/><a class="nav-link" href="/portal_customer_search">Customer Search</a></li>
-                            <li class="nav-item"><img class="userinfo" src="https://img.icons8.com/material-rounded/512/family.png" style="height:20px; width:20px;"/><a class="nav-link" href="/portal_customer_relations"> Customer Relations</a></li>
-                            <li class="nav-item"><img class="userinfo" src="https://img.icons8.com/material-rounded/512/wallet.png" style="height:20px; width:20px;"/><a class="nav-link" href="/portal_account_management"> Account Creation</a></li>
-                            <li class="nav-item"><img class="userinfo" src="https://img.icons8.com/ios/50/000000/money--v1.png" style="height:20px; width:20px;"/> <a class="nav-link" href="/portal_payments">  Payments</a></li>
+
+                            <a class="nav-link" href="/portal_customer_search">
+                                <li class="nav-item">
+                                    <img class="userinfo" src="https://img.icons8.com/material-rounded/512/search-client.png" style="height:20px; width:20px;"/>
+                                    Customer Search
+                                </li>
+                            </a>
+
+                            <a class="nav-link" href="/portal_customer_relations">
+                                <li class="nav-item">
+                                    <img class="userinfo" src="https://img.icons8.com/material-rounded/512/family.png" style="height:20px; width:20px;"/>
+                                    Customer Relations
+                                </li>
+                            </a>
+
+                            <a class="nav-link" href="/portal_account_management">
+                                <li class="nav-item">
+                                    <img class="userinfo" src="https://img.icons8.com/material-rounded/512/wallet.png" style="height:20px; width:20px;"/>
+                                    Account Creation
+                                </li>
+                            </a>
+
+                            <a class="nav-link" href="/portal_payments">
+                                <li class="nav-item">
+                                    <img class="userinfo" src="https://img.icons8.com/pastel-glyph/512/transfer-money.png" style="height:20px; width:20px;"/>
+                                    Payments
+                                </li>
+                            </a>
+
                         </ul>
 
                         <ul class="navbar-nav ms-auto mt-2">
-                            <li class="nav-item"><img class="userinfo" src="https://img.icons8.com/material-outlined/512/exit.png" style="height:20px; width:20px;"/><a class="nav-link" href="/portal_logout"> Log Out</a></li>
+
+                            <a class="nav-link" href="/portal_logout">
+                                <li class="nav-item">
+                                    <img class="userinfo" src="https://img.icons8.com/material-outlined/512/exit.png" style="height:20px; width:20px;"/>
+                                    Log Out
+                                </li>
+                            </a>
+
                         </ul>
 
                         {% endif %}
@@ -91,9 +148,22 @@
                         <!-- FjordPortal login screen -->
                         {% if 'portal-login' in request.path %}
                             <ul class="navbar-nav ms-auto mt-2">
-                                <li class="nav-item"><img class="userinfo" src="https://img.icons8.com/material-outlined/512/create-new.png" style="height:20px; width:20px;"/><a class="nav-link" href="/portal-register">Register</a></li>
-                                <li class="nav-item"><img class="userinfo" src="https://img.icons8.com/material-outlined/512/enter-2.png" style="height:20px; width:20px;"/><a class="nav-link" href="/portal-login">Log In</a></li>
+
+                                <a class="nav-link" href="/portal-register">
+                                    <li class="nav-item">
+                                        <img class="userinfo" src="https://img.icons8.com/material-outlined/512/create-new.png" style="height:20px; width:20px;"/>
+                                        Register
+                                    </li>
+                                </a>
+                                
+                                <a class="nav-link" href="/portal-login">
+                                    <li class="nav-item">
+                                        <img class="userinfo" src="https://img.icons8.com/material-outlined/512/enter-2.png" style="height:20px; width:20px;"/>
+                                        Log In
+                                    </li>
+                                </a>
                             </ul>
+
                             <div class="round-button-wrapper">
                                 <a href="/login" class="round-button">
                                 <img src="https://img.icons8.com/material-rounded/512/circled-left--v2.png" style="height:40px; width:40px;"/>
@@ -102,9 +172,23 @@
                         <!-- FjordBank login screen -->
                         {% else %}
                             <ul class="navbar-nav ms-auto mt-2">
-                                <li class="nav-item"><img class="userinfo" src="https://img.icons8.com/material-outlined/512/create-new.png" style="height:20px; width:20px;"/><a class="nav-link" href="/register">Register</a></li>
-                                <li class="nav-item"><img class="userinfo" src="https://img.icons8.com/material-outlined/512/enter-2.png" style="height:20px; width:20px;"/><a class="nav-link" href="/login"></a>Log In</a></li>
+
+                                <a class="nav-link" href="/register">
+                                    <li class="nav-item">
+                                        <img class="userinfo" src="https://img.icons8.com/material-outlined/512/create-new.png" style="height:20px; width:20px;"/>
+                                        Register
+                                    </li>
+                                </a>
+
+                                <a class="nav-link" href="/login">
+                                    <li class="nav-item">
+                                        <img class="userinfo" src="https://img.icons8.com/material-outlined/512/enter-2.png" style="height:20px; width:20px;"/>
+                                        Log In
+                                    </li>
+                                </a>
+
                             </ul>
+                            
                             <div class="round-button-wrapper">
                                 <a href="/portal-login" class="round-button" id="portal">
                                 <img src="https://img.icons8.com/material-rounded/512/portal.png" style="height:40px; width:40px;"/>
