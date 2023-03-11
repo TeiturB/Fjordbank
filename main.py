@@ -881,7 +881,7 @@ def portal_login():
         return render_template("portal-login.html")
 
 
-@main.route("/portal-payments", methods=["GET", "POST"])
+@main.route("/portal_payments", methods=["GET", "POST"])
 @login_required
 def portal_payments():
 
