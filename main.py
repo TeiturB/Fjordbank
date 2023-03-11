@@ -192,8 +192,8 @@ def accounts_and_loans():
         p_number = session["p_number"]
 
         # Get the account type and account name from the HTML form
-        account_type = request.form["account_type"]
-        account_name = request.form["accountname"]
+        account_type = request.form.get("account_type")
+        account_name = request.form.get("accountname")
 
         # Define the payload for the RESTful Service call
         payload = {
@@ -229,15 +229,15 @@ def account_settings():
 
     if request.method == "POST":
 
-        first_name = request.form["first_name"]
-        middle_name = request.form["middle_name"]
-        last_name = request.form["last_name"]
-        hash = generate_password_hash(request.form["hash"])
-        email = request.form["email"]
-        phone_number = request.form["phone_number"]
-        street_name = request.form["street_name"]
-        street_number = request.form["street_number"]
-        postal_code = request.form["postal_code"]
+        first_name = request.form.get("first_name")
+        middle_name = request.form.get("middle_name")
+        last_name = request.form.get("last_name")
+        hash = generate_password_hash(request.form.get("hash"))
+        email = request.form.get("email")
+        phone_number = request.form.get("phone_number")
+        street_name = request.form.get("street_name")
+        street_number = request.form.get("street_number")
+        postal_code = request.form.get("postal_code")
 
         personinfo = {
             "p_number": p_number,
@@ -710,9 +710,9 @@ def portal_account_management():
     if request.method == "POST":
 
         # Get p_number from session
-        p_number = request.form["p_number"]
-        account_type = request.form["account_type"]
-        account_name = request.form["accountname"]
+        p_number = request.form.get("p_number")
+        account_type = request.form.get("account_type")
+        account_name = request.form.get("accountname")
 
         # Define the payload for the RESTful Service call
         payload = {
@@ -746,11 +746,11 @@ def portal_customer_relations():
     if request.method == "POST":
 
         relation = request.form.get("relation")
-        p_number = request.form.get["p_number"]
-        related_p_number = request.form.get["p_number"]
+        p_number = request.form.get("p_number")
+        related_p_number = request.form.get("related_p_number")
         payload = {
             "p_number": p_number,
-            "p_number": related_p_number,
+            "related_p_number": related_p_number,
         }
 
         # Make the RESTful Service call
