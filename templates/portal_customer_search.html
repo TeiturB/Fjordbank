@@ -13,11 +13,11 @@
         <input type="text" class="form-control" id="p_number" name="p_number" value="{{ p_number }}" placeholder="p_number"><label for="p_number"></label>
         <label for="p_number">P-number</label></div>
 
-        <button class="btn btn-primary" type="submit">Search</button>
+        <button class="btn btn-primary" type="submit" name="customer_search" value="p_number">Search</button>
     </form>
-</div>
+  </div>
 
-
+{% if p_number %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script>function printTable(tableId) {
   var tableToPrint = document.getElementById(tableId);
@@ -198,5 +198,7 @@ searchInput.addEventListener("keydown", function(event) {
     </table>
     </div>
     {% endfor %}
+    {% endif %}
+
 
 {% endblock %}
