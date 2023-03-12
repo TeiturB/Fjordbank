@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Payment_success
+{% endblock %}
+
+{% block main %}
+<div class="flash-message">
+  <div class="alert alert-success">
+      Your payment was successful.
+  </div>
+<script>
+  // Function to show the second Lottie animation
+  function showSecondAnimation() {
+      // Get the second Lottie player
+      const secondPlayer = document.querySelector('#second-lottie');
+      // Show the second Lottie player
+      secondPlayer.style.display = 'block';
+      // Play the second Lottie animation
+      secondPlayer.play();
+  }
+  
+  // Handler function for first Lottie animation end event
+  function handleAnimationEnd(event) {
+      // Check if the event target is the first Lottie player
+      if (event.target.tagName.toLowerCase() === 'lottie-player') {
+          setTimeout(function() {
+              // Call the function to show the second Lottie animation
+              showSecondAnimation();
+              // Hide the first Lottie player
+              event.target.style.display = 'none';
+          }, 3000); // Delay in milliseconds
+      }
+  }
+  
+  // Add event listener to first Lottie player for animation end event
+  const firstPlayer = document.querySelector('#first-lottie');
+  firstPlayer.addEventListener('animationend', handleAnimationEnd);
+</script>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+<center>
+  <div class="lottie-player-wrapper">
+    <lottie-player id="first-lottie" src="https://assets6.lottiefiles.com/packages/lf20_GD2RmK.json" background="transparent" speed="1" style="width: 300px; height: 300px;" autoplay></lottie-player>
+    <lottie-player id="second-lottie" src="https://assets6.lottiefiles.com/packages/lf20_GD2RmK.json" background="transparent" speed="1" style="width: 300px; height: 300px; display: none;"></lottie-player>
+  </div>
+</center>
+
+
+
+
+{% endblock %}
