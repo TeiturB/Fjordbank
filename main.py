@@ -795,13 +795,12 @@ def portal_customer_relations():
 @login_required
 def portal_customer_search():
 
-    if request.method == "GET":
+    if request.method == "POST":
         # Get and declare variables
         p_number = request.args.get("p_number")
-        customer_search = request.form.get("customer_search")
 
         print()
-        print(f"Session p_number: {p_number}")
+        print(f"Customer p_number: {p_number}")
 
 
         # Get account data from database
