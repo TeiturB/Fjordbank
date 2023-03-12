@@ -678,8 +678,8 @@ def payments():
             flash(f"Error occurred while performing {payment_method}")
             return render_template("payments.html", account_list=account_list)
 
-        flash(f"Your {payment_method} was successful")
-        return render_template("payments.html", account_list=account_list)
+        #flash(f"Your {payment_method} was successful")
+        return render_template("payment_success.html")
 
     # If GET method
     else:
