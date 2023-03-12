@@ -18,14 +18,15 @@ def login_required(f):
     return decorated_function
 
 
-def dkk(value):
-    """Format value as DKK."""
-    locale.setlocale(locale.LC_ALL, 'da_DK.UTF-8')
-    return f"{locale.format_string('%.2f', value, grouping=True):>10}"
+# def dkk(value):
+#     """Format value as DKK."""
+#     locale.setlocale(locale.LC_ALL, 'da_DK.UTF-8')
+#     return f"{locale.format_string('%.2f', value, grouping=True):>10}"
 
 
 # Another way to achieve similar results
-    # return f"{value:,.2f}".replace(",", ";").replace(".", ",").replace(";", ".") + "kr"
+def dkk(value):
+    return f"{value:,.2f}".replace(",", ";").replace(".", ",").replace(";", ".") + "kr"
 
 
 # Deprecated. Saved as a potential 404 screen in the future
