@@ -839,7 +839,13 @@ def portal_customer_search():
             flash("Database error: {}".format(response.reason))
             return render_template("portal-customer-search.html")
         
-        customer_dict = json.loads(json.loads(response.content)["items"][0]["json_data"])
+        try:
+            customer_dict = json.loads(json.loads(response.content)["items"][0]["json_data"])
+        except:
+            flash(f"P-number {p_number} is not in the database")
+            return render_template("portal-customer-search.html")
+
+        
         print(customer_dict)
 
         if "customer_id" not in customer_dict:
