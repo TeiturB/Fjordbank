@@ -257,7 +257,7 @@ table.icon-table {
 	cursor: pointer;
   }
 
-  #print-table2 tbody tr:hover {
+  #related_table tbody tr:hover {
     background-color: #CFE2FF;
     cursor: pointer;
     }
