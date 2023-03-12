@@ -57,14 +57,7 @@ searchInput.addEventListener("keydown", function(event) {
 
 
 
-
-
 <div class="container mt-3">
-  <div class="row justify-content-center">
-    <div class="col-md-6 text-center">
-      <canvas id="pie-chart" style="width: 200px; height: 200px;"></canvas>
-    </div>
-  </div>
   <h2 class="overview name">{{ accountname }}</h2>
 
   <table class="icon-table">
@@ -86,10 +79,16 @@ searchInput.addEventListener("keydown", function(event) {
 
 
 
-
 {% if f_transaction_list|length > 0 %}
 
 
+
+  <div class="row justify-content-center">
+    <div class="col-md-6 text-center">
+      <canvas id="pie-chart" style="width: 200px; height: 200px;"></canvas>
+    </div>
+  </div>
+<br>
 
   <script>var futurePaymentsAccordion = new bootstrap.Accordion(document.getElementById('future-payments-accordion'))</script>
 <div class="text-center">
