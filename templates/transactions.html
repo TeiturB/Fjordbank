@@ -55,8 +55,18 @@ searchInput.addEventListener("keydown", function(event) {
   });
 </script>
 
+
+
+
+
 <div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="col-md-6 text-center">
+      <canvas id="pie-chart" style="width: 200px; height: 200px;"></canvas>
+    </div>
+  </div>
   <h2 class="overview name">{{ accountname }}</h2>
+
   <table class="icon-table">
       <tr>
           <td colspan="2">
@@ -78,6 +88,7 @@ searchInput.addEventListener("keydown", function(event) {
 
 
 {% if f_transaction_list|length > 0 %}
+
 
 
   <script>var futurePaymentsAccordion = new bootstrap.Accordion(document.getElementById('future-payments-accordion'))</script>
@@ -332,4 +343,20 @@ searchInput.addEventListener("keydown", function(event) {
     </div>
 </div>
 {% endfor %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1"></script>
+<script>
+  var ctx = document.getElementById('pie-chart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: {{ labels|tojson }},
+      datasets: [{
+        label: 'Total Amount',
+        data: {{ amounts|tojson }},
+        backgroundColor: {{ colors|tojson }},
+        hoverOffset: 4
+      }]
+    }
+  });
+</script>
 {% endblock %}

@@ -549,6 +549,7 @@ def transactions():
     accountnum = session["accountnum"]
     accountname = session["accountname"]
     registration_number = session["registration_number"]
+    
 
     print()
     print(f"Account name: {accountname}")
@@ -576,6 +577,23 @@ def transactions():
 
         f_transaction_list = json.loads(response_f_transactions.content)["items"]
 
+        # Extract transaction data for pie chart
+        labels = ['Transfer', 'Withdrawal', 'Deposit', 'Interest Transfer']  # Replace with desired transaction types
+        amounts = [0, 0, 0, 0]  # Initialize amounts for each transaction type to 0
+
+        for transaction in transaction_list:
+            if transaction['transaction_type_name'] == 'Transfer':
+                amounts[0] += transaction['amount']
+            elif transaction['transaction_type_name'] == 'Withdrawal':
+                amounts[1] += transaction['amount']
+            elif transaction['transaction_type_name'] == 'Deposit':
+                amounts[2] += transaction['amount']
+            elif transaction['transaction_type_name'] == 'Interest':
+                amounts[3] += transaction['amount']
+
+        colors = ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)', 'rgb(75, 192, 192)']
+
+
         return render_template(
             "transactions.html",
             accountnum=accountnum,
@@ -583,6 +601,9 @@ def transactions():
             registration_number=registration_number,
             transaction_list=transaction_list,
             f_transaction_list=f_transaction_list,
+            labels=labels,
+            amounts=amounts,
+            colors=colors,
         )
 
     else:
