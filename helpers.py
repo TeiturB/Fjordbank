@@ -26,7 +26,7 @@ def login_required(f):
 
 # Another way to achieve similar results
 def dkk(value):
-    return f"{value:,.2f}".replace(",", ";").replace(".", ",").replace(";", ".") + "kr"
+    return f"{value:,.2f}".replace(",", ";").replace(".", ",").replace(";", ".")
 
 
 # Deprecated. Saved as a potential 404 screen in the future
