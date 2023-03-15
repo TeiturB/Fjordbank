@@ -60,6 +60,16 @@ searchInput.addEventListener("keydown", function(event) {
 <div class="container mt-3">
   <h2 class="overview name">{{ accountname }}</h2>
 
+
+<!-- Pie Chart -->
+<br>
+<div class="row justify-content-left">
+  <div class="col-md-5 text-center">
+    <canvas id="pie-chart" style="width: 200px; height: 200px;"></canvas>
+  </div>
+</div>
+</br>
+
   <table class="icon-table">
       <tr>
           <td colspan="2">
@@ -261,15 +271,6 @@ searchInput.addEventListener("keydown", function(event) {
             {% endif %}
         </tr>
         {% endfor %}
-
-          <!-- Pie Chart -->
-        <div class="row justify-content-center">
-          <div class="col-md-6 text-center">
-            <canvas id="pie-chart" style="width: 200px; height: 200px;"></canvas>
-        </div>
-      </div>
-
-
       </tbody>
   </table>
 <!-- Modal -->
